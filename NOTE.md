@@ -6,7 +6,7 @@
 > **Frontend Stack:** HTML5, Tailwind CSS CDN (Stitch Design Tokens), Vanilla JS with `@supabase/supabase-js` v2 CDN, Lucide Icons, Web Audio API  
 > **Local Project Root:** `D:\TECH\WEBSITE\BOUNTY COMMUNITY\`  
 > **Google Drive Storage:** `G:\My Drive\ALL WEBSITE WORKPLACE\BOUNTY COMMUNITY WORKPLACE\`  
-> **Last Synchronized:** 2026-09-11 09:30 Local Time  
+> **Last Synchronized:** 2026-09-11 09:44 Local Time  
 
 ---
 
@@ -140,6 +140,27 @@ bounty community/
 - **Google Drive Workplace Sync:**
   - Synchronized updated `NOTE.md` to `G:\My Drive\ALL WEBSITE WORKPLACE\BOUNTY COMMUNITY WORKPLACE\NOTE.md`.
 
+### [Phase 10] Obsidian Midnight Dark Background & Dynamic Asset Path Resolution
+- **Root Cause Analysis:**
+  - When accessing `/public/portal/index.php` directly on Hostinger, the body lacked explicit background classes and defaulted to white canvas.
+  - Furthermore, `BASE_URL` was resolving to empty string `""`, causing stylesheet link `<link rel="stylesheet" href="/css/stitch-tokens.css">` to 404 since the actual file is at `/public/css/stitch-tokens.css`.
+  - With `stitch-tokens.css` failing to load, `.glass-card` styling was absent, rendering white text against a white background.
+- **Architectural & Visual Fixes:**
+  - **`public/config.php`:**
+    - Implemented `resolve_public_base_url()` to dynamically detect `/public/` in `SCRIPT_NAME` or `REQUEST_URI` and set `BASE_URL` to `'/public'` (with fallback support in `render_header()` and `render_footer()`).
+    - Added critical inline `<style>` to `<head>` (`html, body { background-color: #0B0F17 !important; color: #F1F5F9 !important; } .glass-card { background: rgba(18, 24, 38, 0.75) !important; }`) to completely eliminate white FOUC.
+    - Updated `<body>` tag with explicit dark theme classes:
+      `<body class="bg-[#0B0F17] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white pb-28 md:pb-12 has-bottom-dock">`
+  - **`public/portal/index.php`:**
+    - Wrapped page layout in `<div class="portal-outer-wrapper w-full min-h-screen bg-[#0B0F17] text-slate-100">`.
+    - Enforced `bg-[rgba(18,24,38,0.75)] backdrop-blur-md` across all cards, modals, and sidebar widgets.
+  - **`public/js/app.js`:**
+    - Enforced `bg-[rgba(18,24,38,0.75)] backdrop-blur-md` on dynamically injected Job Alert Cards and Chat Messages.
+- **Verification & Git Push:**
+  - Syntax validated with `php -l public/config.php` and `php -l public/portal/index.php`.
+  - Verified dynamic prefixing (`/public/css/stitch-tokens.css`, `/public/js/app.js`, `/public/js/sneak-bar.js`).
+  - Synchronized `NOTE.md` across local and Google Drive workplace directories.
+
 ---
 
 ## 🚀 4. Upcoming Tasks & Future Roadmap ("Will Be Done")
@@ -179,11 +200,11 @@ bounty community/
 | File | Status | Last Check | Purpose |
 |---|---|---|---|
 | `index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Root router redirecting to `/public/portal/index.php` (Hostinger 403 fix) |
-| `public/portal/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Live Community Lounge, Status Box, Modal & Rich Job Alert Cards |
-| `public/js/app.js` | ✅ Verified (Active) | 2026-09-11 | Supabase Realtime `community_messages` listener, Web AudioFX & DOM prepending |
+| `public/portal/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Live Community Lounge with outer dark container & obsidian glass cards |
+| `public/js/app.js` | ✅ Verified (Active) | 2026-09-11 | Supabase Realtime listener, Web AudioFX & obsidian dynamic card styles |
 | `public/css/stitch-tokens.css` | ✅ Updated (Production) | 2026-09-11 | Google Stitch tokens, celebratory animations & cyberpunk utilities |
 | `public/js/sneak-bar.js` | ✅ Verified (Active) | 2026-09-11 | Fixed top purple sneak banner & persona switcher dock |
-| `public/config.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Core security, master header & mobile floating dock |
+| `public/config.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Core security, dynamic BASE_URL resolver, dark theme body & layout dock |
 | `public/api/admin_sneak.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Persona teleportation controller (JSON + Form support) |
 | `public/portal/candidate_review.php`| ✅ Verified (Syntax Clean) | 2026-09-11 | 100-to-2 Applicant Screening Accordion with master layout |
 | `public/portal/job_hub.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Job Listings & Recruiter ATS |

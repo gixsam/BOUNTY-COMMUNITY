@@ -159,7 +159,7 @@
         const msgId = data.id || `job-${Date.now()}`;
         card.id = `feed-item-${msgId}`;
         card.setAttribute('data-message-id', msgId);
-        card.className = `job-alert-card glass-card rounded-2xl p-5 border-l-4 border-l-[#10B981] relative overflow-hidden transition-all duration-300 hover:border-l-[#34D399] ${isLive ? 'job-card-celebrate' : ''}`;
+        card.className = `job-alert-card glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md rounded-2xl p-5 border border-white/10 border-l-4 border-l-[#10B981] relative overflow-hidden transition-all duration-300 hover:border-l-[#34D399] ${isLive ? 'job-card-celebrate' : ''}`;
 
         const meta = data.meta || data.meta_json || {};
         const title = meta.title || data.title || data.message || 'New Bounty Opportunity';
@@ -243,7 +243,7 @@
         const msgId = data.id || `chat-${Date.now()}`;
         item.id = `feed-item-${msgId}`;
         item.setAttribute('data-message-id', msgId);
-        item.className = `chat-message-item glass-card rounded-2xl p-4 transition-all duration-200 hover:border-white/20 ${isLive ? 'feed-item-new' : ''}`;
+        item.className = `chat-message-item glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md rounded-2xl p-4 border border-white/10 transition-all duration-200 hover:border-white/20 ${isLive ? 'feed-item-new' : ''}`;
 
         const senderName = data.sender_name || (data.profiles ? data.profiles.display_name : null) || 'Community Member';
         const senderHandle = data.sender_handle || (data.profiles ? data.profiles.handle : null) || 'member';

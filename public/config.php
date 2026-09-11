@@ -109,9 +109,30 @@ define('SUPABASE_ANON_KEY',     getenv('SUPABASE_ANON_KEY')      ?: '');
 // It must NEVER be sent to the browser or logged in any access log.
 define('SUPABASE_SERVICE_ROLE_KEY', getenv('SUPABASE_SERVICE_ROLE_KEY') ?: '');
 define('COMMUNITY_NAME',        getenv('COMMUNITY_NAME')          ?: 'Bounty Community');
-define('PLATFORM_FEE_PERCENT',  (float)(getenv('PLATFORM_FEE_PERCENT') ?: 5.0));
-// BASE_URL: empty string = site root (/), or e.g. '/bounty' for a sub-path install.
-define('BASE_URL',              rtrim(getenv('BASE_URL') ?: '', '/'));
+// Dynamic BASE_URL resolver: respects environment or auto-detects /public prefix for Hostinger deployment
+function resolve_public_base_url(): string
+{
+    $env = getenv('BASE_URL');
+    if ($env !== false && $env !== '') {
+        return rtrim($env, '/');
+    }
+
+    $script = $_SERVER['SCRIPT_NAME'] ?? '';
+    if (str_contains($script, '/public/')) {
+        $pos = strpos($script, '/public/');
+        return rtrim(substr($script, 0, $pos + 7), '/');
+    }
+
+    $req = $_SERVER['REQUEST_URI'] ?? '';
+    if (str_contains($req, '/public/')) {
+        $pos = strpos($req, '/public/');
+        return rtrim(substr($req, 0, $pos + 7), '/');
+    }
+
+    return '';
+}
+
+define('BASE_URL', resolve_public_base_url());
 
 // Roles that are valid platform role values (single source of truth).
 define('VALID_ROLES', ['admin', 'recruiter', 'hunter', 'mod', 'support']);
@@ -871,6 +892,9 @@ function render_header(string $page_title = 'Bounty Community Engine', string $a
     ];
     $role_badge = $role_badge_colors[$ctx['role']] ?? 'bg-slate-700 text-slate-300';
     $baseUrl    = BASE_URL;
+    if (empty($baseUrl) && str_contains($_SERVER['SCRIPT_NAME'] ?? '', '/public')) {
+        $baseUrl = '/public';
+    }
 
     // Dynamic Level Badge calculation based on role and reputation
     $rep_score = (int)($ctx['reputation_score'] ?? 50);
@@ -890,11 +914,24 @@ function render_header(string $page_title = 'Bounty Community Engine', string $a
     };
     ?>
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="dark" style="background-color: #0B0F17; color-scheme: dark;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($page_title) ?> | <?= htmlspecialchars(COMMUNITY_NAME) ?></title>
+    <!-- Critical Dark Canvas & Glassmorphism Defaults (Prevents White FOUC) -->
+    <style>
+        :root { color-scheme: dark; }
+        html, body {
+            background-color: #0B0F17 !important;
+            color: #F1F5F9 !important;
+        }
+        .glass-card, .bg-stitch-card {
+            background: rgba(18, 24, 38, 0.75) !important;
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+        }
+    </style>
     <!-- Google Stitch Tokens & Cyberpunk Theme -->
     <link rel="stylesheet" href="<?= $baseUrl ?>/css/stitch-tokens.css">
     <!-- Tailwind CSS with Stitch Palette -->
@@ -927,7 +964,7 @@ function render_header(string $page_title = 'Bounty Community Engine', string $a
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-brandIndigo selection:text-white pb-28 md:pb-12 has-bottom-dock">
+<body class="bg-[#0B0F17] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white pb-28 md:pb-12 has-bottom-dock">
 
 <?php /* ── Flash Messages ──────────────────────────────────────────────── */
 if (!empty($flash)): ?>
@@ -1041,6 +1078,9 @@ function render_footer(): void
 {
     $ctx         = get_active_user_context();
     $baseUrl     = BASE_URL;
+    if (empty($baseUrl) && str_contains($_SERVER['SCRIPT_NAME'] ?? '', '/public')) {
+        $baseUrl = '/public';
+    }
     $supabaseUrl = SUPABASE_URL;
     $anonKey     = SUPABASE_ANON_KEY;
 

@@ -25,9 +25,12 @@ if (empty($chatMessages)) {
 render_header('Live Community Lounge & Event Feed', 'portal');
 ?>
 
+<!-- Outer Dark Canvas Container -->
+<div class="portal-outer-wrapper w-full min-h-screen bg-[#0B0F17] text-slate-100">
+
 <!-- Platform Stats Banner -->
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-    <div class="glass-card p-4 rounded-2xl flex items-center gap-3">
+    <div class="glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md p-4 rounded-2xl flex items-center gap-3 border border-white/10">
         <div class="w-10 h-10 rounded-xl bg-brandIndigo/10 border border-brandIndigo/20 flex items-center justify-center text-brandIndigo text-lg">
             <i class="fa-solid fa-vault"></i>
         </div>
@@ -37,7 +40,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
         </div>
     </div>
 
-    <div class="glass-card p-4 rounded-2xl flex items-center gap-3">
+    <div class="glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md p-4 rounded-2xl flex items-center gap-3 border border-white/10">
         <div class="w-10 h-10 rounded-xl bg-brandMint/10 border border-brandMint/20 flex items-center justify-center text-brandMint text-lg">
             <i class="fa-solid fa-briefcase"></i>
         </div>
@@ -47,7 +50,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
         </div>
     </div>
 
-    <div class="glass-card p-4 rounded-2xl flex items-center gap-3">
+    <div class="glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md p-4 rounded-2xl flex items-center gap-3 border border-white/10">
         <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-lg">
             <i class="fa-solid fa-users"></i>
         </div>
@@ -57,7 +60,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
         </div>
     </div>
 
-    <div class="glass-card p-4 rounded-2xl flex items-center gap-3">
+    <div class="glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md p-4 rounded-2xl flex items-center gap-3 border border-white/10">
         <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-lg">
             <i class="fa-solid fa-server"></i>
         </div>
@@ -78,7 +81,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
     <div class="lg:col-span-8 space-y-6">
 
         <!-- Status Update Input Box & Modal Trigger -->
-        <div class="glass-card p-4 sm:p-5 rounded-2xl border border-white/10 shadow-xl">
+        <div class="glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/10 shadow-xl">
             <div class="flex items-center gap-3 mb-3">
                 <img src="<?= htmlspecialchars($ctx['avatar_url'] ?? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150') ?>" 
                      alt="<?= htmlspecialchars($ctx['display_name'] ?? 'User') ?>" 
@@ -172,7 +175,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
                     ?>
                     <div id="feed-item-<?= htmlspecialchars($msgId) ?>" 
                          data-message-id="<?= htmlspecialchars($msgId) ?>" 
-                         class="job-alert-card glass-card rounded-2xl p-5 border-l-4 border-l-[#10B981] relative overflow-hidden transition-all duration-300 hover:border-l-[#34D399]">
+                         class="job-alert-card glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md rounded-2xl p-5 border border-white/10 border-l-4 border-l-[#10B981] relative overflow-hidden transition-all duration-300 hover:border-l-[#34D399]">
                         <div class="absolute -right-12 -bottom-12 w-44 h-44 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
                         <!-- Top Header Row -->
@@ -264,7 +267,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
                     ?>
                     <div id="feed-item-<?= htmlspecialchars($msgId) ?>" 
                          data-message-id="<?= htmlspecialchars($msgId) ?>"
-                         class="chat-message-item glass-card rounded-2xl p-4 transition-all duration-200 hover:border-white/20">
+                         class="chat-message-item glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md rounded-2xl p-4 border border-white/10 transition-all duration-200 hover:border-white/20">
                         <div class="flex items-start gap-3">
                             <img src="<?= htmlspecialchars($senderAvatar) ?>" alt="<?= htmlspecialchars($senderName) ?>" class="w-9 h-9 rounded-xl object-cover border border-white/10 mt-0.5">
                             <div class="flex-1 min-w-0">
@@ -292,7 +295,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
     <div class="lg:col-span-4 space-y-6">
 
         <!-- Active Persona & Escrow Ready Card -->
-        <div class="glass-card rounded-2xl p-5 border border-white/10 shadow-lg">
+        <div class="glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md rounded-2xl p-5 border border-white/10 shadow-lg">
             <div class="flex items-center justify-between mb-4">
                 <span class="text-xs font-mono uppercase text-slate-400">Your Identity</span>
                 <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-bold">
@@ -323,7 +326,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
         </div>
 
         <!-- Open Bounties Quick Widget -->
-        <div class="glass-card rounded-2xl p-5 border border-white/10 shadow-lg">
+        <div class="glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md rounded-2xl p-5 border border-white/10 shadow-lg">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-sm font-bold text-white flex items-center gap-2">
                     <i class="fa-solid fa-fire text-amber-400"></i> Open Bounties
@@ -349,7 +352,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
         </div>
 
         <!-- Infiltration Roster & Switcher -->
-        <div class="glass-card rounded-2xl p-5 border border-white/10 shadow-lg">
+        <div class="glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md rounded-2xl p-5 border border-white/10 shadow-lg">
             <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
                 <i class="fa-solid fa-user-shield text-slate-400"></i> Infiltration Roster
             </h3>
@@ -378,7 +381,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
 
 <!-- ── [Create Paid Job / Bounty] Modal Window ────────────────────────────── -->
 <div id="create-bounty-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-md transition-all">
-    <div class="glass-panel rounded-3xl p-6 sm:p-7 border border-white/15 max-w-lg w-full shadow-2xl relative">
+    <div class="glass-panel bg-[rgba(18,24,38,0.9)] backdrop-blur-xl rounded-3xl p-6 sm:p-7 border border-white/15 max-w-lg w-full shadow-2xl relative">
         <!-- Close Button -->
         <button type="button" class="btn-close-bounty-modal absolute top-5 right-5 w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center text-sm transition cursor-pointer">
             <i class="fa-solid fa-xmark"></i>
@@ -528,6 +531,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
         });
     });
 </script>
+</div> <!-- End portal-outer-wrapper -->
 
 <?php
 render_footer();
