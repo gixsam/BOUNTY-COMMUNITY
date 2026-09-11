@@ -1,0 +1,19 @@
+# Environment configuration & credentials
+.env
+public/.env
+*.env
+
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor & IDE directories
+.idea/
+.vscode/
+*.swp
+*~
+
+# Logs & temp files
+*.log
+error_log

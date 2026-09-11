@@ -1,0 +1,178 @@
+# 📋 BOUNTY COMMUNITY ENGINE — MASTER PROJECT NOTE & CHANGELOG (`NOTE.md`)
+
+> **Project Name:** Bounty Community Engine  
+> **Target Hosting:** Dedicated / Private Hostinger Web Plan (PHP 8.2+, Apache/Nginx, cURL enabled)  
+> **Database & Backend:** Supabase PostgreSQL (Project ID: `ehswbdmizytpahosqkuj`, Region: `ap-southeast-2`)  
+> **Frontend Stack:** HTML5, Tailwind CSS CDN (Stitch Design Tokens), Vanilla JS with `@supabase/supabase-js` v2 CDN, Lucide Icons, Web Audio API  
+> **Local Project Root:** `D:\TECH\WEBSITE\BOUNTY COMMUNITY\`  
+> **Google Drive Storage:** `G:\My Drive\ALL WEBSITE WORKPLACE\BOUNTY COMMUNITY WORKPLACE\`  
+> **Last Synchronized:** 2026-09-11 07:53 Local Time  
+
+---
+
+## 📌 1. Master Rule & Maintenance Directive
+
+This file (`NOTE.md`) is the **single source of truth** for all historical, present, and future updates to the Bounty Community platform.
+Whenever any file, endpoint, database schema, or configuration is updated:
+1. **Document the update** in this file under Section 3 (Completed Updates) or Section 4 (Upcoming Tasks).
+2. **Synchronize this file to all designated locations**:
+   - Local Project Folder: `D:\TECH\WEBSITE\BOUNTY COMMUNITY\NOTE.md`
+   - Google Drive Workplace: `G:\My Drive\ALL WEBSITE WORKPLACE\BOUNTY COMMUNITY WORKPLACE\NOTE.md`
+
+---
+
+## 🏗️ 2. Architectural Blueprint & Technical Stack
+
+### System Overview
+Bounty Community is a zero-external-dependency, high-performance freelance bounty and talent matchmaking engine engineered to run on shared or private Hostinger PHP environments while leveraging Supabase PostgreSQL, Row Level Security (RLS), and Realtime websockets.
+
+```text
+bounty community/
+├── .agent/
+│   └── instructions.md              <-- Architect directives & synchronization rules
+├── NOTE.md                          <-- Master project updates & roadmap log (This file)
+├── schema.sql                       <-- DDL: 8 Tables, 2 RPCs, RLS, Indexes, Seed Data
+├── public/
+│   ├── .env                         <-- Live environment configuration (Supabase URL, Anon Key, etc.)
+│   ├── .env.example                 <-- Environment variable template
+│   ├── .htaccess                    <-- Apache URL rewrite & HTTP security hardening
+│   ├── index.php                    <-- Root router redirecting to /portal/index.php
+│   ├── config.php                   <-- Security boot, Session hardening, User context, Master Header & Mobile Dock
+│   ├── api/
+│   │   ├── admin_sneak.php          <-- Admin persona teleportation & impersonation controller (JSON + Form)
+│   │   ├── jobs_handler.php         <-- Job posting & escrow locking via post_job_with_escrow()
+│   │   ├── payout_handler.php       <-- Escrow disbursement via hire_and_release_payout()
+│   │   ├── applications_handler.php <-- Candidate screening actions (shortlist, reject, hire)
+│   │   ├── telegram_dispatcher.php  <-- Automated Telegram notification bridge
+│   │   └── chat_handler.php         <-- Lounge chat & broadcast messaging endpoint
+│   ├── portal/
+│   │   ├── index.php                <-- Live Lounge Feed, Status Box, Modal & Rich Job Alert Cards
+│   │   ├── job_hub.php              <-- Job Listings & Recruiter ATS
+│   │   └── candidate_review.php     <-- 100-to-2 Applicant Screening Accordion
+│   ├── mod/
+│   │   └── index.php                <-- Threat Patrol & Task Verification Queue
+│   ├── support/
+│   │   └── index.php                <-- Staff Support Desk & Escrow Dispute Split-Pane
+│   ├── admin/
+│   │   ├── index.php                <-- Founder Telemetry & Infiltration Center
+│   │   └── branding.php             <-- White-Label Branding & Hostinger Diagnostics
+│   ├── cron/
+│   │   └── task_expirations.php     <-- Automated cron job for expiring stale open bounties
+│   ├── css/
+│   │   └── stitch-tokens.css        <-- Google Stitch cyberpunk design tokens, utilities & animations
+│   └── js/
+│       ├── app.js                   <-- Realtime event bus, community_messages subscription & AudioFX
+│       └── sneak-bar.js             <-- Fixed top purple sneak-mode banner & persona switcher dock
+```
+
+### Design Tokens (Google Stitch Palette)
+- **Background:** `#0B0F17` (Deep space slate)
+- **Glass Cards / Panels:** `rgba(18, 24, 38, 0.75)` with `backdrop-blur-md`
+- **Card Hover:** `rgba(25, 33, 52, 0.85)`
+- **Accent Indigo:** `#6366F1` (Primary interaction & glow)
+- **Coin Mint / Escrow:** `#10B981` (Escrow ready, balances, success)
+- **Threat / Danger:** `#EF4444` (Verification flags, errors)
+- **Warning / Alert:** `#F59E0B` (Warnings & urgent status)
+- **Admin Sneak Purple:** `#A855F7` (Fixed top impersonation warning banner & dock)
+
+---
+
+## ⚡ 3. Detailed Record of Completed Updates
+
+### [Phase 1] Core DDL & Database Engine (`schema.sql`)
+- Profiles, Jobs, Applications, Escrow Ledger, Chat Messages, Task Verifications, Support Tickets/Messages.
+- Atomic stored procedures: `post_job_with_escrow(...)` and `hire_and_release_payout(...)`.
+- Predefined personas seed data.
+
+### [Phase 2] Security-Hardened Configuration & User Context (`public/config.php`)
+- Strict session cookies, HTTP security headers, input sanitizers.
+- Dynamic context resolver `get_active_user_context()`.
+
+### [Phase 3] Administrative Teleportation & Sneak Mode (`public/api/admin_sneak.php`)
+- CSRF defense, write-once admin locking, JSON and Form dual payload decoding.
+
+### [Phase 4] Production Jobs & Escrow API (`public/api/jobs_handler.php`)
+- Atomic RPC invocation of `public.post_job_with_escrow(...)` with validation and fee handling.
+
+### [Phase 5] Payout Release & Escrow Disbursement API (`public/api/payout_handler.php`)
+- Atomic RPC invocation of `public.hire_and_release_payout(...)` with double authorization and platform fee calculation.
+
+### [Phase 6] Client-Side Realtime & UI Controls
+- Realtime event dispatcher (`public/js/app.js`) and portal views.
+
+### [Phase 7] Master Layout Shell, Stitch Design Tokens & Sneak Mode Enhancements
+- Created `public/css/stitch-tokens.css` with Google Stitch tokens and cyberpunk utilities.
+- Implemented fixed top purple admin sneak-mode strip in `public/js/sneak-bar.js`.
+- Integrated master sticky navbar with level badge, live coin pill, and mobile bottom floating glass dock in `public/config.php`.
+
+### [Phase 8] Live Community Lounge & Real-Time Event Feed
+- **Responsive Layout (`public/portal/index.php`):**
+  - Two-column responsive desktop layout (`lg:col-span-8` main feed and `lg:col-span-4` sidebar) that cleanly collapses to a single column on mobile viewports.
+  - Status update input box with user profile context, live status indicator, and prominent `[Create Paid Job / Bounty]` modal trigger.
+  - Interactive `[Create Paid Job / Bounty]` glass modal with dynamic escrow calculations, category filters, openings counter, and atomic escrow locking submit.
+  - Message stream container (`#feed-stream`) pre-rendering both standard chat messages and rich Job Alert Cards (bounty title, coin reward pill, openings counter, and `[View Details & Apply]` action button).
+- **Supabase Realtime Channel & AudioFX (`public/js/app.js`):**
+  - Initialized `@supabase/supabase-js` v2 from CDN.
+  - Subscribed to Supabase Realtime channel on `community_messages` table (and `chat_messages` / `jobs` tables) for `INSERT` events.
+  - Implemented dynamic DOM prepending without page reloads.
+  - Integrated Web Audio API synthesized celebratory coin sound effect (`playCelebratoryCoinSound()` via B5 987Hz -> E6 1318Hz dual-sine chime).
+  - Implemented celebratory floating coin and sparkle micro-animation (`triggerCelebratoryAnimation()`) with glowing card border flash and toasts.
+- **Design Tokens Stylesheet Enhancements (`public/css/stitch-tokens.css`):**
+  - Added `@keyframes feedItemEnter` and `@keyframes celebratoryGlow` with utility classes `.feed-item-new` and `.job-card-celebrate`.
+
+---
+
+## 🚀 4. Upcoming Tasks & Future Roadmap ("Will Be Done")
+
+### Priority 1: Supabase Database Migration
+- [ ] **Apply `schema.sql` to Live Supabase Project:**
+  - Project ID: `ehswbdmizytpahosqkuj`
+  - Execute DDL to instantiate the 8 tables and 2 RPC functions in the live PostgreSQL instance.
+- [ ] **Configure Service-Role Key in `.env`:**
+  - Add `SUPABASE_SERVICE_ROLE_KEY` to `public/.env` for secure server-side RPC execution.
+
+### Priority 2: Supabase Auth & JWT Session Bridging
+- [ ] **Bridge Supabase Auth to PHP Session:**
+  - Enable native user login/signup via `@supabase/supabase-js` on the frontend.
+  - Transmit Supabase Auth JWT access token to PHP via secure HTTP-only cookie.
+  - Implement server-side JWT verification in `public/config.php` to map authenticated Supabase Auth users to `public.profiles`.
+
+### Priority 3: Candidate Application & Submission Flow
+- [ ] **Create Application Submission API (`public/api/applications_handler.php`):**
+  - Allow bounty hunters to submit proposals, GitHub repositories, and preview links.
+  - Enforce one submission per candidate per bounty.
+- [ ] **Automated Proof Verification / Threat Scanner:**
+  - Implement heuristic URL checking for GitHub repos and file upload links.
+  - Automatically populate `public.task_verifications` with threat scores.
+
+### Priority 4: Production Deployment to Hostinger
+- [ ] **Hostinger Git Deployment / FTP Sync:**
+  - Set up automated Git sync or SFTP deployment pipeline to Hostinger public root.
+  - Configure Hostinger `.htaccess` for production SSL redirection and custom error pages.
+- [ ] **Hostinger PHP.ini Fine-Tuning:**
+  - Ensure `cURL`, `OpenSSL`, and CA certificate bundles are up to date on the remote host.
+
+---
+
+## 📂 5. File Inventory & Verification Summary
+
+| File | Status | Last Check | Purpose |
+|---|---|---|---|
+| `public/portal/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Live Community Lounge, Status Box, Modal & Rich Job Alert Cards |
+| `public/js/app.js` | ✅ Verified (Active) | 2026-09-11 | Supabase Realtime `community_messages` listener, Web AudioFX & DOM prepending |
+| `public/css/stitch-tokens.css` | ✅ Updated (Production) | 2026-09-11 | Google Stitch tokens, celebratory animations & cyberpunk utilities |
+| `public/js/sneak-bar.js` | ✅ Verified (Active) | 2026-09-11 | Fixed top purple sneak banner & persona switcher dock |
+| `public/config.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Core security, master header & mobile floating dock |
+| `public/api/admin_sneak.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Persona teleportation controller (JSON + Form support) |
+| `public/portal/candidate_review.php`| ✅ Verified (Syntax Clean) | 2026-09-11 | 100-to-2 Applicant Screening Accordion with master layout |
+| `public/portal/job_hub.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Job Listings & Recruiter ATS |
+| `public/admin/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Founder Telemetry & Infiltration Center |
+| `public/api/jobs_handler.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Escrow job creation via `post_job_with_escrow()` |
+| `public/api/payout_handler.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Escrow payout release via `hire_and_release_payout()` |
+| `schema.sql` | ✅ Ready to Apply | 2026-09-11 | DDL for PostgreSQL tables, triggers & RPCs |
+| `public/.env` | ✅ Active | 2026-09-11 | Local & Supabase credentials |
+| `.agent/instructions.md` | ✅ Updated | 2026-09-11 | Architect rules & auto-documentation directives |
+| `NOTE.md` | ✅ Synchronized | 2026-09-11 | Master project log (Local + Google Drive) |
+
+---
+*Note: This document is maintained continuously by Antigravity and synchronized to local and Google Drive repositories upon every update.*

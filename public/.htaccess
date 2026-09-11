@@ -1,0 +1,28 @@
+# ==============================================================================
+# Hostinger Apache Configuration for Bounty Community
+# ==============================================================================
+
+Options -Indexes
+Options +FollowSymLinks
+
+# Protect hidden files and config
+<FilesMatch "^\.|\.(env|sql|log)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Enable Gzip Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/xml application/xhtml+xml application/rss+xml application/javascript application/x-javascript application/json
+</IfModule>
+
+# Directory default
+DirectoryIndex portal/index.php index.php

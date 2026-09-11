@@ -1,0 +1,316 @@
+/**
+ * ==============================================================================
+ * BOUNTY COMMUNITY ENGINE — Google Stitch Design System & Cyberpunk Tokens
+ * File: public/css/stitch-tokens.css
+ * ==============================================================================
+ * Design Tokens:
+ *   - Canvas Background : #0B0F17
+ *   - Card Surfaces     : rgba(18, 24, 38, 0.75) with backdrop-blur
+ *   - Borders           : 1px solid rgba(255, 255, 255, 0.08)
+ *   - Accent Indigo     : #6366F1
+ *   - Coin Mint         : #10B981
+ *   - Urgent / Warning  : #F59E0B
+ *   - Critical / Danger : #EF4444
+ *   - Sneak Purple      : #A855F7
+ * ==============================================================================
+ */
+
+:root {
+    /* ── Surface & Canvas Colors ─────────────────────────────────────────────── */
+    --stitch-bg: #0B0F17;
+    --stitch-bg-elevated: #111726;
+    --stitch-bg-deep: #06090E;
+
+    --stitch-card: rgba(18, 24, 38, 0.75);
+    --stitch-card-solid: #121826;
+    --stitch-card-hover: rgba(25, 33, 52, 0.85);
+    --stitch-glass-dock: rgba(18, 24, 38, 0.85);
+
+    /* ── Borders & Outlines ─────────────────────────────────────────────────── */
+    --stitch-border-subtle: rgba(255, 255, 255, 0.08);
+    --stitch-border-hover: rgba(99, 102, 241, 0.35);
+    --stitch-border-active: rgba(99, 102, 241, 0.6);
+    --stitch-border-mint: rgba(16, 185, 129, 0.3);
+    --stitch-border-purple: rgba(168, 85, 247, 0.35);
+
+    /* ── Accent & Brand Palette ─────────────────────────────────────────────── */
+    --stitch-accent: #6366F1;
+    --stitch-accent-rgb: 99, 102, 241;
+
+    --stitch-coins: #10B981;
+    --stitch-coins-rgb: 16, 185, 129;
+
+    --stitch-warning: #F59E0B;
+    --stitch-warning-rgb: 245, 158, 11;
+
+    --stitch-critical: #EF4444;
+    --stitch-critical-rgb: 239, 68, 68;
+
+    --stitch-purple: #A855F7;
+    --stitch-purple-rgb: 168, 85, 247;
+
+    --stitch-cyan: #06B6D4;
+    --stitch-cyan-rgb: 6, 182, 212;
+
+    /* ── Text Shades ────────────────────────────────────────────────────────── */
+    --stitch-text-bright: #FFFFFF;
+    --stitch-text-primary: #F1F5F9;
+    --stitch-text-secondary: #94A3B8;
+    --stitch-text-muted: #64748B;
+
+    /* ── Blur Filters ───────────────────────────────────────────────────────── */
+    --stitch-blur-sm: 8px;
+    --stitch-blur: 16px;
+    --stitch-blur-lg: 24px;
+
+    /* ── Neon Glow Shadows ──────────────────────────────────────────────────── */
+    --stitch-glow-indigo: 0 0 25px -5px rgba(99, 102, 241, 0.35);
+    --stitch-glow-mint: 0 0 25px -5px rgba(16, 185, 129, 0.35);
+    --stitch-glow-purple: 0 0 25px -5px rgba(168, 85, 247, 0.45);
+    --stitch-glow-warning: 0 0 25px -5px rgba(245, 158, 11, 0.35);
+    --stitch-glow-critical: 0 0 25px -5px rgba(239, 68, 68, 0.35);
+}
+
+/* ── Base Reset & Cyberpunk Body ─────────────────────────────────────────── */
+body {
+    background-color: var(--stitch-bg);
+    color: var(--stitch-text-primary);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+}
+
+/* ── Glassmorphism Panels & Cards ────────────────────────────────────────── */
+.glass-card,
+.bg-stitch-card {
+    background: var(--stitch-card) !important;
+    backdrop-filter: blur(var(--stitch-blur));
+    -webkit-backdrop-filter: blur(var(--stitch-blur));
+    border: 1px solid var(--stitch-border-subtle) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover,
+.bg-stitch-card:hover {
+    border-color: var(--stitch-border-hover) !important;
+    background: var(--stitch-card-hover) !important;
+}
+
+.glass-panel {
+    background: rgba(18, 24, 38, 0.85);
+    backdrop-filter: blur(var(--stitch-blur-lg));
+    -webkit-backdrop-filter: blur(var(--stitch-blur-lg));
+    border: 1px solid var(--stitch-border-subtle);
+}
+
+.glass-dock {
+    background: var(--stitch-glass-dock);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.8), 0 0 25px -5px rgba(99, 102, 241, 0.2);
+}
+
+/* ── Stitch Border Helpers ───────────────────────────────────────────────── */
+.border-stitch {
+    border: 1px solid var(--stitch-border-subtle);
+}
+
+.border-stitch-mint {
+    border: 1px solid var(--stitch-border-mint);
+}
+
+.border-stitch-purple {
+    border: 1px solid var(--stitch-border-purple);
+}
+
+/* ── Color Classes ───────────────────────────────────────────────────────── */
+.text-stitch-accent { color: var(--stitch-accent); }
+.text-stitch-coins  { color: var(--stitch-coins); }
+.text-stitch-warning { color: var(--stitch-warning); }
+.text-stitch-critical { color: var(--stitch-critical); }
+.text-stitch-purple { color: var(--stitch-purple); }
+
+.bg-stitch-accent { background-color: var(--stitch-accent); }
+.bg-stitch-coins  { background-color: var(--stitch-coins); }
+.bg-stitch-warning { background-color: var(--stitch-warning); }
+.bg-stitch-critical { background-color: var(--stitch-critical); }
+.bg-stitch-purple { background-color: var(--stitch-purple); }
+
+/* ── Neon Glow Utilities ─────────────────────────────────────────────────── */
+.shadow-glow-indigo {
+    box-shadow: var(--stitch-glow-indigo);
+}
+
+.shadow-glow-mint {
+    box-shadow: var(--stitch-glow-mint);
+}
+
+.shadow-glow-purple {
+    box-shadow: var(--stitch-glow-purple);
+}
+
+.shadow-glow-warning {
+    box-shadow: var(--stitch-glow-warning);
+}
+
+.shadow-glow-critical {
+    box-shadow: var(--stitch-glow-critical);
+}
+
+/* ── Cyberpunk Gradients ─────────────────────────────────────────────────── */
+.bg-gradient-stitch {
+    background: linear-gradient(135deg, #6366F1 0%, #10B981 100%);
+}
+
+.bg-gradient-sneak {
+    background: linear-gradient(90deg, rgba(88, 28, 135, 0.95) 0%, rgba(126, 34, 206, 0.95) 50%, rgba(88, 28, 135, 0.95) 100%);
+}
+
+.bg-gradient-coins {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(99, 102, 241, 0.1) 100%);
+}
+
+/* ── Level Badges & Status Pills ─────────────────────────────────────────── */
+.level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 9999px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(99, 102, 241, 0.15);
+    color: #A5B4FC;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.coin-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: var(--stitch-coins);
+    box-shadow: var(--stitch-glow-mint);
+    transition: all 0.2s ease;
+}
+
+.coin-pill:hover {
+    background: rgba(16, 185, 129, 0.18);
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* ── Interactive Buttons ─────────────────────────────────────────────────── */
+.btn-stitch-primary {
+    background: var(--stitch-accent);
+    color: #FFFFFF;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+    box-shadow: var(--stitch-glow-indigo);
+}
+
+.btn-stitch-primary:hover {
+    background: #4F46E5;
+    transform: translateY(-1px);
+}
+
+.btn-stitch-mint {
+    background: var(--stitch-coins);
+    color: #06110D;
+    font-weight: 700;
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+    box-shadow: var(--stitch-glow-mint);
+}
+
+.btn-stitch-mint:hover {
+    background: #34D399;
+    transform: translateY(-1px);
+}
+
+.btn-stitch-purple {
+    background: var(--stitch-purple);
+    color: #FFFFFF;
+    font-weight: 700;
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+    box-shadow: var(--stitch-glow-purple);
+}
+
+.btn-stitch-purple:hover {
+    background: #9333EA;
+    transform: translateY(-1px);
+}
+
+/* ── Custom Cyberpunk Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--stitch-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1E293B;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+}
+
+/* ── Celebratory & Realtime Feed Micro-Animations ────────────────────────── */
+@keyframes feedItemEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(-16px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes celebratoryGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7), 0 0 30px rgba(99, 102, 241, 0.4);
+        border-color: rgba(16, 185, 129, 0.9);
+    }
+    50% {
+        box-shadow: 0 0 35px 8px rgba(16, 185, 129, 0.5), 0 0 50px rgba(245, 158, 11, 0.3);
+        border-color: rgba(16, 185, 129, 1);
+    }
+    100% {
+        box-shadow: var(--stitch-glow-mint);
+        border-color: var(--stitch-border-subtle);
+    }
+}
+
+.feed-item-new {
+    animation: feedItemEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.job-card-celebrate {
+    animation: feedItemEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards, celebratoryGlow 2.5s ease-out;
+}
+
+/* ── Mobile Layout Safety Padding ────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .has-bottom-dock {
+        padding-bottom: 5.5rem !important;
+    }
+}
+
