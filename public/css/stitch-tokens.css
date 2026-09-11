@@ -333,3 +333,143 @@ body {
     }
 }
 
+/* ── Ambient Visual FX Engine (Video, Nebula & Particle Grid) ─────────────── */
+#bounty-ambient-bg {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    user-select: none;
+    background-color: var(--stitch-bg);
+}
+
+/* Option C: Muted Deep-Space Video Background */
+.ambient-video-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.22;
+    filter: contrast(120%) brightness(85%) saturate(120%);
+    mix-blend-mode: screen;
+    transition: opacity 1.5s ease-in-out;
+}
+
+/* Option A: Floating Cyberpunk Nebula / Aurora Glow Orbs */
+.ambient-nebula-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    pointer-events: none;
+    will-change: transform;
+}
+
+.nebula-1 {
+    top: -10%;
+    left: -5%;
+    width: 42rem;
+    height: 42rem;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(99, 102, 241, 0.05) 50%, rgba(99, 102, 241, 0) 70%);
+    animation: floatNebula1 24s ease-in-out infinite alternate;
+}
+
+.nebula-2 {
+    top: 15%;
+    right: -10%;
+    width: 46rem;
+    height: 46rem;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.20) 0%, rgba(168, 85, 247, 0.04) 50%, rgba(168, 85, 247, 0) 70%);
+    animation: floatNebula2 28s ease-in-out infinite alternate;
+}
+
+.nebula-3 {
+    bottom: -15%;
+    left: 25%;
+    width: 40rem;
+    height: 40rem;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.16) 0%, rgba(6, 182, 212, 0.05) 50%, rgba(16, 185, 129, 0) 70%);
+    animation: floatNebula3 22s ease-in-out infinite alternate;
+}
+
+/* Terminal Theme Accent Modifiers */
+#bounty-ambient-bg.accent-purple-glow .nebula-1 {
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.32) 0%, rgba(168, 85, 247, 0.06) 50%, rgba(168, 85, 247, 0) 70%);
+}
+#bounty-ambient-bg.accent-teal-glow .nebula-1 {
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.30) 0%, rgba(20, 184, 166, 0.06) 50%, rgba(20, 184, 166, 0) 70%);
+}
+#bounty-ambient-bg.accent-rose-glow .nebula-1 {
+    background: radial-gradient(circle, rgba(244, 63, 94, 0.30) 0%, rgba(244, 63, 94, 0.06) 50%, rgba(244, 63, 94, 0) 70%);
+}
+
+@keyframes floatNebula1 {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(80px, 60px, 0) scale(1.12);
+    }
+    100% {
+        transform: translate3d(-40px, 90px, 0) scale(0.96);
+    }
+}
+
+@keyframes floatNebula2 {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(-90px, 70px, 0) scale(1.15);
+    }
+    100% {
+        transform: translate3d(40px, 110px, 0) scale(0.92);
+    }
+}
+
+@keyframes floatNebula3 {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(70px, -60px, 0) scale(1.10);
+    }
+    100% {
+        transform: translate3d(-70px, -30px, 0) scale(1.04);
+    }
+}
+
+/* Option B: Interactive Canvas Layer */
+.ambient-particle-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.55;
+    mix-blend-mode: screen;
+}
+
+/* Deep Obsidian Contrast Scrim & Vignette */
+.ambient-scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(11, 15, 23, 0.35) 0%, rgba(11, 15, 23, 0.82) 70%, #0B0F17 100%),
+                linear-gradient(180deg, rgba(11, 15, 23, 0.65) 0%, rgba(11, 15, 23, 0.25) 50%, rgba(11, 15, 23, 0.85) 100%);
+}
+
+/* Accessibility: respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .ambient-video-layer {
+        display: none !important;
+    }
+    .ambient-nebula-orb {
+        animation: none !important;
+    }
+}
+
+

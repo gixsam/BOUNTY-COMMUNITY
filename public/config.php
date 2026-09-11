@@ -1047,6 +1047,50 @@ function consume_flash(): array
 
 /**
  * Render the shared page <head>, navigation bar, and open <main> tag.
+/**
+ * Render the ambient visual FX background layer (Option A: CSS Nebula + Option B: Particle Canvas + Option C: Deep-Space Video).
+ *
+ * @param string|null $accent Optional theme accent ('purple', 'teal', 'rose', or null for default).
+ */
+function render_ambient_background(?string $accent = null): void
+{
+    $extraNebulaClass = match($accent) {
+        'purple' => 'accent-purple-glow',
+        'teal'   => 'accent-teal-glow',
+        'rose'   => 'accent-rose-glow',
+        default  => '',
+    };
+    ?>
+    <!-- ==============================================================================
+         AMBIENT VISUAL FX ENGINE
+         Layer 0: Deep Space Looping Video (Option C)
+         Layer 1: Ambient Floating Cyberpunk Nebula / Aurora Glows (Option A)
+         Layer 2: Interactive Cyberpunk Particle Grid Canvas (Option B)
+         Layer 3: Obsidian Contrast Scrim & Vignette
+         ============================================================================== -->
+    <div id="bounty-ambient-bg" class="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none <?= $extraNebulaClass ?>" aria-hidden="true">
+        <!-- Option C: Muted Deep-Space Looping Video Background -->
+        <video id="ambient-cosmos-video" class="ambient-video-layer" autoplay loop muted playsinline preload="metadata">
+            <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/3/37/A_superbubble_scene_%28potm2608a%29.webm/A_superbubble_scene_%28potm2608a%29.webm.480p.vp9.webm" type="video/webm">
+            <source src="https://upload.wikimedia.org/wikipedia/commons/3/37/A_superbubble_scene_%28potm2608a%29.webm" type="video/webm">
+        </video>
+
+        <!-- Option A: Ambient Floating Cyberpunk Nebula Orbs -->
+        <div class="ambient-nebula-orb nebula-1"></div>
+        <div class="ambient-nebula-orb nebula-2"></div>
+        <div class="ambient-nebula-orb nebula-3"></div>
+
+        <!-- Option B: Interactive Cyberpunk Particle Grid Canvas -->
+        <canvas id="bounty-particle-canvas" class="ambient-particle-canvas"></canvas>
+
+        <!-- Deep Obsidian Contrast Scrim & Vignette (Guarantees 100% Readability) -->
+        <div class="ambient-scrim"></div>
+    </div>
+    <?php
+}
+
+/**
+ * Render the master HTML header, navigation, and brand elements.
  *
  * NOTE: Only the Supabase ANON key is injected into window.BOUNTY_CONFIG.
  * The service-role key is never exposed here or in any HTML output.
@@ -1143,7 +1187,9 @@ function render_header(string $page_title = 'Bounty Community Engine', string $a
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="bg-[#0B0F17] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white pb-28 md:pb-12 has-bottom-dock">
+<body class="bg-[#0B0F17] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white pb-28 md:pb-12 has-bottom-dock relative">
+
+    <?php render_ambient_background(); ?>
 
 <?php /* ── Flash Messages ──────────────────────────────────────────────── */
 if (!empty($flash)): ?>
@@ -1366,6 +1412,7 @@ function render_footer(): void
             window.lucide.createIcons();
         }
     </script>
+    <script src="<?= $baseUrl ?>/js/ambient-visuals.js"></script>
     <script src="<?= $baseUrl ?>/js/app.js"></script>
     <script src="<?= $baseUrl ?>/js/sneak-bar.js"></script>
 </body>

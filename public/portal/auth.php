@@ -52,9 +52,7 @@ $flash = consume_flash();
 </head>
 <body class="bg-[#0B0F17] text-slate-100 min-h-screen flex items-center justify-center p-4 selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
 
-    <!-- Ambient Cyberpunk Background Glows -->
-    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="fixed bottom-10 right-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <?php render_ambient_background(); ?>
 
     <div class="w-full max-w-md mx-auto mt-16 relative z-10 mb-12">
 
@@ -301,5 +299,6 @@ $flash = consume_flash();
             document.getElementById('login-email').value = email;
         }
     </script>
+    <script src="<?= BASE_URL ?>/js/ambient-visuals.js"></script>
 </body>
 </html>

@@ -251,6 +251,26 @@ bounty community/
     - Extended `window.BountyApp` with `toggleReaction()`, `toggleCommentBox()`, and `appendJobCommentToDOM()`.
     - Added delegated event listeners for all dynamic and static `.btn-reaction` buttons and `.job-reply-form` submissions.
 
+### [Phase 12] Tri-Layer Ambient Visual FX Engine (Deep-Space Video, CSS Nebula & Interactive Particle Grid)
+- **Layer 0: Muted Deep-Space Video Background (Option C):**
+  - Integrated a hardware-accelerated looping cosmic video background (`<video class="ambient-video-layer" autoplay loop muted playsinline preload="metadata">`) using WebM media with low opacity (`0.22`) and high-contrast saturation.
+  - Multi-source fallback with mobile battery/data-saver detection; automatically gracefully falls back to CSS nebula and particle grid if video autoplay is restricted.
+  - Overlayed with a deep obsidian scrim & radial vignette (`.ambient-scrim`), preserving 100% text contrast and obsidian card glassmorphism.
+- **Layer 1: Ambient Floating Cyberpunk Nebula Orbs (Option A):**
+  - Designed 3 dynamic aurora orbs (`.ambient-nebula-orb`, `.nebula-1`, `.nebula-2`, `.nebula-3`) with 90px blurs in indigo, purple, and mint.
+  - Animated with smooth asynchronous CSS transforms (`@keyframes floatNebula1`, `floatNebula2`, `floatNebula3`) creating a living, breathing background without GPU strain.
+  - Terminal-specific accent support (`accent-purple-glow`, `accent-teal-glow`, `accent-rose-glow`) for specialized roles.
+- **Layer 2: Interactive Cyberpunk Particle Grid Canvas (Option B):**
+  - Created `public/js/ambient-visuals.js` managing an interactive HTML5 canvas (`#bounty-particle-canvas`).
+  - Dynamic responsive node scaling (22–52 nodes based on screen resolution) with Retina `devicePixelRatio` handling.
+  - Renders inter-node distance connections with glowing line opacity when distance < 105px.
+  - Constellation cursor interaction: nearby particles subtly connect to mouse movements with interactive trail lines and gentle magnetic drift.
+  - Battery/CPU optimization: automatically pauses the `requestAnimationFrame` render loop when tab visibility changes (`document.hidden`).
+- **Universal Engine Integration:**
+  - Global helper `render_ambient_background(?string $accent = null)` in `public/config.php` automatically called in `render_header()`.
+  - Also embedded across all standalone login gates: User Auth (`public/portal/auth.php`), Founder Terminal (`public/admin/login.php`), Support Desk (`public/support/login.php`), and Threat Patrol (`public/mod/login.php`).
+  - Full WCAG accessibility compliance with `@media (prefers-reduced-motion: reduce)`.
+
 ---
 
 ## 🚀 4. Upcoming Tasks & Future Roadmap ("Will Be Done")
@@ -300,7 +320,8 @@ bounty community/
 | `public/api/reaction_handler.php` | ✅ Verified (Phase 11) | 2026-09-11 | Social emoji reaction controller (toggle, counters & Supabase broadcast) |
 | `public/api/comment_handler.php` | ✅ Verified (Phase 11) | 2026-09-11 | Job inquiry & Q&A thread controller with Supabase real-time broadcast |
 | `public/js/app.js` | ✅ Verified (Phase 11) | 2026-09-11 | Realtime reactions & Q&A event listeners, delegation, Web AudioFX & BDT cards |
-| `public/css/stitch-tokens.css` | ✅ Updated (Production) | 2026-09-11 | Google Stitch tokens, celebratory animations & cyberpunk utilities |
+| `public/js/ambient-visuals.js` | ✅ Verified (Phase 12) | 2026-09-11 | Interactive cyberpunk canvas particle grid, constellation interaction & video safety |
+| `public/css/stitch-tokens.css` | ✅ Updated (Phase 12) | 2026-09-11 | Google Stitch tokens, celebratory animations & ambient visual styles |
 | `public/js/sneak-bar.js` | ✅ Verified (Active) | 2026-09-11 | Fixed top purple sneak banner & persona switcher dock |
 | `public/config.php` | ✅ Verified (Phase 11) | 2026-09-11 | Core security, floating header, BDT formatter, reactions/comments DB & leaderboard |
 | `public/api/admin_sneak.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Persona teleportation controller (JSON + Form support) |

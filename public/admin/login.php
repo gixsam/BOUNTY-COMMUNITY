@@ -54,8 +54,7 @@ $flash = consume_flash();
 </head>
 <body class="bg-[#0B0F17] text-slate-100 min-h-screen flex items-center justify-center p-4 selection:bg-purple-500 selection:text-white relative overflow-x-hidden">
 
-    <!-- Ambient Purple Cyberpunk Glow -->
-    <div class="fixed top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none"></div>
+    <?php render_ambient_background('purple'); ?>
 
     <div class="w-full max-w-md relative z-10 my-8">
 
@@ -168,5 +167,6 @@ $flash = consume_flash();
         </div>
 
     </div>
+    <script src="<?= BASE_URL ?>/js/ambient-visuals.js"></script>
 </body>
 </html>
