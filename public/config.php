@@ -141,8 +141,7 @@ define('BASE_URL', resolve_public_base_url());
  * @param float|int|string $amount Numeric or string amount.
  * @return string Formatted BDT currency string with '৳' prefix.
  */
-function format_bdt(float|int|string $amount): string
-{
+function format_bdt($amount) {
     return '৳' . number_format((float)$amount, 2);
 }
 

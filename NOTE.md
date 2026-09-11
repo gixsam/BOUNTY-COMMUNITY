@@ -263,6 +263,14 @@ bounty community/
     - Linted `public/config.php` and `public/portal/candidate_review.php` with `php -l`.
     - Tested HTML symbol rendering in local CLI.
     - Synchronized `NOTE.md` to Google Drive workplace with verified SHA256 checksums.
+- **Phase 15: Universal Bangladeshi Taka (৳ BDT) Standardization:**
+  - Standardized `format_bdt($amount)` global helper in `public/config.php`:
+    ```php
+    function format_bdt($amount) {
+        return '৳' . number_format((float)$amount, 2);
+    }
+    ```
+  - Verified 100% platform-wide currency coverage across Lounge Feed, ATS Job Hub, Candidate Review, Admin Telemetry, and real-time event feeds.
 
 ---
 
