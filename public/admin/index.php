@@ -6,6 +6,13 @@
 
 require_once __DIR__ . '/../config.php';
 
+// Route Protection: Founder & Admin only
+$currentRole = $_SESSION['user_role'] ?? '';
+if (!in_array($currentRole, ['founder', 'admin'], true)) {
+    header('Location: ' . BASE_URL . '/admin/login.php');
+    exit;
+}
+
 $persona = get_active_persona();
 $personas = get_predefined_personas();
 $jobs = $_SESSION['bounty_mock_db']['jobs'] ?? [];

@@ -1,0 +1,82 @@
+# ==============================================================================
+# BOUNTY COMMUNITY ENGINE — Root Apache Configuration & Clean URL Router
+# File: .htaccess (Root)
+# Hostinger PHP 8.2 / Apache 2.4+
+# ==============================================================================
+
+Options -Indexes
+Options +FollowSymLinks
+
+# ── 1. Security: Deny Web Access to Sensitive Files and Directories ───────────
+<FilesMatch "(^#.*#|\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|sw[op]|env.*|git.*)|NOTE\.md|schema\.sql)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Block access to hidden directories (.agent, .git, etc.)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Deny access to .agent and .git
+    RewriteRule ^\.agent(/.*)?$ - [F,L]
+    RewriteRule ^\.git(/.*)?$ - [F,L]
+    RewriteRule ^NOTE\.md$ - [F,L]
+    RewriteRule ^schema\.sql$ - [F,L]
+
+    # ── 2. Static Asset Routing Without 404s ──────────────────────────────────
+    # Map top-level /css/, /js/, and /api/ to /public/
+    RewriteRule ^css/(.*)$ public/css/$1 [L,QSA]
+    RewriteRule ^js/(.*)$ public/js/$1 [L,QSA]
+    RewriteRule ^api/(.*)$ public/api/$1 [L,QSA]
+
+    # If the file or directory exists as-is, serve it directly
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # ── 3. Canonical Clean Portal Routes ──────────────────────────────────────
+    # Root URL -> User Lounge & Live Feed
+    RewriteRule ^$ public/portal/index.php [L,QSA]
+
+    # User Auth (Login & Signup)
+    RewriteRule ^login/?$ public/portal/auth.php [L,QSA]
+    RewriteRule ^signup/?$ public/portal/auth.php [L,QSA]
+
+    # Admin / Founder Infiltration Terminal
+    RewriteRule ^admin/login/?$ public/admin/login.php [L,QSA]
+    RewriteRule ^admin/?$ public/admin/index.php [L,QSA]
+
+    # Support / Escrow Dispute Desk
+    RewriteRule ^support/login/?$ public/support/login.php [L,QSA]
+    RewriteRule ^support/?$ public/support/index.php [L,QSA]
+
+    # Staff / Threat Patrol & Verification Terminal (supports both 'staff' and 'stuff')
+    RewriteRule ^(staff|stuff)/login/?$ public/mod/login.php [L,QSA]
+    RewriteRule ^(staff|stuff)/?$ public/mod/index.php [L,QSA]
+
+    # Portal sub-routes
+    RewriteRule ^portal/?$ public/portal/index.php [L,QSA]
+    RewriteRule ^portal/job_hub/?$ public/portal/job_hub.php [L,QSA]
+    RewriteRule ^portal/candidate_review/?$ public/portal/candidate_review.php [L,QSA]
+</IfModule>
+
+# ── 4. HTTP Hardening & Compression ───────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/xml application/xhtml+xml application/rss+xml application/javascript application/x-javascript application/json
+</IfModule>
+
+# Directory default index
+DirectoryIndex index.php public/portal/index.php

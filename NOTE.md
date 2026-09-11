@@ -161,32 +161,51 @@ bounty community/
   - Verified dynamic prefixing (`/public/css/stitch-tokens.css`, `/public/js/app.js`, `/public/js/sneak-bar.js`).
   - Synchronized `NOTE.md` across local and Google Drive workplace directories.
 
-### [Phase 11] Google Stitch Design Overhaul, Floating Navigation, Universal BDT Localization & Candidate Review Fallback
+### [Phase 11] Master Google Stitch Overhaul, Floating Navigation, BDT Localization, Clean URLs & Role-Based Auth Gates
+- **Clean Root URL Routing & Apache Rewriting (`.htaccess`):**
+  - Engineered root `.htaccess` (`.htaccess`) for Hostinger Apache:
+    - Denies web access to sensitive files and directories: `schema.sql`, `NOTE.md`, `.agent/`, `.env*`, `.git*`.
+    - Static asset routing without 404s: `^css/(.*)$` -> `public/css/$1`, `^js/(.*)$` -> `public/js/$1`, `^api/(.*)$` -> `public/api/$1`.
+    - Canonical clean portal routing:
+      - `^/?$` -> `public/portal/index.php` (User Lounge & Bounties)
+      - `^login/?$` and `^signup/?$` -> `public/portal/auth.php`
+      - `^admin/?$` -> `public/admin/index.php`
+      - `^admin/login/?$` -> `public/admin/login.php`
+      - `^support/?$` -> `public/support/index.php`
+      - `^support/login/?$` -> `public/support/login.php`
+      - `^(staff|stuff)/?$` -> `public/mod/index.php`
+      - `^(staff|stuff)/login/?$` -> `public/mod/login.php`
+  - Maintained `index.php` in project root as an immediate fallback header redirect to `/public/portal/index.php`.
 - **Floating Glass Inset Navigation (`public/config.php`):**
-  - Redesigned master navigation from a flush top edge into an elevated inset floating glass pill:
-    - Container: `pt-3 px-4 sm:px-6 max-w-7xl mx-auto sticky top-3 z-40`
-    - Navbar: `bg-[#121826]/85 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-5 py-3 flex items-center justify-between`
-  - Fixed awkward multi-line wrapping on navigation items ("100-to-2 Screening", "Job Hub & ATS") by adding `whitespace-nowrap` and smooth hover transitions (`hover:text-indigo-400 transition-colors`).
-  - Updated wallet balance pill in header to display localized BDT currency (`format_bdt($ctx['wallet_balance'])`).
+  - Redesigned master navigation bar with breathing room and Google Stitch glass tokens:
+    - Inset container: `<div class="w-full pt-4 px-4 sm:px-6 max-w-7xl mx-auto sticky top-3 z-40">`
+    - Elevated navbar: `bg-[#121826]/85 backdrop-blur-xl border border-slate-700/60 rounded-2xl shadow-2xl px-6 py-3.5 flex items-center justify-between`
+  - Fixed awkward multi-line text wrapping on navigation items ("Job Hub & ATS", "100-to-2 Screening", "Threat Patrol", "Staff Desk") using `whitespace-nowrap text-xs font-semibold tracking-wide hover:text-indigo-400 hover:bg-slate-800/40 rounded-lg px-3 py-1.5 transition-all`.
+  - Horizontally aligned user level badge, live coin pill, and persona identity chip.
 - **Universal BDT Currency Localization (`৳` / `BDT`):**
-  - Implemented global helper `format_bdt(float|int|string $amount): string` in `public/config.php`.
-  - Localized all currency displays from USD (`$`) to Bangladeshi Taka (`৳` / `BDT`):
-    - `public/config.php`: Header balance badge (`৳50,000.00`) and mock job broadcast alert (`৳2,500.00`).
-    - `public/portal/index.php`: Vault metrics (`৳74,270.00`), bounty card coin pills, sidebar balance, open bounty cards, and modal input (`Bounty Reward (৳ BDT) *`).
-    - `public/portal/job_hub.php`: Bounty cards, post modal labels, live escrow calculation preview (`৳1,500.00`), and user balance indicator.
-    - `public/admin/index.php`: Escrow in custody (`৳74,270.00`), platform revenue (`৳3,713.50`), category liquidity allocations, and user directory wallet balance table.
-    - `public/js/app.js`: Realtime job card coin pill (`৳${bountyVal...}`), input validation alert (`৳0`), and toast notifications (`৳${result.escrow_amount}`).
-    - `public/api/jobs_handler.php`, `public/api/payout_handler.php`, `public/api/telegram_dispatcher.php`: JSON responses, lounge broadcasts, and Telegram channel notifications.
-- **Graceful Candidate Screening & Review Fallback (`public/portal/candidate_review.php`):**
-  - Completely eliminated unstyled blank screen and raw `die('Invalid job identifier.')` crashes.
-  - Auto-selects the first active bounty from Supabase or `bounty_mock_db` when no `job_id` query parameter is provided.
-  - Implemented an elegant Google Stitch empty state card wrapped inside `render_header()` and `render_footer()` when no bounties exist.
-  - Modernized applicant accordion rows into dark glass cards with status badges, applicant threat scores, and wired actions to `applications_handler.php`.
-- **Google Stitch Design Token Enhancement (`public/css/stitch-tokens.css`):**
-  - Added `.nav-floating-glass` utility class with backdrop blur and subtle indigo glow.
+  - Global formatter `format_bdt($amount)` implemented in `public/config.php`.
+  - Replaced all raw USD (`$`) symbols across:
+    - Master Header wallet pill: `৳50,000.00 COINS`.
+    - Lounge Feed (`public/portal/index.php`): Vault stats (`৳74,270.00`), user identity card (`৳50,000.00 Escrow Ready`), open bounty cards (`৳2,500.00`, `৳1,800.00`, `৳3,200.00`), and modal reward input (`BDT (৳)`).
+    - Job Hub ATS (`public/portal/job_hub.php`): Bounty reward pills, escrow calculation preview (`৳1,500.00`), and balance notice.
+    - Admin Telemetry (`public/admin/index.php`): Custody metrics (`৳74,270.00`), revenue (`৳3,713.50`), liquidity allocations, and user balance directory.
+    - Client-side DOM (`public/js/app.js`): Dynamic job cards (`৳${bountyVal...}`), input validation (`৳0`), and toast alerts (`৳${result.escrow_amount}`).
+    - Backend Handlers & Dispatcher: `jobs_handler.php`, `payout_handler.php`, and `telegram_dispatcher.php`.
+- **Candidate Review Empty State & Dark Theme Fallback (`public/portal/candidate_review.php`):**
+  - Removed raw `die('Invalid job identifier.')` and unstyled HTML crashes.
+  - Automatically queries the first active bounty from Supabase or `bounty_mock_db` when no `job_id` query parameter is provided.
+  - Rendered a centered Google Stitch glass card (`bg-[#121826]/75 border border-slate-700/60 rounded-2xl p-10 max-w-xl mx-auto mt-12 text-center shadow-2xl`) with glowing Lucide/FA icon, explanatory text, and `[Open Job Hub & ATS]` CTA.
+  - Full master layout consistency (`render_header()` & `render_footer()`).
+- **Dedicated Portal Authentication & Server-Side Role Enforcement:**
+  - `public/portal/auth.php`: Tabbed switcher for Login & Signup, supporting `hunter` and `recruiter` roles with 1-click demo accounts.
+  - `public/admin/login.php`: Founder infiltration terminal with purple badge (`bg-purple-500/10 text-purple-400 border border-purple-500/20`) and 1-click Elena Rostova login.
+  - `public/support/login.php`: Customer support & dispute desk login with teal badge (`bg-teal-500/10 text-teal-400 border border-teal-500/20`) and 1-click Devon Bailey login.
+  - `public/mod/login.php`: Staff threat patrol login with rose badge (`bg-rose-500/10 text-rose-400 border border-rose-500/20`) and 1-click Sarah Jenkins login.
+  - `public/api/auth_handler.php`: Backend authentication controller enforcing cross-portal role validation (e.g. returns HTTP 403 "Unauthorized: Admin privileges required" if hunter attempts admin login).
+  - Portal Header Route Protection: Gated `public/admin/index.php` (admin/founder only), `public/support/index.php` (support/admin/founder only), and `public/mod/index.php` (mod/admin/founder only).
 - **Verification & Testing:**
-  - Validated PHP syntax cleanly across all 10 modified files using `php -l`.
-  - Verified candidate review fallback via CLI execution (`php -r "require 'public/portal/candidate_review.php';"`).
+  - Validated PHP syntax cleanly across all 13 modified and created PHP files (`php -l`).
+  - Executed automated CLI test verifying BDT formatting, persona mappings, and role gatekeeping logic.
   - Synchronized `NOTE.md` to local root and Google Drive workplace.
 
 ---
@@ -227,18 +246,27 @@ bounty community/
 
 | File | Status | Last Check | Purpose |
 |---|---|---|---|
+| `.htaccess` | ✅ Verified (Syntax Clean) | 2026-09-11 | Root Apache rewrite, clean URL router & sensitive file shield |
 | `index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Root router redirecting to `/public/portal/index.php` (Hostinger 403 fix) |
 | `public/portal/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Live Community Lounge with outer dark container & obsidian glass cards |
-| `public/js/app.js` | ✅ Verified (Active) | 2026-09-11 | Supabase Realtime listener, Web AudioFX & obsidian dynamic card styles |
+| `public/portal/auth.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | User portal login & registration with role selector and demo accounts |
+| `public/admin/login.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Founder infiltration terminal login with executive badge |
+| `public/support/login.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Customer support desk login with dispute resolution badge |
+| `public/mod/login.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Staff threat patrol login with task verification badge |
+| `public/api/auth_handler.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Authentication controller & cross-portal role validation gate |
+| `public/js/app.js` | ✅ Verified (Active) | 2026-09-11 | Supabase Realtime listener, Web AudioFX & BDT dynamic card styles |
 | `public/css/stitch-tokens.css` | ✅ Updated (Production) | 2026-09-11 | Google Stitch tokens, celebratory animations & cyberpunk utilities |
 | `public/js/sneak-bar.js` | ✅ Verified (Active) | 2026-09-11 | Fixed top purple sneak banner & persona switcher dock |
-| `public/config.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Core security, dynamic BASE_URL resolver, dark theme body & layout dock |
+| `public/config.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Core security, floating inset header, BDT formatter & layout renderers |
 | `public/api/admin_sneak.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Persona teleportation controller (JSON + Form support) |
-| `public/portal/candidate_review.php`| ✅ Verified (Syntax Clean) | 2026-09-11 | 100-to-2 Applicant Screening Accordion with master layout |
-| `public/portal/job_hub.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Job Listings & Recruiter ATS |
-| `public/admin/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Founder Telemetry & Infiltration Center |
+| `public/portal/candidate_review.php`| ✅ Verified (Syntax Clean) | 2026-09-11 | 100-to-2 Applicant Screening Accordion with Stitch empty state |
+| `public/portal/job_hub.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Job Listings & Recruiter ATS with BDT currency localization |
+| `public/admin/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Founder Telemetry & Infiltration Center with role protection gate |
+| `public/support/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Staff Support Desk with dispute queue & role protection gate |
+| `public/mod/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Threat Patrol Verification Queue with role protection gate |
 | `public/api/jobs_handler.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Escrow job creation via `post_job_with_escrow()` |
 | `public/api/payout_handler.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Escrow payout release via `hire_and_release_payout()` |
+| `public/api/telegram_dispatcher.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Automated Telegram notification bridge with BDT localization |
 | `schema.sql` | ✅ Ready to Apply | 2026-09-11 | DDL for PostgreSQL tables, triggers & RPCs |
 | `public/.env` | ✅ Active | 2026-09-11 | Local & Supabase credentials |
 | `.agent/instructions.md` | ✅ Updated | 2026-09-11 | Architect rules & auto-documentation directives |
@@ -246,3 +274,4 @@ bounty community/
 
 ---
 *Note: This document is maintained continuously by Antigravity and synchronized to local and Google Drive repositories upon every update.*
+

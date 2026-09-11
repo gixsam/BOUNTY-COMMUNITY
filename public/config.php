@@ -603,6 +603,8 @@ function set_active_persona(string $role_key): array|false
         return false;
     }
     $_SESSION['active_persona_role'] = $role_key;
+    $_SESSION['user_role'] = $role_key;
+    $_SESSION['user_id'] = $personas[$role_key]['id'];
     return $personas[$role_key];
 }
 
@@ -996,8 +998,8 @@ if (!empty($flash)): ?>
 <?php endif; ?>
 
     <!-- Elevated Inset Floating Glass Navigation Bar (Google Stitch Prototype) -->
-    <header id="master-header" class="pt-3 px-4 sm:px-6 max-w-7xl mx-auto sticky top-3 z-40 transition-all">
-        <div class="bg-[#121826]/85 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-5 py-3 flex items-center justify-between gap-4">
+    <header id="master-header" class="w-full pt-4 px-4 sm:px-6 max-w-7xl mx-auto sticky top-3 z-40 transition-all">
+        <div class="bg-[#121826]/85 backdrop-blur-xl border border-slate-700/60 rounded-2xl shadow-2xl px-6 py-3.5 flex items-center justify-between gap-4">
             <div class="flex items-center gap-6">
                 <!-- Dynamic Brand Name -->
                 <a href="<?= $baseUrl ?>/portal/index.php" class="flex items-center gap-3 group shrink-0">
@@ -1014,7 +1016,7 @@ if (!empty($flash)): ?>
                 </a>
 
                 <!-- Desktop Navigation Links (Prevent Awkward Multi-word Wrapping) -->
-                <nav class="hidden md:flex items-center gap-1 text-xs lg:text-sm font-medium">
+                <nav class="hidden md:flex items-center gap-1">
                     <?php
                     $nav_items = [
                         'portal'   => ['label' => 'Lounge Feed',       'icon' => 'fa-comments',        'href' => '/portal/index.php'],
@@ -1029,23 +1031,23 @@ if (!empty($flash)): ?>
                         $is_active = ($active_nav === $slug);
                     ?>
                     <a href="<?= $baseUrl . $item['href'] ?>"
-                       class="whitespace-nowrap px-3 py-1.5 rounded-lg transition-colors duration-200 <?= $is_active ? 'bg-white/10 text-white font-semibold shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-white/5' ?>">
+                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 <?= $is_active ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
                         <i class="fa-solid <?= $item['icon'] ?> mr-1.5 text-xs"></i><?= $item['label'] ?>
                     </a>
                     <?php endforeach; ?>
                 </nav>
             </div>
 
-            <!-- Right: Level Badge, Live Coin Pill & Identity Chip -->
-            <div class="flex items-center gap-2.5 sm:gap-3">
+            <!-- Right: Level Badge, Live Coin Pill & Identity Chip (Aligned Horizontally) -->
+            <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
                 <!-- Dynamic Level Badge -->
-                <div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-mono font-bold" title="Player Reputation Level">
+                <div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-mono font-bold" title="Player Reputation Level">
                     <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
                     <span>Lvl <?= $user_level ?> <?= $level_title ?></span>
                 </div>
 
                 <!-- Live Coin Pill (BDT Currency) -->
-                <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-sm font-semibold shadow-glow-mint transition hover:border-emerald-500/40" title="Live Coin Balance & Escrow Custody (BDT)">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-sm font-semibold shadow-glow-mint transition hover:border-emerald-500/40" title="Live Coin Balance & Escrow Custody (BDT)">
                     <span class="relative flex h-2 w-2">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
@@ -1061,7 +1063,7 @@ if (!empty($flash)): ?>
                 </div>
 
                 <!-- Identity Chip -->
-                <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl glass-card">
+                <div class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl glass-card">
                     <img src="<?= htmlspecialchars($ctx['avatar_url'] ?? '') ?>"
                          alt="<?= htmlspecialchars($ctx['display_name'] ?? 'User') ?>"
                          class="w-7 h-7 rounded-lg object-cover border border-white/10">

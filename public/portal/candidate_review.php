@@ -84,29 +84,27 @@ if (!$job && !empty($_SESSION['bounty_mock_db']['jobs'])) {
 if (!$job) {
     render_header('Candidate Review & 100-to-2 Screening', 'screening');
     ?>
-    <div class="max-w-xl mx-auto my-16 px-4">
-        <div class="glass-card bg-[#121826]/85 backdrop-blur-xl border border-white/10 rounded-3xl p-8 sm:p-10 text-center shadow-2xl relative overflow-hidden">
-            <div class="absolute -right-10 -top-10 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            
-            <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/25 text-indigo-400 flex items-center justify-center mx-auto mb-4 text-2xl shadow-glow-indigo">
-                <i class="fa-solid fa-users-viewfinder"></i>
-            </div>
-            
-            <h2 class="text-xl font-bold text-white mb-2 tracking-tight">No Bounty Selected for Screening</h2>
-            <p class="text-xs sm:text-sm text-slate-400 mb-6 leading-relaxed max-w-md mx-auto">
-                Please select an active bounty from the Job Hub to review its candidate pipeline, evaluate applicant submissions, and disburse escrow milestones.
-            </p>
-            
-            <div class="flex flex-wrap items-center justify-center gap-3">
-                <a href="<?= BASE_URL ?>/portal/job_hub.php" class="btn-stitch-primary px-5 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-2 shadow-glow-indigo">
-                    <i class="fa-solid fa-briefcase"></i>
-                    <span>Browse Job Hub & ATS</span>
-                </a>
-                <a href="<?= BASE_URL ?>/portal/index.php" class="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-semibold border border-white/10 transition inline-flex items-center gap-1.5">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>Lounge Feed</span>
-                </a>
-            </div>
+    <div class="bg-[#121826]/75 border border-slate-700/60 rounded-2xl p-10 max-w-xl mx-auto mt-12 text-center shadow-2xl relative overflow-hidden">
+        <div class="absolute -right-10 -top-10 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/25 text-indigo-400 flex items-center justify-center mx-auto mb-4 text-2xl shadow-glow-indigo">
+            <i class="fa-solid fa-users"></i>
+        </div>
+        
+        <h2 class="text-xl font-bold text-white mb-2 tracking-tight">No Bounty Selected for Screening</h2>
+        <p class="text-xs sm:text-sm text-slate-400 mb-6 leading-relaxed max-w-md mx-auto">
+            Select an active bounty from the Job Hub pipeline to review candidates, screen proposals, and disburse escrow payouts.
+        </p>
+        
+        <div class="flex flex-wrap items-center justify-center gap-3">
+            <a href="<?= BASE_URL ?>/portal/job_hub.php" class="btn-stitch-primary px-5 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-2 shadow-glow-indigo">
+                <i class="fa-solid fa-briefcase"></i>
+                <span>Open Job Hub & ATS</span>
+            </a>
+            <a href="<?= BASE_URL ?>/portal/index.php" class="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-semibold border border-white/10 transition inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Lounge Feed</span>
+            </a>
         </div>
     </div>
     <?php

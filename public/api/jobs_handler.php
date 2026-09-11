@@ -255,7 +255,7 @@ function handle_post_job(): never
 
     // Directive: reward > 0.
     if ($bounty_amount <= 0) {
-        json_response(['error' => 'Bounty amount must be greater than $0.00.'], 422);
+        json_response(['error' => 'Bounty amount must be greater than ৳0.00.'], 422);
     }
 
     // Directive: openings > 0.
@@ -263,9 +263,9 @@ function handle_post_job(): never
         json_response(['error' => 'Number of openings must be at least 1.'], 422);
     }
 
-    // Minimum bounty floor ($1.00) to prevent spam.
+    // Minimum bounty floor (৳1.00) to prevent spam.
     if ($bounty_amount < 1.00) {
-        json_response(['error' => 'Minimum bounty amount is $1.00.'], 422);
+        json_response(['error' => 'Minimum bounty amount is ৳1.00.'], 422);
     }
 
     // Client-side balance pre-check for immediate feedback.

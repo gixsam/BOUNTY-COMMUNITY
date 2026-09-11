@@ -217,6 +217,7 @@ switch ($action) {
 
         // Write sanitised impersonation state.
         $_SESSION['impersonated_user_id'] = $target_uuid;
+        $_SESSION['user_role'] = $target_profile['role'] ?? 'hunter';
         // Clear any previous role override — use the target's actual role.
         unset($_SESSION['impersonated_role']);
 
@@ -283,6 +284,7 @@ switch ($action) {
 
         $_SESSION['impersonated_user_id'] = $role_persona_uuid;
         $_SESSION['impersonated_role']    = $target_role;  // Explicit role override.
+        $_SESSION['user_role']            = $target_role;
 
         // Rotate CSRF token.
         $_SESSION['_csrf_token'] = bin2hex(random_bytes(32));
@@ -308,6 +310,8 @@ switch ($action) {
             $_SESSION['impersonated_user_id'],
             $_SESSION['impersonated_role']
         );
+        $_SESSION['user_role'] = 'admin';
+        $_SESSION['active_persona_role'] = 'admin';
 
         // Regenerate session ID to prevent fixation after privilege change.
         session_regenerate_id(true);
@@ -380,6 +384,8 @@ switch ($action) {
         if ($switched === false) {
             json_response(['error' => 'Role not found in persona table.'], 404);
         }
+
+        $_SESSION['user_role'] = $clean_role;
 
         // Rotate CSRF token.
         $_SESSION['_csrf_token'] = bin2hex(random_bytes(32));
