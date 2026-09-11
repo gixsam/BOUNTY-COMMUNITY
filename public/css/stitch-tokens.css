@@ -16,24 +16,27 @@
  */
 
 :root {
-    /* ── Surface & Canvas Colors ─────────────────────────────────────────────── */
-    --stitch-bg: #0B0F17;
-    --stitch-bg-elevated: #111726;
-    --stitch-bg-deep: #06090E;
+    /* ── Surface & Canvas Colors (Deep Obsidian Caviar) ─────────────────────── */
+    --stitch-bg: #070A11;
+    --stitch-bg-elevated: #0E1424;
+    --stitch-bg-deep: #030508;
 
-    --stitch-card: rgba(18, 24, 38, 0.75);
-    --stitch-card-solid: #121826;
-    --stitch-card-hover: rgba(25, 33, 52, 0.85);
-    --stitch-glass-dock: rgba(18, 24, 38, 0.85);
+    --stitch-card: rgba(15, 22, 36, 0.75);
+    --stitch-card-solid: #0E1524;
+    --stitch-card-hover: rgba(22, 32, 54, 0.85);
+    --stitch-glass-dock: rgba(14, 20, 34, 0.88);
 
     /* ── Borders & Outlines ─────────────────────────────────────────────────── */
-    --stitch-border-subtle: rgba(255, 255, 255, 0.08);
-    --stitch-border-hover: rgba(99, 102, 241, 0.35);
-    --stitch-border-active: rgba(99, 102, 241, 0.6);
-    --stitch-border-mint: rgba(16, 185, 129, 0.3);
-    --stitch-border-purple: rgba(168, 85, 247, 0.35);
+    --stitch-border-subtle: rgba(255, 255, 255, 0.10);
+    --stitch-border-top: rgba(255, 255, 255, 0.20);
+    --stitch-border-hover: rgba(99, 102, 241, 0.50);
+    --stitch-border-active: rgba(99, 102, 241, 0.75);
+    --stitch-border-mint: rgba(16, 185, 129, 0.45);
+    --stitch-border-purple: rgba(168, 85, 247, 0.45);
+    --stitch-border-gold: rgba(245, 158, 11, 0.45);
+    --stitch-border-cyan: rgba(6, 182, 212, 0.45);
 
-    /* ── Accent & Brand Palette ─────────────────────────────────────────────── */
+    /* ── Rich Luminescent Jewel Accents ─────────────────────────────────────── */
     --stitch-accent: #6366F1;
     --stitch-accent-rgb: 99, 102, 241;
 
@@ -43,8 +46,8 @@
     --stitch-warning: #F59E0B;
     --stitch-warning-rgb: 245, 158, 11;
 
-    --stitch-critical: #EF4444;
-    --stitch-critical-rgb: 239, 68, 68;
+    --stitch-critical: #F43F5E;
+    --stitch-critical-rgb: 244, 63, 94;
 
     --stitch-purple: #A855F7;
     --stitch-purple-rgb: 168, 85, 247;
@@ -54,21 +57,22 @@
 
     /* ── Text Shades ────────────────────────────────────────────────────────── */
     --stitch-text-bright: #FFFFFF;
-    --stitch-text-primary: #F1F5F9;
+    --stitch-text-primary: #F8FAFC;
     --stitch-text-secondary: #94A3B8;
     --stitch-text-muted: #64748B;
 
     /* ── Blur Filters ───────────────────────────────────────────────────────── */
     --stitch-blur-sm: 8px;
-    --stitch-blur: 16px;
-    --stitch-blur-lg: 24px;
+    --stitch-blur: 20px;
+    --stitch-blur-lg: 28px;
 
     /* ── Neon Glow Shadows ──────────────────────────────────────────────────── */
-    --stitch-glow-indigo: 0 0 25px -5px rgba(99, 102, 241, 0.35);
-    --stitch-glow-mint: 0 0 25px -5px rgba(16, 185, 129, 0.35);
-    --stitch-glow-purple: 0 0 25px -5px rgba(168, 85, 247, 0.45);
-    --stitch-glow-warning: 0 0 25px -5px rgba(245, 158, 11, 0.35);
-    --stitch-glow-critical: 0 0 25px -5px rgba(239, 68, 68, 0.35);
+    --stitch-glow-indigo: 0 0 28px -4px rgba(99, 102, 241, 0.45);
+    --stitch-glow-mint: 0 0 28px -4px rgba(16, 185, 129, 0.45);
+    --stitch-glow-purple: 0 0 30px -4px rgba(168, 85, 247, 0.50);
+    --stitch-glow-warning: 0 0 28px -4px rgba(245, 158, 11, 0.45);
+    --stitch-glow-critical: 0 0 28px -4px rgba(244, 63, 94, 0.45);
+    --stitch-glow-cyan: 0 0 28px -4px rgba(6, 182, 212, 0.45);
 }
 
 /* ── Base Reset & Cyberpunk Body ─────────────────────────────────────────── */
@@ -79,43 +83,169 @@ body {
     min-height: 100vh;
 }
 
-/* ── Glassmorphism Panels & Cards ────────────────────────────────────────── */
+/* ── Premium Glassmorphism Panels & Cards ────────────────────────────────── */
 .glass-card,
-.bg-stitch-card {
-    background: var(--stitch-card) !important;
-    backdrop-filter: blur(var(--stitch-blur));
-    -webkit-backdrop-filter: blur(var(--stitch-blur));
+.bg-stitch-card,
+.premium-card {
+    background: linear-gradient(135deg, rgba(17, 24, 40, 0.78) 0%, rgba(10, 15, 26, 0.88) 100%) !important;
+    backdrop-filter: blur(var(--stitch-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--stitch-blur)) !important;
     border: 1px solid var(--stitch-border-subtle) !important;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-top: 1px solid var(--stitch-border-top) !important;
+    box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.75), inset 0 1px 0 0 rgba(255, 255, 255, 0.10) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover,
-.bg-stitch-card:hover {
+.bg-stitch-card:hover,
+.premium-card:hover {
     border-color: var(--stitch-border-hover) !important;
-    background: var(--stitch-card-hover) !important;
+    border-top-color: rgba(129, 140, 248, 0.75) !important;
+    background: linear-gradient(135deg, rgba(23, 33, 56, 0.88) 0%, rgba(13, 20, 36, 0.94) 100%) !important;
+    box-shadow: 0 22px 50px -10px rgba(0, 0, 0, 0.85), 0 0 32px -5px rgba(99, 102, 241, 0.28), inset 0 1px 0 0 rgba(255, 255, 255, 0.18) !important;
 }
 
 .glass-panel {
-    background: rgba(18, 24, 38, 0.85);
+    background: rgba(14, 20, 34, 0.88);
     backdrop-filter: blur(var(--stitch-blur-lg));
     -webkit-backdrop-filter: blur(var(--stitch-blur-lg));
     border: 1px solid var(--stitch-border-subtle);
+    border-top: 1px solid var(--stitch-border-top);
 }
 
 .glass-dock {
     background: var(--stitch-glass-dock);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.8), 0 0 25px -5px rgba(99, 102, 241, 0.2);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 16px 45px -10px rgba(0, 0, 0, 0.85), 0 0 30px -5px rgba(99, 102, 241, 0.3);
 }
 
 .nav-floating-glass {
-    background: rgba(18, 24, 38, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6), 0 0 30px -5px rgba(99, 102, 241, 0.12);
+    background: linear-gradient(135deg, rgba(16, 23, 39, 0.88) 0%, rgba(10, 15, 26, 0.92) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 35px -5px rgba(99, 102, 241, 0.20), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ── Rich Luminescent Jewel Badges ───────────────────────────────────────── */
+.badge-gold {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.20) 0%, rgba(217, 119, 6, 0.30) 100%);
+    color: #FDE68A;
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.25);
+}
+
+.badge-emerald {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.20) 0%, rgba(5, 150, 105, 0.30) 100%);
+    color: #A7F3D0;
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
+}
+
+.badge-cyan {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.20) 0%, rgba(14, 165, 233, 0.30) 100%);
+    color: #A5F3FC;
+    border: 1px solid rgba(6, 182, 212, 0.45);
+    box-shadow: 0 0 16px rgba(6, 182, 212, 0.25);
+}
+
+.badge-purple {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.20) 0%, rgba(147, 51, 234, 0.30) 100%);
+    color: #E9D5FF;
+    border: 1px solid rgba(168, 85, 247, 0.45);
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
+}
+
+.badge-rose {
+    background: linear-gradient(135deg, rgba(244, 63, 94, 0.20) 0%, rgba(225, 29, 72, 0.30) 100%);
+    color: #FECDD3;
+    border: 1px solid rgba(244, 63, 94, 0.45);
+    box-shadow: 0 0 16px rgba(244, 63, 94, 0.25);
+}
+
+/* ── Radiant Text Gradients ──────────────────────────────────────────────── */
+.text-glow-gold {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FDE68A 30%, #F59E0B 70%, #D97706 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.40));
+}
+
+.text-glow-cyan {
+    background: linear-gradient(135deg, #ECFEFF 0%, #A5F3FC 30%, #38BDF8 70%, #6366F1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.40));
+}
+
+.text-glow-mint {
+    background: linear-gradient(135deg, #F0FDF4 0%, #A7F3D0 30%, #34D399 70%, #10B981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.40));
+}
+
+.text-glow-purple {
+    background: linear-gradient(135deg, #FAF5FF 0%, #E9D5FF 30%, #C084FC 70%, #A855F7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.40));
+}
+
+.text-glow-title {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F1F5F9 50%, #94A3B8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ── Hardware Vault Coin Pill ────────────────────────────────────────────── */
+.coin-pill-vault {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, rgba(6, 182, 212, 0.14) 50%, rgba(99, 102, 241, 0.12) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    border-top: 1px solid rgba(16, 185, 129, 0.70);
+    box-shadow: 0 0 25px -4px rgba(16, 185, 129, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: all 0.25s ease;
+}
+
+.coin-pill-vault:hover {
+    border-color: rgba(52, 211, 153, 0.75);
+    box-shadow: 0 0 35px -2px rgba(16, 185, 129, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+}
+
+/* ── Luxury Gradient Buttons ─────────────────────────────────────────────── */
+.btn-luxury-primary {
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #4F46E5 100%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+    font-weight: 700;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-luxury-primary:hover {
+    background: linear-gradient(135deg, #818CF8 0%, #9333EA 50%, #6366F1 100%);
+    box-shadow: 0 6px 28px rgba(99, 102, 241, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px) scale(1.02);
+}
+
+.btn-luxury-emerald {
+    background: linear-gradient(135deg, #10B981 0%, #059669 50%, #047857 100%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+    font-weight: 700;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-luxury-emerald:hover {
+    background: linear-gradient(135deg, #34D399 0%, #10B981 50%, #059669 100%);
+    box-shadow: 0 6px 28px rgba(16, 185, 129, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px) scale(1.02);
 }
 
 /* ── Stitch Border Helpers ───────────────────────────────────────────────── */

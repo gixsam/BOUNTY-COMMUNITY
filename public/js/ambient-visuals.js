@@ -84,6 +84,20 @@
         mouse.y = null;
     }, { passive: true });
 
+    // Interactive tactile ripple burst on click
+    let ripples = [];
+    window.addEventListener('click', (e) => {
+        if (ripples.length > 5) ripples.shift();
+        ripples.push({
+            x: e.clientX,
+            y: e.clientY,
+            radius: 4,
+            maxRadius: 75,
+            alpha: 0.5,
+            color: '6, 182, 212'
+        });
+    }, { passive: true });
+
     // Palette of subtle glowing cyber tokens
     const particleColors = [
         '99, 102, 241',  // Indigo
@@ -144,8 +158,8 @@
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(${this.color}, ${Math.max(0.1, this.alpha)})`;
-            ctx.shadowColor = `rgba(${this.color}, 0.5)`;
-            ctx.shadowBlur = 6;
+            ctx.shadowColor = `rgba(${this.color}, 0.75)`;
+            ctx.shadowBlur = 8;
             ctx.fill();
         }
     }
@@ -160,7 +174,7 @@
     }
 
     function drawConnections() {
-        const maxDist = 105;
+        const maxDist = 110;
         const maxDistSq = maxDist * maxDist;
 
         for (let i = 0; i < particles.length; i++) {
@@ -171,7 +185,7 @@
 
                 if (distSq < maxDistSq) {
                     const dist = Math.sqrt(distSq);
-                    const opacity = (1 - dist / maxDist) * 0.18;
+                    const opacity = (1 - dist / maxDist) * 0.22;
 
                     ctx.beginPath();
                     ctx.moveTo(particles[i].x, particles[i].y);
@@ -191,17 +205,38 @@
 
                 if (distSq < (mouse.radius * mouse.radius)) {
                     const dist = Math.sqrt(distSq);
-                    const opacity = (1 - dist / mouse.radius) * 0.28;
+                    const opacity = (1 - dist / mouse.radius) * 0.32;
 
                     ctx.beginPath();
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(mouse.x, mouse.y);
-                    ctx.strokeStyle = `rgba(168, 85, 247, ${opacity})`;
-                    ctx.lineWidth = 0.9;
+                    ctx.strokeStyle = `rgba(6, 182, 212, ${opacity})`;
+                    ctx.lineWidth = 1;
                     ctx.shadowBlur = 0;
                     ctx.stroke();
                 }
             }
+        }
+    }
+
+    function drawRipples() {
+        for (let i = ripples.length - 1; i >= 0; i--) {
+            const r = ripples[i];
+            r.radius += 2.5;
+            r.alpha *= 0.94;
+
+            if (r.radius >= r.maxRadius || r.alpha <= 0.02) {
+                ripples.splice(i, 1);
+                continue;
+            }
+
+            ctx.beginPath();
+            ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(${r.color}, ${r.alpha})`;
+            ctx.lineWidth = 1.2;
+            ctx.shadowColor = `rgba(${r.color}, 0.6)`;
+            ctx.shadowBlur = 6;
+            ctx.stroke();
         }
     }
 
@@ -216,6 +251,7 @@
         }
 
         drawConnections();
+        drawRipples();
 
         animationFrameId = requestAnimationFrame(renderLoop);
     }

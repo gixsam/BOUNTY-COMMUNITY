@@ -67,15 +67,15 @@ bounty community/
 │       └── sneak-bar.js             <-- Fixed top purple sneak-mode banner & persona switcher dock
 ```
 
-### Design Tokens (Google Stitch Palette)
-- **Background:** `#0B0F17` (Deep space slate)
-- **Glass Cards / Panels:** `rgba(18, 24, 38, 0.75)` with `backdrop-blur-md`
-- **Card Hover:** `rgba(25, 33, 52, 0.85)`
-- **Accent Indigo:** `#6366F1` (Primary interaction & glow)
-- **Coin Mint / Escrow:** `#10B981` (Escrow ready, balances, success)
-- **Threat / Danger:** `#EF4444` (Verification flags, errors)
-- **Warning / Alert:** `#F59E0B` (Warnings & urgent status)
-- **Admin Sneak Purple:** `#A855F7` (Fixed top impersonation warning banner & dock)
+### Design Tokens (Luminescent Jewel & Google Stitch Cyberpunk Palette)
+- **Canvas / Background:** `#070A11` (Deep obsidian caviar)
+- **Specular Glass Cards:** `rgba(15, 23, 42, 0.70)` with `backdrop-blur-xl`, `border-t-white/20`, and `box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.10)`
+- **Luminescent Solar Amber / Gold:** `#F59E0B` (Escrow Vaults, Leaderboard 1st, Hunter badges, Vault Coins)
+- **Electric Cyan:** `#06B6D4` (Active Bounties, Vacancies, Support Desk, WebSockets)
+- **Cyber Jade / Mint Emerald:** `#10B981` (Hostinger Engine, Escrow Ready balances, Recruiter badges, Payout releases)
+- **Hyper Indigo & Royal Violet:** `#6366F1`, `#A855F7` (Brand Aura, Founder Telemetry, Primary luxury CTAs)
+- **Rose Crimson:** `#F43F5E` / `#EF4444` (Threat Patrol, Sybil flags, dispute verification)
+- **Admin Sneak Purple:** `#A855F7` (Fixed top impersonation warning banner & switcher dock)
 
 ---
 
@@ -271,6 +271,39 @@ bounty community/
   - Also embedded across all standalone login gates: User Auth (`public/portal/auth.php`), Founder Terminal (`public/admin/login.php`), Support Desk (`public/support/login.php`), and Threat Patrol (`public/mod/login.php`).
   - Full WCAG accessibility compliance with `@media (prefers-reduced-motion: reduce)`.
 
+### [Phase 13] Luxury Premium UI Overhaul & Luminescent Jewel Color Palette
+- **1. Luminescent Jewel Color Palette & Obsidian Caviar Canvas (`stitch-tokens.css`, `config.php`):**
+  - Upgraded platform canvas from `#0B0F17` to deep obsidian caviar `#070A11` (`bg-[#070A11]`) across all layouts, portals, and login gates.
+  - Formulated a 5-tier luminescent jewel color system with tailored neon drop shadows and specular glassmorphism:
+    * **Solar Amber & Gold (`#F59E0B`):** Applied to Escrow Vaults, Leaderboard #1 rank (Alex Chen), Hunter persona badges, and coins.
+    * **Electric Cyan (`#06B6D4`):** Applied to Active Bounties, Vacancies, Support Desk, and live WebSocket heartbeat indicators.
+    * **Cyber Jade & Mint Emerald (`#10B981`):** Applied to Hostinger PHP 8.2 Engine, Escrow Ready balances, and Recruiter badges.
+    * **Hyper Indigo & Royal Violet (`#6366F1`, `#A855F7`):** Applied to master brand aura, Lounge activity, Founder telemetry, and primary CTA gradients.
+    * **Rose Crimson (`#F43F5E`, `#EF4444`):** Applied to Threat Patrol verification gates, active disputes, and Sybil warnings.
+- **2. Specular Glassmorphism & Jewel Design Tokens (`public/css/stitch-tokens.css`):**
+  - Formulated `.glass-card`, `.bg-stitch-card`, and `.premium-card` with specular top highlights (`border-t-white/20`), inner refraction rims (`box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.10)`), and luminous hover states.
+  - Added radiant text glow utilities: `.text-glow-gold`, `.text-glow-cyan`, `.text-glow-mint`, `.text-glow-purple`, `.text-glow-title`.
+  - Built hardware-vault coin pill token `.coin-pill-vault` with metallic rim sheen, dual glowing pulse beacon, and BDT formatting.
+  - Created luxury CTA buttons `.btn-luxury-primary` (indigo-purple) and `.btn-luxury-emerald` (cyber jade) with hover micro-scaling (`scale-[1.02]`), specular edges, and neon glow.
+  - Formulated universal jewel badge classes: `.badge-gold`, `.badge-emerald`, `.badge-cyan`, `.badge-purple`, `.badge-rose`.
+- **3. Master Floating Header & Mobile Dock Modernization (`public/config.php`):**
+  - Master Header: Elevated with specular top shine, glowing gradient brand bolt (`shadow-[0_0_25px_rgba(99,102,241,0.55)]`), active nav gradient pill highlight, `.coin-pill-vault` for BDT wallet custody, and glowing avatar ring on the identity chip.
+  - Layout Canvas: Added `relative z-10` to `<main>` container, eliminating visual occlusion and providing high-contrast depth separation over the ambient background.
+  - Mobile Floating Glass Dock: Modernized with `.glass-dock`, specular top border (`border-t-white/20`), backdrop blur 24px, and glowing jewel icons (forum, cases, add task, screening, support).
+- **4. Live Lounge Feed & Sidebar Overhaul (`public/portal/index.php`):**
+  - Solid background occlusion resolved: set `.portal-outer-wrapper` to `bg-transparent relative z-10`, allowing the deep-space video, nebulae, and interactive particle grid to shine through frosted glass.
+  - Top 4 Platform Stats Banner: Redesigned with jewel borders and radiant glowing numbers (Gold Vault, Cyan Bounties, Purple Hunters, Emerald Engine).
+  - Status Update Box: Upgraded with glowing avatar ring, frosted textarea, and luxury CTA buttons (`[Create Paid Job / Bounty]` in cyber jade and `[Post Update]` in hyper indigo).
+  - Job Alert Cards: Enhanced with left cyber jade glowing bar (`border-l-[#10B981] shadow-[-6px_0_20px_-3px_rgba(16,185,129,0.35)]`), pulsing escrow beacon, category jewel pills, and luxury apply CTA.
+  - Emoji Reactions & Q&A: Frosted jewel pill buttons with active neon glow states and sleek terminal styling on inquiry threads.
+  - Sidebar Widgets: Upgraded Community Activity radar beacon with jewel counts, and Top Earners Leaderboard with Gold (🥇), Cyan (🥈), Emerald (🥉), and Purple (🎖️) glowing earnings.
+  - [Create Paid Job / Bounty] Modal: Transformed into a frosted obsidian glass panel with specular borders and luxury escrow lock button.
+- **5. Interactive Tactile Ripple Feedback (`public/js/ambient-visuals.js`):**
+  - Integrated click ripple burst engine (`drawRipples()`): clicks anywhere in the portal emit expanding neon cyan rings with gentle decay.
+  - Boosted particle halo luminescence (`ctx.shadowBlur = 8`) and dynamic two-tone connection lines between nodes and cursor.
+- **6. Authentication & Role Terminal Unification (`auth.php`, `admin/login.php`, `support/login.php`, `mod/login.php`):**
+  - Synchronized canvas background to deep obsidian `#070A11` and added specular top borders (`border-t-white/20`, `border-t-purple-400/40`, `border-t-teal-400/40`, `border-t-rose-400/40`) to all auth cards.
+
 ---
 
 ## 🚀 4. Upcoming Tasks & Future Roadmap ("Will Be Done")
@@ -311,19 +344,19 @@ bounty community/
 |---|---|---|---|
 | `.htaccess` | ✅ Verified (Syntax Clean) | 2026-09-11 | Root Apache rewrite, clean URL router & sensitive file shield |
 | `index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Root router redirecting to `/public/portal/index.php` (Hostinger 403 fix) |
-| `public/portal/index.php` | ✅ Verified (Phase 11) | 2026-09-11 | Live Community Lounge with emoji reactions, quick reply Q&A and sidebar leaderboard |
-| `public/portal/auth.php` | ✅ Verified (Phase 11) | 2026-09-11 | User portal login & signup with Hunter/Recruiter role tabs & obsidian card |
-| `public/admin/login.php` | ✅ Verified (Phase 11) | 2026-09-11 | Founder & Admin Terminal login with purple accent & Elena Vance quick-fill |
-| `public/support/login.php` | ✅ Verified (Phase 11) | 2026-09-11 | Customer Support Desk login with teal accent & Devon Bailey quick-fill |
-| `public/mod/login.php` | ✅ Verified (Phase 11) | 2026-09-11 | Threat Patrol Staff Terminal login with red accent & Sarah Jenkins quick-fill |
+| `public/portal/index.php` | ✅ Verified (Phase 13) | 2026-09-11 | Live Community Lounge with jewel stats, specular cards, reactions, Q&A & leaderboard |
+| `public/portal/auth.php` | ✅ Verified (Phase 13) | 2026-09-11 | User portal login & signup with Hunter/Recruiter role tabs, obsidian caviar & luxury buttons |
+| `public/admin/login.php` | ✅ Verified (Phase 13) | 2026-09-11 | Founder & Admin Terminal login with purple accent, specular card & Elena Vance quick-fill |
+| `public/support/login.php` | ✅ Verified (Phase 13) | 2026-09-11 | Customer Support Desk login with teal accent, specular card & Devon Bailey quick-fill |
+| `public/mod/login.php` | ✅ Verified (Phase 13) | 2026-09-11 | Threat Patrol Staff Terminal login with red accent, specular card & Sarah Jenkins quick-fill |
 | `public/api/auth_handler.php` | ✅ Verified (Phase 11) | 2026-09-11 | Authentication controller, boundary enforcement & cross-portal gate |
 | `public/api/reaction_handler.php` | ✅ Verified (Phase 11) | 2026-09-11 | Social emoji reaction controller (toggle, counters & Supabase broadcast) |
 | `public/api/comment_handler.php` | ✅ Verified (Phase 11) | 2026-09-11 | Job inquiry & Q&A thread controller with Supabase real-time broadcast |
 | `public/js/app.js` | ✅ Verified (Phase 11) | 2026-09-11 | Realtime reactions & Q&A event listeners, delegation, Web AudioFX & BDT cards |
-| `public/js/ambient-visuals.js` | ✅ Verified (Phase 12) | 2026-09-11 | Interactive cyberpunk canvas particle grid, constellation interaction & video safety |
-| `public/css/stitch-tokens.css` | ✅ Updated (Phase 12) | 2026-09-11 | Google Stitch tokens, celebratory animations & ambient visual styles |
+| `public/js/ambient-visuals.js` | ✅ Verified (Phase 13) | 2026-09-11 | Interactive cyberpunk canvas particle grid, click ripple burst & video safety |
+| `public/css/stitch-tokens.css` | ✅ Updated (Phase 13) | 2026-09-11 | Luminescent jewel palette, specular cards, text glow, coin vault pill & luxury buttons |
 | `public/js/sneak-bar.js` | ✅ Verified (Active) | 2026-09-11 | Fixed top purple sneak banner & persona switcher dock |
-| `public/config.php` | ✅ Verified (Phase 11) | 2026-09-11 | Core security, floating header, BDT formatter, reactions/comments DB & leaderboard |
+| `public/config.php` | ✅ Verified (Phase 13) | 2026-09-11 | Floating header with specular shine, coin vault pill, jewel badges & relative z-10 |
 | `public/api/admin_sneak.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Persona teleportation controller (JSON + Form support) |
 | `public/portal/candidate_review.php`| ✅ Verified (Syntax Clean) | 2026-09-11 | 100-to-2 Applicant Screening Accordion with Stitch empty state |
 | `public/portal/job_hub.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Job Listings & Recruiter ATS with BDT currency localization |

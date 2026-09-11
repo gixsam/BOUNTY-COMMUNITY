@@ -13,7 +13,7 @@ $_SESSION['_csrf_token'] = $csrfToken;
 $flash = consume_flash();
 ?>
 <!DOCTYPE html>
-<html lang="en" class="dark" style="background-color: #0B0F17; color-scheme: dark;">
+<html lang="en" class="dark" style="background-color: #070A11; color-scheme: dark;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,11 +21,11 @@ $flash = consume_flash();
     <style>
         :root { color-scheme: dark; }
         html, body {
-            background-color: #0B0F17 !important;
+            background-color: #070A11 !important;
             color: #F1F5F9 !important;
         }
         .glass-card {
-            background: rgba(18, 24, 38, 0.88) !important;
+            background: rgba(15, 23, 42, 0.85) !important;
             backdrop-filter: blur(24px) !important;
             -webkit-backdrop-filter: blur(24px) !important;
         }
@@ -38,7 +38,7 @@ $flash = consume_flash();
             theme: {
                 extend: {
                     colors: {
-                        brandDark:   '#0B0F17',
+                        brandDark:   '#070A11',
                         brandPurple: '#A855F7',
                         brandIndigo: '#6366F1',
                         brandMint:   '#10B981',
@@ -52,7 +52,7 @@ $flash = consume_flash();
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="bg-[#0B0F17] text-slate-100 min-h-screen flex items-center justify-center p-4 selection:bg-purple-500 selection:text-white relative overflow-x-hidden">
+<body class="bg-[#070A11] text-slate-100 min-h-screen flex items-center justify-center p-4 selection:bg-purple-500 selection:text-white relative overflow-x-hidden">
 
     <?php render_ambient_background('purple'); ?>
 
@@ -65,7 +65,7 @@ $flash = consume_flash();
             </div>
             
             <div class="inline-block mb-2">
-                <span class="text-xs font-mono uppercase px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 font-bold">
+                <span class="badge-purple text-xs font-mono uppercase px-3 py-1 rounded-full font-bold">
                     Executive Access Only
                 </span>
             </div>
@@ -91,7 +91,7 @@ $flash = consume_flash();
         <?php endif; ?>
 
         <!-- Login Form Card -->
-        <div class="glass-card bg-[#121826]/88 backdrop-blur-2xl border border-purple-500/30 rounded-3xl p-6 sm:p-8 shadow-glow-purple relative">
+        <div class="glass-card bg-[#0F172A]/85 backdrop-blur-2xl border border-purple-500/30 border-t-purple-400/40 rounded-3xl p-6 sm:p-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_30px_rgba(168,85,247,0.25)] relative">
 
             <form action="<?= BASE_URL ?>/api/auth_handler.php" method="POST" class="space-y-4">
                 <input type="hidden" name="_csrf" value="<?= htmlspecialchars($csrfToken) ?>">

@@ -1105,11 +1105,11 @@ function render_header(string $page_title = 'Bounty Community Engine', string $a
     $flash = consume_flash();
 
     $role_badge_colors = [
-        'admin'     => 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
-        'recruiter' => 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-        'hunter'    => 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-        'mod'       => 'bg-rose-500/20 text-rose-400 border-rose-500/30',
-        'support'   => 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+        'admin'     => 'badge-purple',
+        'recruiter' => 'badge-emerald',
+        'hunter'    => 'badge-gold',
+        'mod'       => 'badge-rose',
+        'support'   => 'badge-cyan',
     ];
     $role_badge = $role_badge_colors[$ctx['role']] ?? 'bg-slate-700 text-slate-300';
     $baseUrl    = BASE_URL;
@@ -1135,7 +1135,7 @@ function render_header(string $page_title = 'Bounty Community Engine', string $a
     };
     ?>
 <!DOCTYPE html>
-<html lang="en" class="dark" style="background-color: #0B0F17; color-scheme: dark;">
+<html lang="en" class="dark" style="background-color: #070A11; color-scheme: dark;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1144,13 +1144,13 @@ function render_header(string $page_title = 'Bounty Community Engine', string $a
     <style>
         :root { color-scheme: dark; }
         html, body {
-            background-color: #0B0F17 !important;
+            background-color: #070A11 !important;
             color: #F1F5F9 !important;
         }
         .glass-card, .bg-stitch-card {
-            background: rgba(18, 24, 38, 0.75) !important;
-            backdrop-filter: blur(16px) !important;
-            -webkit-backdrop-filter: blur(16px) !important;
+            background: rgba(15, 23, 42, 0.65) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
         }
     </style>
     <!-- Google Stitch Tokens & Cyberpunk Theme -->
@@ -1163,18 +1163,21 @@ function render_header(string $page_title = 'Bounty Community Engine', string $a
             theme: {
                 extend: {
                     colors: {
-                        brandDark:     '#0B0F17',
-                        brandCard:     'rgba(18,24,38,0.75)',
+                        brandDark:     '#070A11',
+                        brandCard:     'rgba(15,23,42,0.65)',
                         brandIndigo:   '#6366F1',
                         brandMint:     '#10B981',
                         brandRed:      '#EF4444',
                         brandAmber:    '#F59E0B',
                         brandPurple:   '#A855F7',
+                        brandCyan:     '#06B6D4',
                     },
                     boxShadow: {
-                        'glow-indigo': '0 0 25px -5px rgba(99,102,241,0.35)',
-                        'glow-mint':   '0 0 25px -5px rgba(16,185,129,0.35)',
-                        'glow-purple': '0 0 25px -5px rgba(168,85,247,0.4)',
+                        'glow-indigo': '0 0 25px -5px rgba(99,102,241,0.45)',
+                        'glow-mint':   '0 0 25px -5px rgba(16,185,129,0.45)',
+                        'glow-purple': '0 0 25px -5px rgba(168,85,247,0.45)',
+                        'glow-cyan':   '0 0 25px -5px rgba(6,182,212,0.45)',
+                        'glow-gold':   '0 0 25px -5px rgba(245,158,11,0.45)',
                     }
                 }
             }
@@ -1187,7 +1190,7 @@ function render_header(string $page_title = 'Bounty Community Engine', string $a
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="bg-[#0B0F17] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white pb-28 md:pb-12 has-bottom-dock relative">
+<body class="bg-[#070A11] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white pb-28 md:pb-12 has-bottom-dock relative">
 
     <?php render_ambient_background(); ?>
 
@@ -1196,8 +1199,8 @@ if (!empty($flash)): ?>
     <div class="fixed top-20 right-5 z-50 flex flex-col gap-2">
         <?php foreach ($flash as $type => $msg): ?>
             <?php $cls = match($type) {
-                'success' => 'bg-emerald-950/90 border-emerald-500/30 text-emerald-200',
-                'error'   => 'bg-rose-950/90 border-rose-500/30 text-rose-200',
+                'success' => 'bg-emerald-950/90 border-emerald-500/30 text-emerald-200 shadow-glow-mint',
+                'error'   => 'bg-rose-950/90 border-rose-500/30 text-rose-200 shadow-[0_0_25px_rgba(244,63,94,0.3)]',
                 default   => 'bg-slate-900/90 border-white/10 text-slate-200'
             }; ?>
             <div class="flex items-center gap-2 px-4 py-3 rounded-xl border backdrop-blur-xl text-sm font-medium <?= $cls ?>">
@@ -1210,36 +1213,36 @@ if (!empty($flash)): ?>
 
     <!-- Elevated Inset Floating Glass Navigation Bar (Google Stitch Prototype) -->
     <div class="w-full pt-4 px-4 sm:px-6 max-w-7xl mx-auto sticky top-3 z-40">
-        <header id="master-header" class="bg-[#121826]/85 backdrop-blur-xl border border-slate-700/60 rounded-2xl shadow-2xl px-6 py-3.5 flex items-center justify-between gap-4">
+        <header id="master-header" class="bg-[#0B0F17]/85 backdrop-blur-2xl border border-white/10 border-t-white/20 rounded-2xl shadow-[0_12px_40px_-10px_rgba(0,0,0,0.8),0_0_20px_rgba(99,102,241,0.08)] px-5 sm:px-6 py-3.5 flex items-center justify-between gap-4 transition-all">
             <div class="flex items-center gap-3 lg:gap-6 min-w-0">
                 <!-- Dynamic Brand Name -->
                 <a href="<?= $baseUrl ?>/portal/index.php" class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-brandIndigo to-brandMint flex items-center justify-center shadow-glow-indigo group-hover:scale-105 transition-transform shrink-0">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center shadow-[0_0_25px_rgba(99,102,241,0.55)] group-hover:scale-105 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] transition-all shrink-0">
                         <span class="material-symbols-outlined text-slate-950 font-black text-xl">bolt</span>
                     </div>
                     <div class="min-w-0">
-                        <div class="font-bold text-sm sm:text-base tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap">
-                            <?= htmlspecialchars(COMMUNITY_NAME) ?>
-                            <span class="text-[9px] sm:text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-brandIndigo/20 text-brandIndigo border border-brandIndigo/30">Engine</span>
+                        <div class="font-extrabold text-sm sm:text-base tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap">
+                            <span class="bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent"><?= htmlspecialchars(COMMUNITY_NAME) ?></span>
+                            <span class="badge-cyan text-[9px] sm:text-[10px] uppercase font-mono px-1.5 py-0.5 rounded font-bold">Engine</span>
                         </div>
-                        <div class="hidden sm:block text-[10px] text-slate-400 font-mono -mt-0.5 truncate">Hostinger PHP 8.2 · Supabase</div>
+                        <div class="hidden sm:block text-[10px] text-slate-400 font-mono -mt-0.5 truncate">Hostinger PHP 8.2 · Supabase Realtime</div>
                     </div>
                 </a>
 
                 <!-- Role-Aware Desktop Navigation Links -->
-                <nav class="hidden lg:flex items-center gap-1">
+                <nav class="hidden lg:flex items-center gap-1.5">
                     <a href="<?= $baseUrl ?>/portal/index.php"
-                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 <?= ($active_nav === 'portal') ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
+                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-xl transition-all duration-200 flex items-center gap-1.5 <?= ($active_nav === 'portal') ? 'bg-gradient-to-r from-indigo-500/25 via-purple-500/20 to-indigo-500/10 text-white border border-indigo-400/40 shadow-[0_0_15px_rgba(99,102,241,0.25)]' : 'text-slate-400 hover:text-indigo-300 hover:bg-white/5' ?>">
                         <span class="material-symbols-outlined text-[18px]">forum</span>
                         <span>Lounge Feed</span>
                     </a>
                     <a href="<?= $baseUrl ?>/portal/job_hub.php"
-                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 <?= ($active_nav === 'job_hub') ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
+                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-xl transition-all duration-200 flex items-center gap-1.5 <?= ($active_nav === 'job_hub') ? 'bg-gradient-to-r from-indigo-500/25 via-purple-500/20 to-indigo-500/10 text-white border border-indigo-400/40 shadow-[0_0_15px_rgba(99,102,241,0.25)]' : 'text-slate-400 hover:text-indigo-300 hover:bg-white/5' ?>">
                         <span class="material-symbols-outlined text-[18px]">cases</span>
                         <span>Job Hub & ATS</span>
                     </a>
                     <a href="<?= $baseUrl ?>/portal/candidate_review.php"
-                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 <?= ($active_nav === 'screening') ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
+                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-xl transition-all duration-200 flex items-center gap-1.5 <?= ($active_nav === 'screening') ? 'bg-gradient-to-r from-indigo-500/25 via-purple-500/20 to-indigo-500/10 text-white border border-indigo-400/40 shadow-[0_0_15px_rgba(99,102,241,0.25)]' : 'text-slate-400 hover:text-indigo-300 hover:bg-white/5' ?>">
                         <span class="material-symbols-outlined text-[18px]">how_to_reg</span>
                         <span>100-to-2 Screening</span>
                     </a>
@@ -1251,12 +1254,12 @@ if (!empty($flash)): ?>
                     ?>
                     <!-- Staff Suite Dropdown for privileged roles -->
                     <div class="relative group">
-                        <button type="button" class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 <?= in_array($active_nav, ['mod', 'support', 'admin', 'branding'], true) ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
+                        <button type="button" class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-xl transition-all duration-200 flex items-center gap-1.5 <?= in_array($active_nav, ['mod', 'support', 'admin', 'branding'], true) ? 'bg-gradient-to-r from-indigo-500/25 via-purple-500/20 to-indigo-500/10 text-white border border-indigo-400/40 shadow-[0_0_15px_rgba(99,102,241,0.25)]' : 'text-slate-400 hover:text-indigo-300 hover:bg-white/5' ?>">
                             <span class="material-symbols-outlined text-[18px]">shield</span>
                             <span>Staff Suite</span>
                             <span class="material-symbols-outlined text-[16px] opacity-70 group-hover:rotate-180 transition-transform duration-200">expand_more</span>
                         </button>
-                        <div class="absolute left-0 top-full mt-2 w-48 rounded-xl bg-[#121826]/95 backdrop-blur-2xl border border-white/10 shadow-2xl py-1.5 hidden group-hover:block z-50 transition-all">
+                        <div class="absolute left-0 top-full mt-2 w-48 rounded-2xl bg-[#0B0F17]/95 backdrop-blur-2xl border border-white/10 border-t-white/20 shadow-2xl py-1.5 hidden group-hover:block z-50 transition-all">
                             <?php if (in_array($user_role, ['admin', 'mod'], true)): ?>
                                 <a href="<?= $baseUrl ?>/mod/index.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-semibold whitespace-nowrap <?= ($active_nav === 'mod') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
                                     <span class="material-symbols-outlined text-[18px] text-rose-400">shield</span>
@@ -1288,27 +1291,27 @@ if (!empty($flash)): ?>
             <!-- Right: Level Badge, Live Coin Pill & Identity Chip -->
             <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
                 <!-- Dynamic Level Badge (Visible on xl+ screens to prevent navbar squeeze) -->
-                <div class="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-mono font-bold" title="Player Reputation Level">
-                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                <div class="hidden xl:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500/15 via-purple-500/15 to-indigo-500/15 border border-indigo-400/30 text-indigo-300 text-xs font-mono font-bold shadow-[0_0_15px_rgba(168,85,247,0.2)]" title="Player Reputation Level">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse shadow-[0_0_6px_#F59E0B]"></span>
                     <span class="whitespace-nowrap">Lvl <?= $user_level ?> <?= $level_title ?></span>
                 </div>
 
-                <!-- Live Coin Pill (BDT Currency) -->
-                <div class="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs sm:text-sm font-semibold shadow-glow-mint transition hover:border-emerald-500/40 shrink-0" title="Live Coin Balance & Escrow Custody (BDT)">
+                <!-- Live Coin Pill (BDT Hardware-Vault Styling) -->
+                <div class="coin-pill-vault inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-xl border border-emerald-500/35 text-emerald-300 text-xs sm:text-sm font-semibold shadow-[0_0_20px_rgba(16,185,129,0.25),inset_0_1px_0_rgba(255,255,255,0.15)] transition hover:scale-[1.02] shrink-0" title="Live Coin Balance & Escrow Custody (BDT)">
                     <span class="relative flex h-2 w-2 shrink-0">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_#10B981]"></span>
                     </span>
-                    <span class="material-symbols-outlined text-[18px] text-emerald-400 shrink-0">monetization_on</span>
-                    <span class="font-mono font-bold whitespace-nowrap"><?= format_bdt($ctx['wallet_balance'] ?? 0) ?></span>
+                    <span class="material-symbols-outlined text-[18px] text-amber-400 shrink-0">monetization_on</span>
+                    <span class="font-mono font-black text-white whitespace-nowrap"><?= format_bdt($ctx['wallet_balance'] ?? 0) ?></span>
                     <span class="hidden 2xl:inline text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">Coins</span>
                 </div>
 
                 <!-- Identity Chip -->
-                <div class="inline-flex items-center gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl glass-card shrink-0">
+                <div class="inline-flex items-center gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl glass-card border border-white/10 border-t-white/20 shrink-0 shadow-lg">
                     <img src="<?= htmlspecialchars($ctx['avatar_url'] ?? '') ?>"
                          alt="<?= htmlspecialchars($ctx['display_name'] ?? 'User') ?>"
-                         class="w-7 h-7 rounded-lg object-cover border border-white/10 shrink-0">
+                         class="w-7 h-7 rounded-lg object-cover ring-2 ring-indigo-500/40 shadow-[0_0_10px_rgba(99,102,241,0.35)] shrink-0">
                     <div class="hidden 2xl:block text-left max-w-[110px] truncate">
                         <div class="text-xs font-semibold text-white leading-tight truncate"><?= htmlspecialchars($ctx['display_name'] ?? '') ?></div>
                         <div class="text-[10px] font-mono text-slate-400 truncate">@<?= htmlspecialchars($ctx['handle'] ?? '') ?></div>
@@ -1321,7 +1324,7 @@ if (!empty($flash)): ?>
         </header>
     </div>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
     <?php
 }
 
@@ -1351,22 +1354,22 @@ function render_footer(): void
     <div id="sneak-bar-mount"></div>
 
     <!-- Responsive Bottom Floating Glass Dock for Mobile Viewports (Google Stitch Prototype) -->
-    <nav id="mobile-floating-dock" class="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-md z-40 px-3 py-2 rounded-2xl glass-dock flex items-center justify-between border border-white/10 backdrop-blur-2xl">
+    <nav id="mobile-floating-dock" class="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-md z-40 px-3 py-2 rounded-2xl glass-dock flex items-center justify-between border border-white/10 border-t-white/20 backdrop-blur-2xl shadow-[0_10px_35px_rgba(0,0,0,0.8),0_0_20px_rgba(99,102,241,0.1)]">
         <!-- 1. Feed -->
         <a href="<?= $baseUrl ?>/portal/index.php" class="flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-xs font-medium transition <?= (str_contains($_SERVER['REQUEST_URI'] ?? '', 'portal/index') || !str_contains($_SERVER['REQUEST_URI'] ?? '', 'php')) ? 'text-white' : 'text-slate-400 hover:text-white' ?>">
-            <span class="material-symbols-outlined text-2xl <?= (str_contains($_SERVER['REQUEST_URI'] ?? '', 'portal/index') || !str_contains($_SERVER['REQUEST_URI'] ?? '', 'php')) ? 'text-brandIndigo' : '' ?>">forum</span>
+            <span class="material-symbols-outlined text-2xl <?= (str_contains($_SERVER['REQUEST_URI'] ?? '', 'portal/index') || !str_contains($_SERVER['REQUEST_URI'] ?? '', 'php')) ? 'text-indigo-400 drop-shadow-[0_0_8px_rgba(99,102,241,0.6)]' : '' ?>">forum</span>
             <span class="text-[10px]">Feed</span>
         </a>
 
         <!-- 2. Bounties -->
         <a href="<?= $baseUrl ?>/portal/job_hub.php" class="flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-xs font-medium transition <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'job_hub') ? 'text-white' : 'text-slate-400 hover:text-white' ?>">
-            <span class="material-symbols-outlined text-2xl <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'job_hub') ? 'text-brandIndigo' : '' ?>">cases</span>
+            <span class="material-symbols-outlined text-2xl <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'job_hub') ? 'text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]' : '' ?>">cases</span>
             <span class="text-[10px]">Bounties</span>
         </a>
 
         <!-- 3. Post Task (Elevated Center Action Button) -->
         <a href="<?= $baseUrl ?>/portal/job_hub.php#new-bounty" class="flex flex-col items-center -mt-6 group" title="Post Bounty with Escrow">
-            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brandIndigo to-brandMint flex items-center justify-center shadow-glow-indigo border border-white/20 group-hover:scale-105 active:scale-95 transition-transform">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-emerald-400 flex items-center justify-center shadow-[0_0_25px_rgba(16,185,129,0.5)] border border-white/25 group-hover:scale-105 active:scale-95 transition-transform">
                 <span class="material-symbols-outlined text-2xl text-slate-950 font-bold">add</span>
             </div>
             <span class="text-[10px] font-bold text-white mt-1">Post Task</span>
@@ -1374,13 +1377,13 @@ function render_footer(): void
 
         <!-- 4. Leaderboard / Screening -->
         <a href="<?= $baseUrl ?>/portal/candidate_review.php" class="flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-xs font-medium transition <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'candidate_review') ? 'text-white' : 'text-slate-400 hover:text-white' ?>">
-            <span class="material-symbols-outlined text-2xl <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'candidate_review') ? 'text-brandIndigo' : '' ?>">how_to_reg</span>
+            <span class="material-symbols-outlined text-2xl <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'candidate_review') ? 'text-purple-400 drop-shadow-[0_0_8px_rgba(168,85,247,0.6)]' : '' ?>">how_to_reg</span>
             <span class="text-[10px]">Screening</span>
         </a>
 
         <!-- 5. Support -->
         <a href="<?= $baseUrl ?>/support/index.php" class="flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-xs font-medium transition <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'support') ? 'text-white' : 'text-slate-400 hover:text-white' ?>">
-            <span class="material-symbols-outlined text-2xl <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'support') ? 'text-brandIndigo' : '' ?>">support_agent</span>
+            <span class="material-symbols-outlined text-2xl <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'support') ? 'text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.6)]' : '' ?>">support_agent</span>
             <span class="text-[10px]">Support</span>
         </a>
     </nav>

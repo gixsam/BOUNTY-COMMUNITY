@@ -22,11 +22,11 @@ $flash = consume_flash();
     <style>
         :root { color-scheme: dark; }
         html, body {
-            background-color: #0B0F17 !important;
+            background-color: #070A11 !important;
             color: #F1F5F9 !important;
         }
         .glass-card, .bg-stitch-card {
-            background: rgba(18, 24, 38, 0.85) !important;
+            background: rgba(15, 23, 42, 0.75) !important;
             backdrop-filter: blur(20px) !important;
             -webkit-backdrop-filter: blur(20px) !important;
         }
@@ -39,10 +39,12 @@ $flash = consume_flash();
             theme: {
                 extend: {
                     colors: {
-                        brandDark:   '#0B0F17',
-                        brandCard:   'rgba(18,24,38,0.85)',
+                        brandDark:   '#070A11',
+                        brandCard:   'rgba(15,23,42,0.75)',
                         brandIndigo: '#6366F1',
                         brandMint:   '#10B981',
+                        brandPurple: '#A855F7',
+                        brandCyan:   '#06B6D4',
                     }
                 }
             }
@@ -50,7 +52,7 @@ $flash = consume_flash();
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="bg-[#0B0F17] text-slate-100 min-h-screen flex items-center justify-center p-4 selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
+<body class="bg-[#070A11] text-slate-100 min-h-screen flex items-center justify-center p-4 selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
 
     <?php render_ambient_background(); ?>
 
@@ -59,13 +61,13 @@ $flash = consume_flash();
         <!-- Brand Icon & Header -->
         <div class="text-center mb-6">
             <a href="<?= empty(BASE_URL) ? '/' : BASE_URL . '/portal/index.php' ?>" class="inline-flex items-center gap-3 group mb-3">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brandIndigo to-brandMint flex items-center justify-center shadow-glow-indigo group-hover:scale-105 transition-transform">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center shadow-[0_0_25px_rgba(99,102,241,0.5)] group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-bolt text-slate-950 font-black text-xl"></i>
                 </div>
                 <div class="text-left">
-                    <div class="font-bold text-lg tracking-tight text-white flex items-center gap-1.5">
+                    <div class="font-extrabold text-lg tracking-tight text-white flex items-center gap-1.5">
                         <?= htmlspecialchars(COMMUNITY_NAME) ?>
-                        <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-brandIndigo/20 text-brandIndigo border border-brandIndigo/30">Portal</span>
+                        <span class="badge-cyan text-[10px] uppercase font-mono px-2 py-0.5 rounded font-bold">Portal</span>
                     </div>
                     <div class="text-xs text-slate-400 font-mono -mt-0.5">Community Identity & Auth Gate</div>
                 </div>
@@ -86,7 +88,7 @@ $flash = consume_flash();
         <?php endif; ?>
 
         <!-- Main Auth Card -->
-        <div class="glass-card bg-[#121826]/85 backdrop-blur-xl border border-white/10 rounded-2xl max-w-md mx-auto p-8 shadow-2xl relative">
+        <div class="glass-card bg-[#0F172A]/80 backdrop-blur-2xl border border-white/10 border-t-white/20 rounded-3xl max-w-md mx-auto p-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_30px_rgba(99,102,241,0.15)] relative">
 
             <!-- Tab Switcher -->
             <div class="flex items-center p-1 rounded-xl bg-white/5 border border-white/10 mb-6 text-xs font-semibold">
@@ -146,7 +148,7 @@ $flash = consume_flash();
 
                     <button 
                         type="submit" 
-                        class="w-full py-2.5 rounded-xl bg-brandIndigo hover:bg-indigo-500 text-white font-bold text-sm shadow-glow-indigo transition flex items-center justify-center gap-2 cursor-pointer mt-2">
+                        class="btn-luxury-primary w-full py-2.5 rounded-xl text-white font-bold text-sm shadow-glow-indigo transition flex items-center justify-center gap-2 cursor-pointer mt-2 hover:scale-[1.01]">
                         <span>Sign In to Community</span>
                         <i class="fa-solid fa-arrow-right text-xs"></i>
                     </button>
@@ -251,7 +253,7 @@ $flash = consume_flash();
 
                     <button 
                         type="submit" 
-                        class="w-full py-2.5 rounded-xl bg-brandMint hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow-glow-mint transition flex items-center justify-center gap-2 cursor-pointer mt-2">
+                        class="btn-luxury-emerald w-full py-2.5 rounded-xl text-white font-bold text-sm shadow-glow-mint transition flex items-center justify-center gap-2 cursor-pointer mt-2 hover:scale-[1.01]">
                         <span>Create Account & Join</span>
                         <i class="fa-solid fa-sparkles text-xs"></i>
                     </button>
