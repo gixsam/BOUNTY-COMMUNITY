@@ -974,6 +974,8 @@ function render_header(string $page_title = 'Bounty Community Engine', string $a
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Google Stitch Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -998,13 +1000,13 @@ if (!empty($flash)): ?>
 <?php endif; ?>
 
     <!-- Elevated Inset Floating Glass Navigation Bar (Google Stitch Prototype) -->
-    <header id="master-header" class="w-full pt-3 px-3 sm:px-6 max-w-7xl mx-auto sticky top-2 sm:top-3 z-40 transition-all">
-        <div class="bg-[#121826]/90 backdrop-blur-xl border border-slate-700/60 rounded-2xl shadow-2xl px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-3 sm:gap-4 overflow-visible">
+    <div class="w-full pt-4 px-4 sm:px-6 max-w-7xl mx-auto sticky top-3 z-40">
+        <header id="master-header" class="bg-[#121826]/85 backdrop-blur-xl border border-slate-700/60 rounded-2xl shadow-2xl px-6 py-3.5 flex items-center justify-between gap-4">
             <div class="flex items-center gap-3 lg:gap-6 min-w-0">
                 <!-- Dynamic Brand Name -->
                 <a href="<?= $baseUrl ?>/portal/index.php" class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
                     <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-brandIndigo to-brandMint flex items-center justify-center shadow-glow-indigo group-hover:scale-105 transition-transform shrink-0">
-                        <i class="fa-solid fa-bolt text-slate-950 font-black text-base sm:text-lg"></i>
+                        <span class="material-symbols-outlined text-slate-950 font-black text-xl">bolt</span>
                     </div>
                     <div class="min-w-0">
                         <div class="font-bold text-sm sm:text-base tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap">
@@ -1018,16 +1020,19 @@ if (!empty($flash)): ?>
                 <!-- Role-Aware Desktop Navigation Links -->
                 <nav class="hidden lg:flex items-center gap-1">
                     <a href="<?= $baseUrl ?>/portal/index.php"
-                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 <?= ($active_nav === 'portal') ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
-                        <i class="fa-solid fa-comments mr-1.5 text-xs"></i>Lounge
+                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 <?= ($active_nav === 'portal') ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
+                        <span class="material-symbols-outlined text-[18px]">forum</span>
+                        <span>Lounge Feed</span>
                     </a>
                     <a href="<?= $baseUrl ?>/portal/job_hub.php"
-                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 <?= ($active_nav === 'job_hub') ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
-                        <i class="fa-solid fa-briefcase mr-1.5 text-xs"></i>Job Hub
+                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 <?= ($active_nav === 'job_hub') ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
+                        <span class="material-symbols-outlined text-[18px]">cases</span>
+                        <span>Job Hub & ATS</span>
                     </a>
                     <a href="<?= $baseUrl ?>/portal/candidate_review.php"
-                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 <?= ($active_nav === 'screening') ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
-                        <i class="fa-solid fa-users-viewfinder mr-1.5 text-xs"></i>Screening
+                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 <?= ($active_nav === 'screening') ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
+                        <span class="material-symbols-outlined text-[18px]">how_to_reg</span>
+                        <span>100-to-2 Screening</span>
                     </a>
 
                     <?php 
@@ -1038,30 +1043,30 @@ if (!empty($flash)): ?>
                     <!-- Staff Suite Dropdown for privileged roles -->
                     <div class="relative group">
                         <button type="button" class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 <?= in_array($active_nav, ['mod', 'support', 'admin', 'branding'], true) ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
-                            <i class="fa-solid fa-shield-halved text-xs"></i>
+                            <span class="material-symbols-outlined text-[18px]">shield</span>
                             <span>Staff Suite</span>
-                            <i class="fa-solid fa-chevron-down text-[10px] opacity-70 group-hover:rotate-180 transition-transform duration-200"></i>
+                            <span class="material-symbols-outlined text-[16px] opacity-70 group-hover:rotate-180 transition-transform duration-200">expand_more</span>
                         </button>
                         <div class="absolute left-0 top-full mt-2 w-48 rounded-xl bg-[#121826]/95 backdrop-blur-2xl border border-white/10 shadow-2xl py-1.5 hidden group-hover:block z-50 transition-all">
                             <?php if (in_array($user_role, ['admin', 'mod'], true)): ?>
-                                <a href="<?= $baseUrl ?>/mod/index.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium <?= ($active_nav === 'mod') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
-                                    <i class="fa-solid fa-shield-halved w-4 text-xs text-rose-400"></i>
+                                <a href="<?= $baseUrl ?>/mod/index.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-semibold whitespace-nowrap <?= ($active_nav === 'mod') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
+                                    <span class="material-symbols-outlined text-[18px] text-rose-400">shield</span>
                                     <span>Threat Patrol</span>
                                 </a>
                             <?php endif; ?>
                             <?php if (in_array($user_role, ['admin', 'support'], true)): ?>
-                                <a href="<?= $baseUrl ?>/support/index.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium <?= ($active_nav === 'support') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
-                                    <i class="fa-solid fa-headset w-4 text-xs text-cyan-400"></i>
+                                <a href="<?= $baseUrl ?>/support/index.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-semibold whitespace-nowrap <?= ($active_nav === 'support') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
+                                    <span class="material-symbols-outlined text-[18px] text-cyan-400">support_agent</span>
                                     <span>Staff Desk</span>
                                 </a>
                             <?php endif; ?>
                             <?php if ($user_role === 'admin'): ?>
-                                <a href="<?= $baseUrl ?>/admin/index.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium <?= ($active_nav === 'admin') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
-                                    <i class="fa-solid fa-chart-line w-4 text-xs text-indigo-400"></i>
+                                <a href="<?= $baseUrl ?>/admin/index.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-semibold whitespace-nowrap <?= ($active_nav === 'admin') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
+                                    <span class="material-symbols-outlined text-[18px] text-indigo-400">monitoring</span>
                                     <span>Telemetry</span>
                                 </a>
-                                <a href="<?= $baseUrl ?>/admin/branding.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium <?= ($active_nav === 'branding') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
-                                    <i class="fa-solid fa-sliders w-4 text-xs text-amber-400"></i>
+                                <a href="<?= $baseUrl ?>/admin/branding.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-semibold whitespace-nowrap <?= ($active_nav === 'branding') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
+                                    <span class="material-symbols-outlined text-[18px] text-amber-400">tune</span>
                                     <span>Console</span>
                                 </a>
                             <?php endif; ?>
@@ -1085,12 +1090,7 @@ if (!empty($flash)): ?>
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                     </span>
-                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="8" cy="8" r="6"/>
-                        <path d="M18.09 10.37A6 6 0 1 1 10.34 18"/>
-                        <path d="m7 6 2 2-2 2"/>
-                        <path d="m17 16 2 2-2 2"/>
-                    </svg>
+                    <span class="material-symbols-outlined text-[18px] text-emerald-400 shrink-0">monetization_on</span>
                     <span class="font-mono font-bold whitespace-nowrap"><?= format_bdt($ctx['wallet_balance'] ?? 0) ?></span>
                     <span class="hidden 2xl:inline text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">Coins</span>
                 </div>
@@ -1109,8 +1109,8 @@ if (!empty($flash)): ?>
                     </span>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
+    </div>
 
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
     <?php
@@ -1145,50 +1145,33 @@ function render_footer(): void
     <nav id="mobile-floating-dock" class="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-md z-40 px-3 py-2 rounded-2xl glass-dock flex items-center justify-between border border-white/10 backdrop-blur-2xl">
         <!-- 1. Feed -->
         <a href="<?= $baseUrl ?>/portal/index.php" class="flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-xs font-medium transition <?= (str_contains($_SERVER['REQUEST_URI'] ?? '', 'portal/index') || !str_contains($_SERVER['REQUEST_URI'] ?? '', 'php')) ? 'text-white' : 'text-slate-400 hover:text-white' ?>">
-            <svg class="w-5 h-5 <?= (str_contains($_SERVER['REQUEST_URI'] ?? '', 'portal/index') || !str_contains($_SERVER['REQUEST_URI'] ?? '', 'php')) ? 'text-brandIndigo' : '' ?>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            </svg>
+            <span class="material-symbols-outlined text-2xl <?= (str_contains($_SERVER['REQUEST_URI'] ?? '', 'portal/index') || !str_contains($_SERVER['REQUEST_URI'] ?? '', 'php')) ? 'text-brandIndigo' : '' ?>">forum</span>
             <span class="text-[10px]">Feed</span>
         </a>
 
         <!-- 2. Bounties -->
         <a href="<?= $baseUrl ?>/portal/job_hub.php" class="flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-xs font-medium transition <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'job_hub') ? 'text-white' : 'text-slate-400 hover:text-white' ?>">
-            <svg class="w-5 h-5 <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'job_hub') ? 'text-brandIndigo' : '' ?>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
-                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-            </svg>
+            <span class="material-symbols-outlined text-2xl <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'job_hub') ? 'text-brandIndigo' : '' ?>">cases</span>
             <span class="text-[10px]">Bounties</span>
         </a>
 
         <!-- 3. Post Task (Elevated Center Action Button) -->
         <a href="<?= $baseUrl ?>/portal/job_hub.php#new-bounty" class="flex flex-col items-center -mt-6 group" title="Post Bounty with Escrow">
             <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brandIndigo to-brandMint flex items-center justify-center shadow-glow-indigo border border-white/20 group-hover:scale-105 active:scale-95 transition-transform">
-                <svg class="w-6 h-6 text-slate-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
+                <span class="material-symbols-outlined text-2xl text-slate-950 font-bold">add</span>
             </div>
             <span class="text-[10px] font-bold text-white mt-1">Post Task</span>
         </a>
 
         <!-- 4. Leaderboard / Screening -->
         <a href="<?= $baseUrl ?>/portal/candidate_review.php" class="flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-xs font-medium transition <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'candidate_review') ? 'text-white' : 'text-slate-400 hover:text-white' ?>">
-            <svg class="w-5 h-5 <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'candidate_review') ? 'text-brandIndigo' : '' ?>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
-                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
-                <path d="M4 22h16"/>
-                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
-                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
-                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
-            </svg>
-            <span class="text-[10px]">Leaderboard</span>
+            <span class="material-symbols-outlined text-2xl <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'candidate_review') ? 'text-brandIndigo' : '' ?>">how_to_reg</span>
+            <span class="text-[10px]">Screening</span>
         </a>
 
         <!-- 5. Support -->
         <a href="<?= $baseUrl ?>/support/index.php" class="flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-xs font-medium transition <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'support') ? 'text-white' : 'text-slate-400 hover:text-white' ?>">
-            <svg class="w-5 h-5 <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'support') ? 'text-brandIndigo' : '' ?>" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/>
-            </svg>
+            <span class="material-symbols-outlined text-2xl <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'support') ? 'text-brandIndigo' : '' ?>">support_agent</span>
             <span class="text-[10px]">Support</span>
         </a>
     </nav>

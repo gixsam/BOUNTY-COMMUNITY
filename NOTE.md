@@ -242,6 +242,27 @@ bounty community/
     - `/staff/login` and `/stuff/login` -> `public/mod/login.php`
   - **Root Direct Routing (`index.php`):**
     - Clean PHP redirect fallback to `public/portal/index.php` with verified syntax.
+- **Phase 14: Floating Glass Header & Google Stitch Material Symbols Integration:**
+  - **Google Stitch Material Symbols Head CDN (`public/config.php`):**
+    - Added `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />` to HTML `<head>`.
+  - **Floating Header Positioning & Inset Wrapper (`public/config.php`):**
+    - Wrapped header in `<div class="w-full pt-4 px-4 sm:px-6 max-w-7xl mx-auto sticky top-3 z-40">`.
+    - Styled with Google Stitch obsidian glass: `bg-[#121826]/85 backdrop-blur-xl border border-slate-700/60 rounded-2xl shadow-2xl px-6 py-3.5 flex items-center justify-between`.
+    - Guarded against menu item text wrapping with `whitespace-nowrap text-xs font-semibold`.
+  - **Universal Stitch Icon Tokens Across Header & Mobile Dock:**
+    - Lounge Feed -> `<span class="material-symbols-outlined">forum</span>`
+    - Job Hub -> `<span class="material-symbols-outlined">cases</span>`
+    - Screening -> `<span class="material-symbols-outlined">how_to_reg</span>`
+    - Threat Patrol -> `<span class="material-symbols-outlined">shield</span>`
+    - Staff Desk -> `<span class="material-symbols-outlined">support_agent</span>`
+    - Wallet Coin -> `<span class="material-symbols-outlined">monetization_on</span>`
+    - Mobile bottom dock items mapped to Stitch symbols (`forum`, `cases`, `add`, `how_to_reg`, `support_agent`).
+  - **CSS Token Optimization (`public/css/stitch-tokens.css`):**
+    - Added `.material-symbols-outlined` display alignment and baseline centering.
+  - **Verification & Testing:**
+    - Linted `public/config.php` and `public/portal/candidate_review.php` with `php -l`.
+    - Tested HTML symbol rendering in local CLI.
+    - Synchronized `NOTE.md` to Google Drive workplace with verified SHA256 checksums.
 
 ---
 

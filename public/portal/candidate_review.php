@@ -234,12 +234,7 @@ render_header('Candidate Review & 100-to-2 Screening', 'screening');
         <!-- Bounty Escrow Badge (BDT Currency) -->
         <div class="flex items-center gap-3">
             <div class="coin-pill">
-                <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="8" cy="8" r="6"/>
-                    <path d="M18.09 10.37A6 6 0 1 1 10.34 18"/>
-                    <path d="m7 6 2 2-2 2"/>
-                    <path d="m17 16 2 2-2 2"/>
-                </svg>
+                <span class="material-symbols-outlined text-[18px] text-emerald-400">monetization_on</span>
                 <span class="font-mono font-bold"><?= format_bdt($bountyReward) ?></span>
                 <span class="text-[10px] uppercase font-mono px-1 rounded bg-emerald-500/20 text-emerald-300 font-bold">Escrow</span>
             </div>
