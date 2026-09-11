@@ -374,7 +374,7 @@ function handle_post_job_supabase(
         'job_id'            => $data['job_id']            ?? null,
         'escrow_amount'     => $data['escrow_amount']      ?? $bounty_amount,
         'remaining_balance' => $data['remaining_balance']  ?? null,
-        'message'           => 'Bounty created and $' . number_format($bounty_amount, 2) . ' locked in Escrow!',
+        'message'           => 'Bounty created and ' . format_bdt($bounty_amount) . ' locked in Escrow!',
     ], 201);
 }
 
@@ -444,7 +444,7 @@ function handle_post_job_mock(
         'sender_handle' => $ctx['handle'],
         'sender_role'  => $ctx['role'],
         'sender_avatar' => $ctx['avatar_url'] ?? '',
-        'message'      => '🚀 New Bounty Broadcast: ' . $title . ' ($' . number_format($bounty_amount, 2) . ') locked in Escrow!',
+        'message'      => '🚀 New Bounty Broadcast: ' . $title . ' (' . format_bdt($bounty_amount) . ') locked in Escrow!',
         'message_type' => 'job_broadcast',
         'meta'         => ['job_id' => $new_job_id, 'bounty' => $bounty_amount, 'title' => $title],
         'created_at'   => date('H:i'),
@@ -455,6 +455,6 @@ function handle_post_job_mock(
         'job_id'            => $new_job_id,
         'escrow_amount'     => $bounty_amount,
         'remaining_balance' => $remaining,
-        'message'           => 'Bounty created and $' . number_format($bounty_amount, 2) . ' locked in Escrow!',
+        'message'           => 'Bounty created and ' . format_bdt($bounty_amount) . ' locked in Escrow!',
     ], 201);
 }

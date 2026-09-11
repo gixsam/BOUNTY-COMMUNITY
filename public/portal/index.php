@@ -36,7 +36,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
         </div>
         <div>
             <div class="text-[11px] uppercase tracking-wider font-mono text-slate-400">Total Escrow Vault</div>
-            <div class="text-xl font-black text-white font-mono">$74,270.00</div>
+            <div class="text-xl font-black text-white font-mono">৳74,270.00</div>
         </div>
     </div>
 
@@ -204,8 +204,8 @@ render_header('Live Community Lounge & Event Feed', 'portal');
                                     <path d="m7 6 2 2-2 2"/>
                                     <path d="m17 16 2 2-2 2"/>
                                 </svg>
-                                <span class="font-mono font-bold">$<?= number_format($bountyVal, 2) ?></span>
-                                <span class="text-[10px] uppercase font-mono px-1 rounded bg-emerald-500/20 text-emerald-300">Coins</span>
+                                <span class="font-mono font-bold"><?= format_bdt($bountyVal) ?></span>
+                                <span class="text-[10px] uppercase font-mono px-1 rounded bg-emerald-500/20 text-emerald-300">BDT</span>
                             </div>
                         </div>
 
@@ -310,7 +310,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
                     <div class="text-xs font-mono text-slate-400">@<?= htmlspecialchars($ctx['handle'] ?? 'handle') ?></div>
                     <div class="text-xs text-emerald-400 font-mono mt-0.5 font-bold flex items-center gap-1">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                        $<?= number_format((float)($ctx['wallet_balance'] ?? 0), 2) ?> Escrow Ready
+                        <?= format_bdt($ctx['wallet_balance'] ?? 0) ?> Escrow Ready
                     </div>
                 </div>
             </div>
@@ -339,7 +339,7 @@ render_header('Live Community Lounge & Event Feed', 'portal');
                     <div class="p-3 rounded-xl bg-white/5 border border-white/5 hover:border-brandIndigo/30 transition">
                         <div class="flex items-center justify-between mb-1.5">
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-slate-300"><?= htmlspecialchars($jb['category']) ?></span>
-                            <span class="text-xs font-black text-emerald-400 font-mono">$<?= number_format($jb['bounty_amount'], 2) ?></span>
+                            <span class="text-xs font-black text-emerald-400 font-mono"><?= format_bdt($jb['bounty_amount']) ?></span>
                         </div>
                         <h4 class="text-xs font-bold text-white line-clamp-1 mb-1.5"><?= htmlspecialchars($jb['title']) ?></h4>
                         <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-white/5">
@@ -425,14 +425,14 @@ render_header('Live Community Lounge & Event Feed', 'portal');
                 </div>
 
                 <div>
-                    <label class="block text-xs font-mono uppercase text-slate-300 mb-1.5 font-semibold">Bounty Reward ($) *</label>
+                    <label class="block text-xs font-mono uppercase text-slate-300 mb-1.5 font-semibold">Bounty Reward (৳ BDT) *</label>
                     <div class="relative">
-                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-400 font-bold">$</span>
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-400 font-bold">৳</span>
                         <input 
                             type="number" 
                             name="bounty_amount" 
-                            min="5" 
-                            step="1" 
+                            min="50" 
+                            step="10" 
                             value="1500" 
                             required 
                             class="w-full bg-white/5 border border-white/10 rounded-xl pl-8 pr-3 py-2.5 text-sm text-white font-mono font-bold focus:outline-none focus:border-brandMint focus:ring-1 focus:ring-brandMint transition">

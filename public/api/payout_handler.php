@@ -241,7 +241,7 @@ function execute_payout_rpc(string $job_id, string $applicant_id, string $actor_
         'platform_fee'     => $data['platform_fee']    ?? null,
         'net_payout'       => $data['net_payout']      ?? null,
         'platform_fee_pct' => PLATFORM_FEE_PERCENT,
-        'message'          => 'Escrow released! $' . number_format((float)($data['net_payout'] ?? 0), 2) . ' transferred to the winner.',
+        'message'          => 'Escrow released! ' . format_bdt((float)($data['net_payout'] ?? 0)) . ' transferred to the winner.',
     ]);
 }
 
@@ -355,11 +355,11 @@ function execute_payout_mock(
         'sender_handle' => $ctx['handle']       ?? 'system',
         'sender_role'   => $actor_role,
         'sender_avatar' => $ctx['avatar_url']   ?? '',
-        'message'       => '🎉 Escrow Released! $' . number_format($bounty_amount, 2)
+        'message'       => '🎉 Escrow Released! ' . format_bdt($bounty_amount)
             . ' awarded to @' . $candidate_handle
             . ' for "' . $job['title'] . '"'
-            . ' (Net: $' . number_format($net_payout, 2)
-            . ', Platform Fee: $' . number_format($fee, 2) . ')',
+            . ' (Net: ' . format_bdt($net_payout)
+            . ', Platform Fee: ' . format_bdt($fee) . ')',
         'message_type'  => 'system_alert',
         'meta'          => [
             'job_id'     => $job_id,
@@ -379,6 +379,6 @@ function execute_payout_mock(
         'platform_fee'     => $fee,
         'net_payout'       => $net_payout,
         'platform_fee_pct' => PLATFORM_FEE_PERCENT,
-        'message'          => 'Escrow released! $' . number_format($net_payout, 2) . ' transferred to @' . $candidate_handle . '.',
+        'message'          => 'Escrow released! ' . format_bdt($net_payout) . ' transferred to @' . $candidate_handle . '.',
     ]);
 }

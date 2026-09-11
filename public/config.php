@@ -134,6 +134,18 @@ function resolve_public_base_url(): string
 
 define('BASE_URL', resolve_public_base_url());
 
+/**
+ * Universal BDT Currency Formatter.
+ * Formats numeric amounts into Bangladeshi Taka currency format (e.g. ৳50,000.00).
+ *
+ * @param float|int|string $amount Numeric or string amount.
+ * @return string Formatted BDT currency string with '৳' prefix.
+ */
+function format_bdt(float|int|string $amount): string
+{
+    return '৳' . number_format((float)$amount, 2);
+}
+
 // Roles that are valid platform role values (single source of truth).
 define('VALID_ROLES', ['admin', 'recruiter', 'hunter', 'mod', 'support']);
 
@@ -734,7 +746,7 @@ function init_mock_db(): void
                 'sender_handle' => 'marcus_hire',
                 'sender_role'  => 'recruiter',
                 'sender_avatar' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-                'message'      => '🚀 New Bounty Broadcast: Build Hostinger PHP 8.2 Supabase PostgREST Connector ($2,500.00) locked in Escrow!',
+                'message'      => '🚀 New Bounty Broadcast: Build Hostinger PHP 8.2 Supabase PostgREST Connector (৳2,500.00) locked in Escrow!',
                 'message_type' => 'job_broadcast',
                 'meta'         => ['job_id' => 'job-101', 'bounty' => 2500, 'title' => 'Build Hostinger PHP 8.2 Supabase PostgREST Connector'],
                 'created_at'   => date('H:i', strtotime('-10 minutes')),
@@ -983,12 +995,12 @@ if (!empty($flash)): ?>
     </div>
 <?php endif; ?>
 
-    <!-- Sticky Top Navigation Bar -->
-    <header id="master-header" class="sticky top-0 z-40 w-full border-b border-white/5 bg-[#0B0F17]/85 backdrop-blur-xl transition-all">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+    <!-- Elevated Inset Floating Glass Navigation Bar (Google Stitch Prototype) -->
+    <header id="master-header" class="pt-3 px-4 sm:px-6 max-w-7xl mx-auto sticky top-3 z-40 transition-all">
+        <div class="bg-[#121826]/85 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-5 py-3 flex items-center justify-between gap-4">
             <div class="flex items-center gap-6">
                 <!-- Dynamic Brand Name -->
-                <a href="<?= $baseUrl ?>/portal/index.php" class="flex items-center gap-3 group">
+                <a href="<?= $baseUrl ?>/portal/index.php" class="flex items-center gap-3 group shrink-0">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brandIndigo to-brandMint flex items-center justify-center shadow-glow-indigo group-hover:scale-105 transition-transform">
                         <i class="fa-solid fa-bolt text-slate-950 font-black text-lg"></i>
                     </div>
@@ -1001,8 +1013,8 @@ if (!empty($flash)): ?>
                     </div>
                 </a>
 
-                <!-- Desktop Navigation Links -->
-                <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
+                <!-- Desktop Navigation Links (Prevent Awkward Multi-word Wrapping) -->
+                <nav class="hidden md:flex items-center gap-1 text-xs lg:text-sm font-medium">
                     <?php
                     $nav_items = [
                         'portal'   => ['label' => 'Lounge Feed',       'icon' => 'fa-comments',        'href' => '/portal/index.php'],
@@ -1017,7 +1029,7 @@ if (!empty($flash)): ?>
                         $is_active = ($active_nav === $slug);
                     ?>
                     <a href="<?= $baseUrl . $item['href'] ?>"
-                       class="px-3 py-1.5 rounded-lg transition <?= $is_active ? 'bg-white/10 text-white font-semibold' : 'text-slate-400 hover:text-white hover:bg-white/5' ?>">
+                       class="whitespace-nowrap px-3 py-1.5 rounded-lg transition-colors duration-200 <?= $is_active ? 'bg-white/10 text-white font-semibold shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-white/5' ?>">
                         <i class="fa-solid <?= $item['icon'] ?> mr-1.5 text-xs"></i><?= $item['label'] ?>
                     </a>
                     <?php endforeach; ?>
@@ -1032,8 +1044,8 @@ if (!empty($flash)): ?>
                     <span>Lvl <?= $user_level ?> <?= $level_title ?></span>
                 </div>
 
-                <!-- Live Coin Pill -->
-                <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-sm font-semibold shadow-glow-mint transition hover:border-emerald-500/40" title="Live Coin Balance & Escrow Custody">
+                <!-- Live Coin Pill (BDT Currency) -->
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-sm font-semibold shadow-glow-mint transition hover:border-emerald-500/40" title="Live Coin Balance & Escrow Custody (BDT)">
                     <span class="relative flex h-2 w-2">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
@@ -1044,7 +1056,7 @@ if (!empty($flash)): ?>
                         <path d="m7 6 2 2-2 2"/>
                         <path d="m17 16 2 2-2 2"/>
                     </svg>
-                    <span class="font-mono font-bold">$<?= number_format((float)($ctx['wallet_balance'] ?? 0), 2) ?></span>
+                    <span class="font-mono font-bold"><?= format_bdt($ctx['wallet_balance'] ?? 0) ?></span>
                     <span class="hidden sm:inline text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">Coins</span>
                 </div>
 

@@ -47,7 +47,7 @@ render_header('Founder Telemetry & Directory Infiltration', 'admin');
                 <span class="uppercase font-mono">Escrow In Custody</span>
                 <i class="fa-solid fa-vault text-brandMint text-base"></i>
             </div>
-            <div class="text-2xl font-black text-white font-mono">$74,270.00</div>
+            <div class="text-2xl font-black text-white font-mono">৳74,270.00</div>
             <div class="text-xs text-brandMint mt-1 flex items-center gap-1 font-mono">
                 <i class="fa-solid fa-arrow-trend-up text-[10px]"></i> +18.4% this week
             </div>
@@ -58,7 +58,7 @@ render_header('Founder Telemetry & Directory Infiltration', 'admin');
                 <span class="uppercase font-mono">Platform Revenue (5%)</span>
                 <i class="fa-solid fa-coins text-amber-400 text-base"></i>
             </div>
-            <div class="text-2xl font-black text-amber-400 font-mono">$3,713.50</div>
+            <div class="text-2xl font-black text-amber-400 font-mono">৳3,713.50</div>
             <div class="text-xs text-slate-400 mt-1 font-mono">
                 From completed payouts
             </div>
@@ -97,7 +97,7 @@ render_header('Founder Telemetry & Directory Infiltration', 'admin');
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div class="p-4 rounded-xl bg-white/5 border border-white/5">
                 <div class="text-xs text-slate-400 font-mono">Backend & PostgREST</div>
-                <div class="text-lg font-bold text-white font-mono mt-1">$38,500.00</div>
+                <div class="text-lg font-bold text-white font-mono mt-1">৳38,500.00</div>
                 <div class="w-full bg-slate-800 rounded-full h-1.5 mt-2 overflow-hidden">
                     <div class="bg-brandIndigo h-1.5 rounded-full" style="width: 52%"></div>
                 </div>
@@ -105,7 +105,7 @@ render_header('Founder Telemetry & Directory Infiltration', 'admin');
 
             <div class="p-4 rounded-xl bg-white/5 border border-white/5">
                 <div class="text-xs text-slate-400 font-mono">Frontend & Tailwind</div>
-                <div class="text-lg font-bold text-white font-mono mt-1">$19,200.00</div>
+                <div class="text-lg font-bold text-white font-mono mt-1">৳19,200.00</div>
                 <div class="w-full bg-slate-800 rounded-full h-1.5 mt-2 overflow-hidden">
                     <div class="bg-brandMint h-1.5 rounded-full" style="width: 26%"></div>
                 </div>
@@ -113,7 +113,7 @@ render_header('Founder Telemetry & Directory Infiltration', 'admin');
 
             <div class="p-4 rounded-xl bg-white/5 border border-white/5">
                 <div class="text-xs text-slate-400 font-mono">Threat Patrol & Security</div>
-                <div class="text-lg font-bold text-white font-mono mt-1">$11,400.00</div>
+                <div class="text-lg font-bold text-white font-mono mt-1">৳11,400.00</div>
                 <div class="w-full bg-slate-800 rounded-full h-1.5 mt-2 overflow-hidden">
                     <div class="bg-rose-500 h-1.5 rounded-full" style="width: 15%"></div>
                 </div>
@@ -121,7 +121,7 @@ render_header('Founder Telemetry & Directory Infiltration', 'admin');
 
             <div class="p-4 rounded-xl bg-white/5 border border-white/5">
                 <div class="text-xs text-slate-400 font-mono">DevOps & Hostinger</div>
-                <div class="text-lg font-bold text-white font-mono mt-1">$5,170.00</div>
+                <div class="text-lg font-bold text-white font-mono mt-1">৳5,170.00</div>
                 <div class="w-full bg-slate-800 rounded-full h-1.5 mt-2 overflow-hidden">
                     <div class="bg-amber-500 h-1.5 rounded-full" style="width: 7%"></div>
                 </div>
@@ -193,7 +193,7 @@ render_header('Founder Telemetry & Directory Infiltration', 'admin');
                             </td>
 
                             <td class="px-5 py-4 font-mono font-bold text-brandMint">
-                                $<?= number_format($p['wallet_balance'], 2) ?>
+                                <?= format_bdt($p['wallet_balance']) ?>
                             </td>
 
                             <td class="px-5 py-4 font-mono text-xs">

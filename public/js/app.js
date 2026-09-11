@@ -201,8 +201,8 @@
                         <path d="m7 6 2 2-2 2"/>
                         <path d="m17 16 2 2-2 2"/>
                     </svg>
-                    <span class="font-mono font-bold">$${bountyVal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                    <span class="text-[10px] uppercase font-mono px-1 rounded bg-emerald-500/20 text-emerald-300">Coins</span>
+                    <span class="font-mono font-bold">৳${bountyVal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <span class="text-[10px] uppercase font-mono px-1 rounded bg-emerald-500/20 text-emerald-300">BDT</span>
                 </div>
             </div>
 
@@ -477,7 +477,7 @@
                     }
 
                     if (bountyAmount <= 0) {
-                        alert('Bounty reward must be greater than $0.');
+                        alert('Bounty reward must be greater than ৳0.');
                         return;
                     }
 
@@ -577,7 +577,7 @@
                 if (!res.ok) {
                     throw new Error(result.error || 'Failed to post bounty');
                 }
-                showToast(`Bounty created! $${result.escrow_amount} locked in escrow.`, 'success');
+                showToast(`Bounty created! ৳${result.escrow_amount} locked in escrow.`, 'success');
                 return result;
             } catch (err) {
                 showToast(err.message, 'error');

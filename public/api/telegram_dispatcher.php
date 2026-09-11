@@ -44,7 +44,7 @@ if (!$botToken || !$chatId) {
 
 $message = "🪙 *New Bounty Posted!*\n" .
            "*Title:* " . addslashes($title) . "\n" .
-           "*Reward:* $" . number_format((float)$bounty_amount, 2) . "\n" .
+           "*Reward:* " . format_bdt((float)$bounty_amount) . "\n" .
            "[Apply Here]($apply_link)";
 
 $apiUrl = "https://api.telegram.org/bot{$botToken}/sendMessage";

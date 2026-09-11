@@ -84,7 +84,7 @@ render_header('Job Hub & Recruiter ATS', 'job_hub');
                             <?= htmlspecialchars($job['category']) ?>
                         </span>
                         <div class="text-right">
-                            <span class="text-lg font-black font-mono text-brandMint">$<?= number_format($job['bounty_amount'], 2) ?></span>
+                            <span class="text-lg font-black font-mono text-brandMint"><?= format_bdt($job['bounty_amount']) ?></span>
                         </div>
                     </div>
 
@@ -182,7 +182,7 @@ render_header('Job Hub & Recruiter ATS', 'job_hub');
                 </div>
 
                 <div>
-                    <label class="block text-xs font-mono uppercase text-slate-300 mb-1.5">Bounty Amount ($ USD)</label>
+                    <label class="block text-xs font-mono uppercase text-slate-300 mb-1.5">Bounty Amount (৳ BDT)</label>
                     <input 
                         type="number" 
                         id="bounty-amount-input"
@@ -229,11 +229,11 @@ render_header('Job Hub & Recruiter ATS', 'job_hub');
             <div class="p-3 rounded-xl bg-brandMint/10 border border-brandMint/20 flex items-center justify-between text-xs">
                 <div class="text-slate-300">
                     <span class="font-bold text-brandMint">Escrow Lock Amount:</span>
-                    <span id="escrow-preview-text" class="font-mono font-bold text-white">$1,500.00</span>
+                    <span id="escrow-preview-text" class="font-mono font-bold text-white">৳1,500.00</span>
                     <span class="text-slate-400 text-[10px] block">Deducted from active wallet upon creation</span>
                 </div>
                 <div class="text-right font-mono text-[11px] text-slate-400">
-                    <div>Your Balance: <span class="text-emerald-400 font-bold">$<?= number_format($persona['wallet_balance'], 2) ?></span></div>
+                    <div>Your Balance: <span class="text-emerald-400 font-bold"><?= format_bdt($persona['wallet_balance']) ?></span></div>
                 </div>
             </div>
 
@@ -263,7 +263,7 @@ render_header('Job Hub & Recruiter ATS', 'job_hub');
     const previewText = document.getElementById('escrow-preview-text');
     amountInput.addEventListener('input', (e) => {
         const val = parseFloat(e.target.value) || 0;
-        previewText.textContent = '$' + val.toLocaleString('en-US', { minimumFractionDigits: 2 });
+        previewText.textContent = '৳' + val.toLocaleString('en-US', { minimumFractionDigits: 2 });
     });
 
     // Form submission

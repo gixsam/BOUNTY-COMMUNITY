@@ -161,6 +161,34 @@ bounty community/
   - Verified dynamic prefixing (`/public/css/stitch-tokens.css`, `/public/js/app.js`, `/public/js/sneak-bar.js`).
   - Synchronized `NOTE.md` across local and Google Drive workplace directories.
 
+### [Phase 11] Google Stitch Design Overhaul, Floating Navigation, Universal BDT Localization & Candidate Review Fallback
+- **Floating Glass Inset Navigation (`public/config.php`):**
+  - Redesigned master navigation from a flush top edge into an elevated inset floating glass pill:
+    - Container: `pt-3 px-4 sm:px-6 max-w-7xl mx-auto sticky top-3 z-40`
+    - Navbar: `bg-[#121826]/85 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl px-5 py-3 flex items-center justify-between`
+  - Fixed awkward multi-line wrapping on navigation items ("100-to-2 Screening", "Job Hub & ATS") by adding `whitespace-nowrap` and smooth hover transitions (`hover:text-indigo-400 transition-colors`).
+  - Updated wallet balance pill in header to display localized BDT currency (`format_bdt($ctx['wallet_balance'])`).
+- **Universal BDT Currency Localization (`৳` / `BDT`):**
+  - Implemented global helper `format_bdt(float|int|string $amount): string` in `public/config.php`.
+  - Localized all currency displays from USD (`$`) to Bangladeshi Taka (`৳` / `BDT`):
+    - `public/config.php`: Header balance badge (`৳50,000.00`) and mock job broadcast alert (`৳2,500.00`).
+    - `public/portal/index.php`: Vault metrics (`৳74,270.00`), bounty card coin pills, sidebar balance, open bounty cards, and modal input (`Bounty Reward (৳ BDT) *`).
+    - `public/portal/job_hub.php`: Bounty cards, post modal labels, live escrow calculation preview (`৳1,500.00`), and user balance indicator.
+    - `public/admin/index.php`: Escrow in custody (`৳74,270.00`), platform revenue (`৳3,713.50`), category liquidity allocations, and user directory wallet balance table.
+    - `public/js/app.js`: Realtime job card coin pill (`৳${bountyVal...}`), input validation alert (`৳0`), and toast notifications (`৳${result.escrow_amount}`).
+    - `public/api/jobs_handler.php`, `public/api/payout_handler.php`, `public/api/telegram_dispatcher.php`: JSON responses, lounge broadcasts, and Telegram channel notifications.
+- **Graceful Candidate Screening & Review Fallback (`public/portal/candidate_review.php`):**
+  - Completely eliminated unstyled blank screen and raw `die('Invalid job identifier.')` crashes.
+  - Auto-selects the first active bounty from Supabase or `bounty_mock_db` when no `job_id` query parameter is provided.
+  - Implemented an elegant Google Stitch empty state card wrapped inside `render_header()` and `render_footer()` when no bounties exist.
+  - Modernized applicant accordion rows into dark glass cards with status badges, applicant threat scores, and wired actions to `applications_handler.php`.
+- **Google Stitch Design Token Enhancement (`public/css/stitch-tokens.css`):**
+  - Added `.nav-floating-glass` utility class with backdrop blur and subtle indigo glow.
+- **Verification & Testing:**
+  - Validated PHP syntax cleanly across all 10 modified files using `php -l`.
+  - Verified candidate review fallback via CLI execution (`php -r "require 'public/portal/candidate_review.php';"`).
+  - Synchronized `NOTE.md` to local root and Google Drive workplace.
+
 ---
 
 ## 🚀 4. Upcoming Tasks & Future Roadmap ("Will Be Done")
