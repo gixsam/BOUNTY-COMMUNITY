@@ -213,7 +213,7 @@ $bountyReward = (float)($job['bounty_amount'] ?? $job['total_escrow_locked'] ?? 
 render_header('Candidate Review & 100-to-2 Screening', 'screening');
 ?>
 
-<div class="max-w-5xl mx-auto space-y-6">
+<div class="max-w-5xl mx-auto space-y-6 pb-24">
 
     <!-- Top Breadcrumb & Title Row -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

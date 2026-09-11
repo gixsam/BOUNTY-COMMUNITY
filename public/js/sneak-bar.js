@@ -165,7 +165,7 @@
 
         const dock = document.createElement('div');
         dock.id = 'sneak-bar-root';
-        dock.className = 'fixed bottom-20 md:bottom-4 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 p-1.5 rounded-2xl border border-white/10 bg-[#0B0F17]/90 backdrop-blur-2xl shadow-2xl transition-all duration-300';
+        dock.className = 'hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40 items-center gap-2 p-1.5 rounded-2xl border border-white/10 bg-[#0B0F17]/90 backdrop-blur-2xl shadow-2xl transition-all duration-300';
         dock.style.boxShadow = '0 12px 40px -10px rgba(0, 0, 0, 0.8), 0 0 20px -5px rgba(99, 102, 241, 0.25)';
 
         dock.innerHTML = `

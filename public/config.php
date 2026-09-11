@@ -998,80 +998,113 @@ if (!empty($flash)): ?>
 <?php endif; ?>
 
     <!-- Elevated Inset Floating Glass Navigation Bar (Google Stitch Prototype) -->
-    <header id="master-header" class="w-full pt-4 px-4 sm:px-6 max-w-7xl mx-auto sticky top-3 z-40 transition-all">
-        <div class="bg-[#121826]/85 backdrop-blur-xl border border-slate-700/60 rounded-2xl shadow-2xl px-6 py-3.5 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-6">
+    <header id="master-header" class="w-full pt-3 px-3 sm:px-6 max-w-7xl mx-auto sticky top-2 sm:top-3 z-40 transition-all">
+        <div class="bg-[#121826]/90 backdrop-blur-xl border border-slate-700/60 rounded-2xl shadow-2xl px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-3 sm:gap-4 overflow-visible">
+            <div class="flex items-center gap-3 lg:gap-6 min-w-0">
                 <!-- Dynamic Brand Name -->
-                <a href="<?= $baseUrl ?>/portal/index.php" class="flex items-center gap-3 group shrink-0">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brandIndigo to-brandMint flex items-center justify-center shadow-glow-indigo group-hover:scale-105 transition-transform">
-                        <i class="fa-solid fa-bolt text-slate-950 font-black text-lg"></i>
+                <a href="<?= $baseUrl ?>/portal/index.php" class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-brandIndigo to-brandMint flex items-center justify-center shadow-glow-indigo group-hover:scale-105 transition-transform shrink-0">
+                        <i class="fa-solid fa-bolt text-slate-950 font-black text-base sm:text-lg"></i>
                     </div>
-                    <div>
-                        <div class="font-bold text-base tracking-tight text-white flex items-center gap-1.5">
+                    <div class="min-w-0">
+                        <div class="font-bold text-sm sm:text-base tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap">
                             <?= htmlspecialchars(COMMUNITY_NAME) ?>
-                            <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-brandIndigo/20 text-brandIndigo border border-brandIndigo/30">Engine</span>
+                            <span class="text-[9px] sm:text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-brandIndigo/20 text-brandIndigo border border-brandIndigo/30">Engine</span>
                         </div>
-                        <div class="text-[11px] text-slate-400 font-mono -mt-0.5">Hostinger PHP 8.2 · Supabase</div>
+                        <div class="hidden sm:block text-[10px] text-slate-400 font-mono -mt-0.5 truncate">Hostinger PHP 8.2 · Supabase</div>
                     </div>
                 </a>
 
-                <!-- Desktop Navigation Links (Prevent Awkward Multi-word Wrapping) -->
-                <nav class="hidden md:flex items-center gap-1">
-                    <?php
-                    $nav_items = [
-                        'portal'   => ['label' => 'Lounge Feed',       'icon' => 'fa-comments',        'href' => '/portal/index.php'],
-                        'job_hub'  => ['label' => 'Job Hub & ATS',     'icon' => 'fa-briefcase',       'href' => '/portal/job_hub.php'],
-                        'screening'=> ['label' => '100-to-2 Screening','icon' => 'fa-users-viewfinder','href' => '/portal/candidate_review.php'],
-                        'mod'      => ['label' => 'Threat Patrol',     'icon' => 'fa-shield-halved',   'href' => '/mod/index.php'],
-                        'support'  => ['label' => 'Staff Desk',        'icon' => 'fa-headset',         'href' => '/support/index.php'],
-                        'admin'    => ['label' => 'Telemetry',         'icon' => 'fa-chart-line',      'href' => '/admin/index.php'],
-                        'branding' => ['label' => 'Console',           'icon' => 'fa-sliders',         'href' => '/admin/branding.php'],
-                    ];
-                    foreach ($nav_items as $slug => $item):
-                        $is_active = ($active_nav === $slug);
-                    ?>
-                    <a href="<?= $baseUrl . $item['href'] ?>"
-                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 <?= $is_active ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
-                        <i class="fa-solid <?= $item['icon'] ?> mr-1.5 text-xs"></i><?= $item['label'] ?>
+                <!-- Role-Aware Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center gap-1">
+                    <a href="<?= $baseUrl ?>/portal/index.php"
+                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 <?= ($active_nav === 'portal') ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
+                        <i class="fa-solid fa-comments mr-1.5 text-xs"></i>Lounge
                     </a>
-                    <?php endforeach; ?>
+                    <a href="<?= $baseUrl ?>/portal/job_hub.php"
+                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 <?= ($active_nav === 'job_hub') ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
+                        <i class="fa-solid fa-briefcase mr-1.5 text-xs"></i>Job Hub
+                    </a>
+                    <a href="<?= $baseUrl ?>/portal/candidate_review.php"
+                       class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 <?= ($active_nav === 'screening') ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
+                        <i class="fa-solid fa-users-viewfinder mr-1.5 text-xs"></i>Screening
+                    </a>
+
+                    <?php 
+                    $user_role = $ctx['role'] ?? 'hunter';
+                    $is_staff = in_array($user_role, ['admin', 'founder', 'mod', 'support'], true);
+                    if ($is_staff): 
+                    ?>
+                    <!-- Staff Suite Dropdown for privileged roles -->
+                    <div class="relative group">
+                        <button type="button" class="whitespace-nowrap text-xs font-semibold tracking-wide px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-1.5 <?= in_array($active_nav, ['mod', 'support', 'admin', 'branding'], true) ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40' ?>">
+                            <i class="fa-solid fa-shield-halved text-xs"></i>
+                            <span>Staff Suite</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] opacity-70 group-hover:rotate-180 transition-transform duration-200"></i>
+                        </button>
+                        <div class="absolute left-0 top-full mt-2 w-48 rounded-xl bg-[#121826]/95 backdrop-blur-2xl border border-white/10 shadow-2xl py-1.5 hidden group-hover:block z-50 transition-all">
+                            <?php if (in_array($user_role, ['admin', 'mod'], true)): ?>
+                                <a href="<?= $baseUrl ?>/mod/index.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium <?= ($active_nav === 'mod') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
+                                    <i class="fa-solid fa-shield-halved w-4 text-xs text-rose-400"></i>
+                                    <span>Threat Patrol</span>
+                                </a>
+                            <?php endif; ?>
+                            <?php if (in_array($user_role, ['admin', 'support'], true)): ?>
+                                <a href="<?= $baseUrl ?>/support/index.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium <?= ($active_nav === 'support') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
+                                    <i class="fa-solid fa-headset w-4 text-xs text-cyan-400"></i>
+                                    <span>Staff Desk</span>
+                                </a>
+                            <?php endif; ?>
+                            <?php if ($user_role === 'admin'): ?>
+                                <a href="<?= $baseUrl ?>/admin/index.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium <?= ($active_nav === 'admin') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
+                                    <i class="fa-solid fa-chart-line w-4 text-xs text-indigo-400"></i>
+                                    <span>Telemetry</span>
+                                </a>
+                                <a href="<?= $baseUrl ?>/admin/branding.php" class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium <?= ($active_nav === 'branding') ? 'text-indigo-300 bg-indigo-500/15' : 'text-slate-300 hover:text-white hover:bg-white/5' ?>">
+                                    <i class="fa-solid fa-sliders w-4 text-xs text-amber-400"></i>
+                                    <span>Console</span>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
                 </nav>
             </div>
 
-            <!-- Right: Level Badge, Live Coin Pill & Identity Chip (Aligned Horizontally) -->
-            <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
-                <!-- Dynamic Level Badge -->
-                <div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-mono font-bold" title="Player Reputation Level">
+            <!-- Right: Level Badge, Live Coin Pill & Identity Chip -->
+            <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                <!-- Dynamic Level Badge (Visible on xl+ screens to prevent navbar squeeze) -->
+                <div class="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-mono font-bold" title="Player Reputation Level">
                     <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-                    <span>Lvl <?= $user_level ?> <?= $level_title ?></span>
+                    <span class="whitespace-nowrap">Lvl <?= $user_level ?> <?= $level_title ?></span>
                 </div>
 
                 <!-- Live Coin Pill (BDT Currency) -->
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-sm font-semibold shadow-glow-mint transition hover:border-emerald-500/40" title="Live Coin Balance & Escrow Custody (BDT)">
-                    <span class="relative flex h-2 w-2">
+                <div class="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs sm:text-sm font-semibold shadow-glow-mint transition hover:border-emerald-500/40 shrink-0" title="Live Coin Balance & Escrow Custody (BDT)">
+                    <span class="relative flex h-2 w-2 shrink-0">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                     </span>
-                    <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="8" cy="8" r="6"/>
                         <path d="M18.09 10.37A6 6 0 1 1 10.34 18"/>
                         <path d="m7 6 2 2-2 2"/>
                         <path d="m17 16 2 2-2 2"/>
                     </svg>
-                    <span class="font-mono font-bold"><?= format_bdt($ctx['wallet_balance'] ?? 0) ?></span>
-                    <span class="hidden sm:inline text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">Coins</span>
+                    <span class="font-mono font-bold whitespace-nowrap"><?= format_bdt($ctx['wallet_balance'] ?? 0) ?></span>
+                    <span class="hidden 2xl:inline text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">Coins</span>
                 </div>
 
                 <!-- Identity Chip -->
-                <div class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl glass-card">
+                <div class="inline-flex items-center gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl glass-card shrink-0">
                     <img src="<?= htmlspecialchars($ctx['avatar_url'] ?? '') ?>"
                          alt="<?= htmlspecialchars($ctx['display_name'] ?? 'User') ?>"
-                         class="w-7 h-7 rounded-lg object-cover border border-white/10">
-                    <div class="hidden lg:block text-left">
-                        <div class="text-xs font-semibold text-white leading-tight"><?= htmlspecialchars($ctx['display_name'] ?? '') ?></div>
-                        <div class="text-[10px] font-mono text-slate-400">@<?= htmlspecialchars($ctx['handle'] ?? '') ?></div>
+                         class="w-7 h-7 rounded-lg object-cover border border-white/10 shrink-0">
+                    <div class="hidden 2xl:block text-left max-w-[110px] truncate">
+                        <div class="text-xs font-semibold text-white leading-tight truncate"><?= htmlspecialchars($ctx['display_name'] ?? '') ?></div>
+                        <div class="text-[10px] font-mono text-slate-400 truncate">@<?= htmlspecialchars($ctx['handle'] ?? '') ?></div>
                     </div>
-                    <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-md border <?= $role_badge ?>">
+                    <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-md border <?= $role_badge ?> shrink-0">
                         <?= htmlspecialchars($ctx['role'] ?? '') ?>
                     </span>
                 </div>

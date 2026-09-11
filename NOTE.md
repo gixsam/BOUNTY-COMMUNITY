@@ -203,10 +203,28 @@ bounty community/
   - `public/mod/login.php`: Staff threat patrol login with rose badge (`bg-rose-500/10 text-rose-400 border border-rose-500/20`) and 1-click Sarah Jenkins login.
   - `public/api/auth_handler.php`: Backend authentication controller enforcing cross-portal role validation (e.g. returns HTTP 403 "Unauthorized: Admin privileges required" if hunter attempts admin login).
   - Portal Header Route Protection: Gated `public/admin/index.php` (admin/founder only), `public/support/index.php` (support/admin/founder only), and `public/mod/index.php` (mod/admin/founder only).
-- **Verification & Testing:**
-  - Validated PHP syntax cleanly across all 13 modified and created PHP files (`php -l`).
-  - Executed automated CLI test verifying BDT formatting, persona mappings, and role gatekeeping logic.
-  - Synchronized `NOTE.md` to local root and Google Drive workplace.
+- **Phase 12: Elimination of UI Overlapping & Responsive Header / Bottom Dock Redesign:**
+  - **Master Header Overcrowding & Collision Fix (`public/config.php`):**
+    - *Root Cause Diagnosed:* Combined width of 7 text-heavy nav links + Brand + Level Badge + Coin Pill + Identity Chip required ~1,600px, but the container was capped at `max-w-7xl` (1,280px). On viewports under 1600px, flex items overflowed and `Lvl 5 Recruiter` physically collided with `Console` (on desktop) and `ENGINE` (on tablet/mobile).
+    - *Role-Aware Navigation:* Non-staff users (`hunter`, `recruiter`) only see core portal links: `Lounge`, `Job Hub`, and `Screening`.
+    - *Staff Suite Dropdown:* Internal tools (`Threat Patrol`, `Staff Desk`, `Telemetry`, `Console`) are now grouped into an elegant `Staff Suite ▾` dropdown visible exclusively to authorized roles (`admin`, `founder`, `mod`, `support`), saving over 450px of horizontal space.
+    - *Responsive Badges:*
+      - Level Badge: `hidden xl:inline-flex` (prevents navbar squeezing on tablet/laptop).
+      - Coin Pill: Trailing label `Coins` marked `hidden 2xl:inline`, keeping balance display `• ৳12,450.00` compact.
+      - Identity Chip: Name + handle marked `hidden 2xl:block` with `truncate`, rendering Avatar + Role badge cleanly on smaller screens.
+    - *Flex Box Protection:* Left container assigned `min-w-0` and brand `shrink-0` to eliminate horizontal text collisions across all viewport widths.
+  - **Bottom Floating Dock Collision Fix (`public/js/sneak-bar.js`):**
+    - *Root Cause Diagnosed:* `#sneak-bar-root` was styled with `fixed bottom-20 md:bottom-4`, causing it to render simultaneously above `#mobile-floating-dock` (`bottom-3`) on mobile/tablet screens, blocking candidate cards (`Arif Chowdhury`) and ATS action buttons.
+    - *Single Dock Guarantee:* Changed `#sneak-bar-root` to `hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40`:
+      - On mobile (< 768px): Only `#mobile-floating-dock` is displayed at `bottom-3`.
+      - On desktop/tablet (>= 768px): `#mobile-floating-dock` is hidden (`md:hidden`), and only `#sneak-bar-root` is displayed at `bottom-4`.
+      - Eliminates dual-stacking and card occlusion entirely.
+  - **Candidate Review Viewport Safety (`public/portal/candidate_review.php`):**
+    - Added `pb-24` safety padding to the candidate list container, ensuring all applicant cards and ATS actions remain fully visible and clickable.
+  - **Verification & Testing:**
+    - Validated PHP syntax (`php -l`) across `public/config.php` and `public/portal/candidate_review.php`.
+    - Verified HTML output rendering and flexbox responsiveness in local CLI.
+    - Synchronized `NOTE.md` to local root and Google Drive workplace with matching SHA256 checksums.
 
 ---
 
