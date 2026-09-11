@@ -161,151 +161,93 @@ bounty community/
   - Verified dynamic prefixing (`/public/css/stitch-tokens.css`, `/public/js/app.js`, `/public/js/sneak-bar.js`).
   - Synchronized `NOTE.md` across local and Google Drive workplace directories.
 
-### [Phase 11] Master Google Stitch Overhaul, Floating Navigation, BDT Localization, Clean URLs & Role-Based Auth Gates
-- **Clean Root URL Routing & Apache Rewriting (`.htaccess`):**
-  - Engineered root `.htaccess` (`.htaccess`) for Hostinger Apache:
-    - Denies web access to sensitive files and directories: `schema.sql`, `NOTE.md`, `.agent/`, `.env*`, `.git*`.
-    - Static asset routing without 404s: `^css/(.*)$` -> `public/css/$1`, `^js/(.*)$` -> `public/js/$1`, `^api/(.*)$` -> `public/api/$1`.
-    - Canonical clean portal routing:
-      - `^/?$` -> `public/portal/index.php` (User Lounge & Bounties)
-      - `^login/?$` and `^signup/?$` -> `public/portal/auth.php`
-      - `^admin/?$` -> `public/admin/index.php`
-      - `^admin/login/?$` -> `public/admin/login.php`
-      - `^support/?$` -> `public/support/index.php`
-      - `^support/login/?$` -> `public/support/login.php`
-      - `^(staff|stuff)/?$` -> `public/mod/index.php`
-      - `^(staff|stuff)/login/?$` -> `public/mod/login.php`
-  - Maintained `index.php` in project root as an immediate fallback header redirect to `/public/portal/index.php`.
-- **Floating Glass Inset Navigation (`public/config.php`):**
+### [Phase 11] Full Social Community Rollout, Stitch Design, BDT Localization, Role Logins & Clean URLs
+
+- **1. Clean Root URLs & Apache URL Rewriting (`.htaccess`, `index.php`):**
+  - Configured root `.htaccess` (`.htaccess`) for Hostinger Apache:
+    - Blocked unauthorized browser access to sensitive files and directories: `schema.sql`, `NOTE.md`, `.env*`, `.agent/`, and `.git*` (HTTP 403 Forbidden).
+    - Preserved direct static asset access without 404s: `/css/*` -> `public/css/*`, `/js/*` -> `public/js/*`, `/api/*` -> `public/api/*`.
+    - Established canonical clean URL routes:
+      * `/` -> `public/portal/index.php` (User Lounge & Bounties)
+      * `/login` and `/signup` -> `public/portal/auth.php` (Tabbed Hunter/Recruiter Auth)
+      * `/admin` -> `public/admin/index.php`
+      * `/admin/login` -> `public/admin/login.php` (Founder & Admin Terminal)
+      * `/support` -> `public/support/index.php`
+      * `/support/login` -> `public/support/login.php` (Customer Support Desk)
+      * `/staff` and `/stuff` -> `public/mod/index.php`
+      * `/staff/login` and `/stuff/login` -> `public/mod/login.php` (Threat Patrol Staff Terminal)
+  - Maintained root `index.php` as a syntax-clean immediate 302 redirect fallback to `/public/portal/index.php` resolving Hostinger document root edge cases.
+
+- **2. Floating Glass Inset Header & Google Stitch Material Symbols (`public/config.php`, `public/css/stitch-tokens.css`):**
+  - Loaded Google Stitch Material Symbols in HTML `<head>`:
+    `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />`
   - Redesigned master navigation bar with breathing room and Google Stitch glass tokens:
     - Inset container: `<div class="w-full pt-4 px-4 sm:px-6 max-w-7xl mx-auto sticky top-3 z-40">`
     - Elevated navbar: `bg-[#121826]/85 backdrop-blur-xl border border-slate-700/60 rounded-2xl shadow-2xl px-6 py-3.5 flex items-center justify-between`
-  - Fixed awkward multi-line text wrapping on navigation items ("Job Hub & ATS", "100-to-2 Screening", "Threat Patrol", "Staff Desk") using `whitespace-nowrap text-xs font-semibold tracking-wide hover:text-indigo-400 hover:bg-slate-800/40 rounded-lg px-3 py-1.5 transition-all`.
-  - Horizontally aligned user level badge, live coin pill, and persona identity chip.
-- **Universal BDT Currency Localization (`৳` / `BDT`):**
-  - Global formatter `format_bdt($amount)` implemented in `public/config.php`.
-  - Replaced all raw USD (`$`) symbols across:
-    - Master Header wallet pill: `৳50,000.00 COINS`.
-    - Lounge Feed (`public/portal/index.php`): Vault stats (`৳74,270.00`), user identity card (`৳50,000.00 Escrow Ready`), open bounty cards (`৳2,500.00`, `৳1,800.00`, `৳3,200.00`), and modal reward input (`BDT (৳)`).
-    - Job Hub ATS (`public/portal/job_hub.php`): Bounty reward pills, escrow calculation preview (`৳1,500.00`), and balance notice.
-    - Admin Telemetry (`public/admin/index.php`): Custody metrics (`৳74,270.00`), revenue (`৳3,713.50`), liquidity allocations, and user balance directory.
-    - Client-side DOM (`public/js/app.js`): Dynamic job cards (`৳${bountyVal...}`), input validation (`৳0`), and toast alerts (`৳${result.escrow_amount}`).
-    - Backend Handlers & Dispatcher: `jobs_handler.php`, `payout_handler.php`, and `telegram_dispatcher.php`.
-- **Candidate Review Empty State & Dark Theme Fallback (`public/portal/candidate_review.php`):**
-  - Removed raw `die('Invalid job identifier.')` and unstyled HTML crashes.
-  - Automatically queries the first active bounty from Supabase or `bounty_mock_db` when no `job_id` query parameter is provided.
-  - Rendered a centered Google Stitch glass card (`bg-[#121826]/75 border border-slate-700/60 rounded-2xl p-10 max-w-xl mx-auto mt-12 text-center shadow-2xl`) with glowing Lucide/FA icon, explanatory text, and `[Open Job Hub & ATS]` CTA.
-  - Full master layout consistency (`render_header()` & `render_footer()`).
-- **Dedicated Portal Authentication & Server-Side Role Enforcement:**
-  - `public/portal/auth.php`: Tabbed switcher for Login & Signup, supporting `hunter` and `recruiter` roles with 1-click demo accounts.
-  - `public/admin/login.php`: Founder infiltration terminal with purple badge (`bg-purple-500/10 text-purple-400 border border-purple-500/20`) and 1-click Elena Rostova login.
-  - `public/support/login.php`: Customer support & dispute desk login with teal badge (`bg-teal-500/10 text-teal-400 border border-teal-500/20`) and 1-click Devon Bailey login.
-  - `public/mod/login.php`: Staff threat patrol login with rose badge (`bg-rose-500/10 text-rose-400 border border-rose-500/20`) and 1-click Sarah Jenkins login.
-  - `public/api/auth_handler.php`: Backend authentication controller enforcing cross-portal role validation (e.g. returns HTTP 403 "Unauthorized: Admin privileges required" if hunter attempts admin login).
-  - Portal Header Route Protection: Gated `public/admin/index.php` (admin/founder only), `public/support/index.php` (support/admin/founder only), and `public/mod/index.php` (mod/admin/founder only).
-- **Phase 12: Elimination of UI Overlapping & Responsive Header / Bottom Dock Redesign:**
-  - **Master Header Overcrowding & Collision Fix (`public/config.php`):**
-    - *Root Cause Diagnosed:* Combined width of 7 text-heavy nav links + Brand + Level Badge + Coin Pill + Identity Chip required ~1,600px, but the container was capped at `max-w-7xl` (1,280px). On viewports under 1600px, flex items overflowed and `Lvl 5 Recruiter` physically collided with `Console` (on desktop) and `ENGINE` (on tablet/mobile).
-    - *Role-Aware Navigation:* Non-staff users (`hunter`, `recruiter`) only see core portal links: `Lounge`, `Job Hub`, and `Screening`.
-    - *Staff Suite Dropdown:* Internal tools (`Threat Patrol`, `Staff Desk`, `Telemetry`, `Console`) are now grouped into an elegant `Staff Suite ▾` dropdown visible exclusively to authorized roles (`admin`, `founder`, `mod`, `support`), saving over 450px of horizontal space.
-    - *Responsive Badges:*
-      - Level Badge: `hidden xl:inline-flex` (prevents navbar squeezing on tablet/laptop).
-      - Coin Pill: Trailing label `Coins` marked `hidden 2xl:inline`, keeping balance display `• ৳12,450.00` compact.
-      - Identity Chip: Name + handle marked `hidden 2xl:block` with `truncate`, rendering Avatar + Role badge cleanly on smaller screens.
-    - *Flex Box Protection:* Left container assigned `min-w-0` and brand `shrink-0` to eliminate horizontal text collisions across all viewport widths.
-  - **Bottom Floating Dock Collision Fix (`public/js/sneak-bar.js`):**
-    - *Root Cause Diagnosed:* `#sneak-bar-root` was styled with `fixed bottom-20 md:bottom-4`, causing it to render simultaneously above `#mobile-floating-dock` (`bottom-3`) on mobile/tablet screens, blocking candidate cards (`Arif Chowdhury`) and ATS action buttons.
-    - *Single Dock Guarantee:* Changed `#sneak-bar-root` to `hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40`:
-      - On mobile (< 768px): Only `#mobile-floating-dock` is displayed at `bottom-3`.
-      - On desktop/tablet (>= 768px): `#mobile-floating-dock` is hidden (`md:hidden`), and only `#sneak-bar-root` is displayed at `bottom-4`.
-      - Eliminates dual-stacking and card occlusion entirely.
-  - **Candidate Review Viewport Safety (`public/portal/candidate_review.php`):**
-    - Added `pb-24` safety padding to the candidate list container, ensuring all applicant cards and ATS actions remain fully visible and clickable.
-  - **Verification & Testing:**
-    - Validated PHP syntax (`php -l`) across `public/config.php` and `public/portal/candidate_review.php`.
-    - Verified HTML output rendering and flexbox responsiveness in local CLI.
-    - Synchronized `NOTE.md` to local root and Google Drive workplace with matching SHA256 checksums.
-- **Phase 13: Clean Apache URL Routing & Root Security Hardening:**
-  - **Private File Protection (`.htaccess`):**
-    - Configured multi-layer blocking via `FilesMatch` and `mod_rewrite` for sensitive files and directories: `schema.sql`, `NOTE.md`, `.env*`, `.agent/`, and `.git*`.
-    - Direct browser requests return HTTP 403 Forbidden.
-  - **Static Asset Routing (`.htaccess`):**
-    - Seamlessly pass `/css/*`, `/js/*`, and `/api/*` directly to `public/css/*`, `public/js/*`, and `public/api/*` without 404s.
-  - **Clean Canonical URL Routing (`.htaccess`):**
-    - `/` -> `public/portal/index.php`
-    - `/login` and `/signup` -> `public/portal/auth.php`
-    - `/admin` -> `public/admin/index.php`
-    - `/admin/login` -> `public/admin/login.php`
-    - `/support` -> `public/support/index.php`
-    - `/support/login` -> `public/support/login.php`
-    - `/staff` and `/stuff` -> `public/mod/index.php`
-    - `/staff/login` and `/stuff/login` -> `public/mod/login.php`
-  - **Root Direct Routing (`index.php`):**
-    - Clean PHP redirect fallback to `public/portal/index.php` with verified syntax.
-- **Phase 14: Floating Glass Header & Google Stitch Material Symbols Integration:**
-  - **Google Stitch Material Symbols Head CDN (`public/config.php`):**
-    - Added `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />` to HTML `<head>`.
-  - **Floating Header Positioning & Inset Wrapper (`public/config.php`):**
-    - Wrapped header in `<div class="w-full pt-4 px-4 sm:px-6 max-w-7xl mx-auto sticky top-3 z-40">`.
-    - Styled with Google Stitch obsidian glass: `bg-[#121826]/85 backdrop-blur-xl border border-slate-700/60 rounded-2xl shadow-2xl px-6 py-3.5 flex items-center justify-between`.
-    - Guarded against menu item text wrapping with `whitespace-nowrap text-xs font-semibold`.
-  - **Universal Stitch Icon Tokens Across Header & Mobile Dock:**
-    - Lounge Feed -> `<span class="material-symbols-outlined">forum</span>`
-    - Job Hub -> `<span class="material-symbols-outlined">cases</span>`
-    - Screening -> `<span class="material-symbols-outlined">how_to_reg</span>`
-    - Threat Patrol -> `<span class="material-symbols-outlined">shield</span>`
-    - Staff Desk -> `<span class="material-symbols-outlined">support_agent</span>`
-    - Wallet Coin -> `<span class="material-symbols-outlined">monetization_on</span>`
-    - Mobile bottom dock items mapped to Stitch symbols (`forum`, `cases`, `add`, `how_to_reg`, `support_agent`).
-  - **CSS Token Optimization (`public/css/stitch-tokens.css`):**
-    - Added `.material-symbols-outlined` display alignment and baseline centering.
-  - **Verification & Testing:**
-    - Linted `public/config.php` and `public/portal/candidate_review.php` with `php -l`.
-    - Tested HTML symbol rendering in local CLI.
-    - Synchronized `NOTE.md` to Google Drive workplace with verified SHA256 checksums.
-- **Phase 15: Universal Bangladeshi Taka (৳ BDT) Standardization:**
+  - Fixed awkward multi-line text wrapping on navigation items using `whitespace-nowrap text-xs font-semibold`.
+  - Replaced all header and bottom dock icons with Google Stitch icon tokens:
+    * Lounge Feed -> `<span class="material-symbols-outlined">forum</span>`
+    * Job Hub -> `<span class="material-symbols-outlined">cases</span>`
+    * Screening -> `<span class="material-symbols-outlined">how_to_reg</span>`
+    * Threat Patrol -> `<span class="material-symbols-outlined">shield</span>`
+    * Staff Desk -> `<span class="material-symbols-outlined">support_agent</span>`
+    * Wallet Coin -> `<span class="material-symbols-outlined">monetization_on</span>`
+  - Implemented role-aware navigation: standard members only see core items, while internal management tools are tucked into an elegant `Staff Suite ▾` dropdown.
+  - Enforced single-dock guarantee: fixed bottom purple sneak bar (`#sneak-bar-root`) displayed exclusively on desktop (`hidden md:flex`), mobile dock exclusively on mobile (`md:hidden`), eliminating dual-dock collisions and card occlusions.
+
+- **3. Universal Bangladeshi Taka (৳ BDT) Standardization (`public/config.php`):**
   - Standardized `format_bdt($amount)` global helper in `public/config.php`:
     ```php
     function format_bdt($amount) {
         return '৳' . number_format((float)$amount, 2);
     }
     ```
-  - Verified 100% platform-wide currency coverage across Lounge Feed, ATS Job Hub, Candidate Review, Admin Telemetry, and real-time event feeds.
-- **Phase 16: Role-Based Portal Logins & Server-Side Auth Gatekeeper:**
+  - Replaced all USD (`$`) symbols across the entire platform:
+    * Master Header wallet pill: `৳50,000.00 COINS`
+    * Lounge Feed (`public/portal/index.php`): Vault stats (`৳74,270.00`), user identity card (`৳50,000.00 Escrow Ready`), open bounty cards (`৳2,500.00`, `৳1,800.00`, `৳3,200.00`), and modal reward inputs
+    * Job Hub ATS (`public/portal/job_hub.php`): Bounty reward pills, escrow calculation previews, and balance notices
+    * Admin Telemetry (`public/admin/index.php`): Custody metrics, platform revenue, liquidity pools, and user balance directory
+    * Client-side DOM (`public/js/app.js`): Dynamic job cards (`৳${bountyVal...}`), input validation (`৳0`), and toast alerts (`৳${result.escrow_amount}`)
+    * Backend Handlers & Dispatcher: `jobs_handler.php`, `payout_handler.php`, and `telegram_dispatcher.php`
+
+- **4. Candidate Review Screen Fallback & Dark Theme Integration (`public/portal/candidate_review.php`):**
+  - Removed raw `die('Invalid job identifier.')` crashes when no `job_id` query parameter is provided.
+  - Added automatic fallback to query the first active bounty from Supabase or session mock database.
+  - Rendered a centered Google Stitch obsidian glass empty state (`bg-[#121826]/75 border border-slate-700/60 rounded-2xl p-10 max-w-xl mx-auto mt-12 text-center shadow-2xl`) with glowing icon, helpful guidance, and `[Open Job Hub & ATS]` CTA.
+  - Integrated full master layout shell (`render_header()` and `render_footer()`) and added `pb-24` bottom padding for obstacle-free candidate review.
+
+- **5. Role-Specific Login Portals & Server-Side Auth Gatekeeper (`public/portal/auth.php`, `public/admin/login.php`, `public/support/login.php`, `public/mod/login.php`, `public/api/auth_handler.php`):**
   - **User Portal Auth (`public/portal/auth.php`):**
     - Clean tab switcher for Login and Sign Up.
     - Role selector for registration offering `Hunter` ("Solve tasks & earn") and `Recruiter` ("Post jobs & hire").
     - Obsidian card styling: `bg-[#121826]/85 backdrop-blur-xl border border-white/10 rounded-2xl max-w-md mx-auto p-8 shadow-2xl relative` with top spacing `mt-16`.
     - Clean fallback return link routing to `/`.
   - **Dedicated Staff Login Terminals (Login-Only):**
-    - Admin Login (`public/admin/login.php`): Title & `<h1>` "Founder & Admin Terminal", purple accent, quick-fill for Elena Vance.
-    - Support Login (`public/support/login.php`): Title & `<h1>` "Customer Support Desk", teal accent, quick-fill for Devon Bailey.
-    - Staff/Mod Login (`public/mod/login.php`): Title & `<h1>` "Threat Patrol Staff Terminal", red accent, quick-fill for Sarah Jenkins.
+    - Admin Login (`public/admin/login.php`): Title & `<h1>` "Founder & Admin Terminal", purple accent, quick-fill for Elena Vance (`elena@bounty.community`).
+    - Support Login (`public/support/login.php`): Title & `<h1>` "Customer Support Desk", teal accent, quick-fill for Devon Bailey (`support@bounty.community`).
+    - Staff/Mod Login (`public/mod/login.php`): Title & `<h1>` "Threat Patrol Staff Terminal", red accent, quick-fill for Sarah Jenkins (`mod@bounty.community`).
   - **Authentication Controller (`public/api/auth_handler.php`):**
     - Multi-tier identity lookup: predefined personas, mock registered accounts, and Supabase `public.profiles` by email or handle.
-    - Server-side boundary enforcement: Hunters and recruiters attempting access to `/admin`, `/support`, or `/staff` terminals are rejected with HTTP 403 / redirect to terminal logins.
-    - Session cookie issuance with strict role state tracking.
-    - Clean destination routing on successful authentication.
+    - Server-side boundary enforcement: Hunters and Recruiters attempting access to `/admin`, `/support`, or `/staff` terminals are rejected with HTTP 403 / redirect to terminal logins.
+    - Session cookie issuance with strict role state tracking and clean destination routing on successful authentication.
   - **Header Gatekeeping on Protected Pages:**
     - `public/admin/index.php` & `public/admin/branding.php`: Redirect unauthenticated visitors to `/admin/login`.
     - `public/support/index.php`: Redirect unauthenticated visitors to `/support/login`.
     - `public/mod/index.php`: Redirect unauthenticated visitors to `/staff/login`.
-  - **Apache Clean URL Routing (`.htaccess`):**
-    - Enhanced rewrite rules for `/admin/login`, `/support/login`, and `/staff/login` with optional `.php` and trailing slashes.
 
-- **Phase 17: Social Community Lounge Reactions, Q&A Comment Threads & Leaderboard:**
-  - **One-Click Emoji Reactions Engine (`public/portal/index.php`, `public/js/app.js`, `public/api/reaction_handler.php`):**
+- **6. Social Community Lounge Reactions, In-Stream Q&A Threads & Leaderboard (`public/portal/index.php`, `public/js/app.js`, `public/api/reaction_handler.php`, `public/api/comment_handler.php`):**
+  - **One-Click Emoji Reactions Engine:**
     - Added interactive reaction buttons (👍 Like, 🚀 Launch, 🪙 Bounty, 🔥 Fire) with live reaction counters under all Lounge chat messages and escrowed job alert cards.
-    - Built optimistic UI feedback with micro-bounce animations, immediate count adjustments, and active indigo styling.
+    - Built optimistic UI feedback with micro-bounce animations (`scale-110`), immediate count adjustments, and active indigo styling.
     - Created `public/api/reaction_handler.php` supporting GET (reaction totals + active user state) and POST (toggle/increment/decrement) with session state persistence and real-time Supabase broadcasting via `chat_messages` (`meta_json.type = 'reaction_event'`).
-  - **In-Stream Bounty Q&A & Quick Reply Threads (`public/portal/index.php`, `public/js/app.js`, `public/api/comment_handler.php`):**
+  - **In-Stream Bounty Q&A & Quick Reply Threads:**
     - Built quick question/inquiry thread under each job alert card directly on the social wall, allowing hunters to ask questions before applying.
     - Created `public/api/comment_handler.php` supporting GET (job comments) and POST (post inquiry/reply) with sender context preservation and Supabase broadcasting (`meta_json.type = 'job_reply'`).
     - Integrated real-time Supabase websocket listener in `public/js/app.js` to dynamically append incoming comments to the relevant bounty card's discussion thread without page refresh.
-  - **Sidebar Community Leaderboard & Live Online Stats (`public/portal/index.php`, `public/config.php`):**
+  - **Sidebar Community Leaderboard & Live Online Stats:**
     - Added Live Community Activity widget to the Lounge sidebar showing live counts of active members (142 online, 89 hunters, 24 recruiters, 29 tasks).
     - Built "Top Earners this Week" Leaderboard widget showcasing top 4 performers with ranking medals (🥇, 🥈, 🥉, ⭐), persona badges, bounties won, and total earnings rendered in universal Bangladeshi Taka (`৳ BDT`).
-  - **Global JavaScript Interface (`public/js/app.js`):**
+  - **Global JavaScript Interface:**
     - Extended `window.BountyApp` with `toggleReaction()`, `toggleCommentBox()`, and `appendJobCommentToDOM()`.
     - Added delegated event listeners for all dynamic and static `.btn-reaction` buttons and `.job-reply-form` submissions.
 
@@ -349,25 +291,25 @@ bounty community/
 |---|---|---|---|
 | `.htaccess` | ✅ Verified (Syntax Clean) | 2026-09-11 | Root Apache rewrite, clean URL router & sensitive file shield |
 | `index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Root router redirecting to `/public/portal/index.php` (Hostinger 403 fix) |
-| `public/portal/index.php` | ✅ Verified (Phase 17) | 2026-09-11 | Live Community Lounge with emoji reactions, quick reply Q&A and sidebar leaderboard |
-| `public/portal/auth.php` | ✅ Verified (Phase 16) | 2026-09-11 | User portal login & signup with Hunter/Recruiter role tabs & obsidian card |
-| `public/admin/login.php` | ✅ Verified (Phase 16) | 2026-09-11 | Founder & Admin Terminal login with purple accent & Elena Vance quick-fill |
-| `public/support/login.php` | ✅ Verified (Phase 16) | 2026-09-11 | Customer Support Desk login with teal accent & Devon Bailey quick-fill |
-| `public/mod/login.php` | ✅ Verified (Phase 16) | 2026-09-11 | Threat Patrol Staff Terminal login with red accent & Sarah Jenkins quick-fill |
-| `public/api/auth_handler.php` | ✅ Verified (Phase 16) | 2026-09-11 | Authentication controller, boundary enforcement & cross-portal gate |
-| `public/api/reaction_handler.php` | ✅ Verified (Phase 17) | 2026-09-11 | Social emoji reaction controller (toggle, counters & Supabase broadcast) |
-| `public/api/comment_handler.php` | ✅ Verified (Phase 17) | 2026-09-11 | Job inquiry & Q&A thread controller with Supabase real-time broadcast |
-| `public/js/app.js` | ✅ Verified (Phase 17) | 2026-09-11 | Realtime reactions & Q&A event listeners, delegation, Web AudioFX & BDT cards |
+| `public/portal/index.php` | ✅ Verified (Phase 11) | 2026-09-11 | Live Community Lounge with emoji reactions, quick reply Q&A and sidebar leaderboard |
+| `public/portal/auth.php` | ✅ Verified (Phase 11) | 2026-09-11 | User portal login & signup with Hunter/Recruiter role tabs & obsidian card |
+| `public/admin/login.php` | ✅ Verified (Phase 11) | 2026-09-11 | Founder & Admin Terminal login with purple accent & Elena Vance quick-fill |
+| `public/support/login.php` | ✅ Verified (Phase 11) | 2026-09-11 | Customer Support Desk login with teal accent & Devon Bailey quick-fill |
+| `public/mod/login.php` | ✅ Verified (Phase 11) | 2026-09-11 | Threat Patrol Staff Terminal login with red accent & Sarah Jenkins quick-fill |
+| `public/api/auth_handler.php` | ✅ Verified (Phase 11) | 2026-09-11 | Authentication controller, boundary enforcement & cross-portal gate |
+| `public/api/reaction_handler.php` | ✅ Verified (Phase 11) | 2026-09-11 | Social emoji reaction controller (toggle, counters & Supabase broadcast) |
+| `public/api/comment_handler.php` | ✅ Verified (Phase 11) | 2026-09-11 | Job inquiry & Q&A thread controller with Supabase real-time broadcast |
+| `public/js/app.js` | ✅ Verified (Phase 11) | 2026-09-11 | Realtime reactions & Q&A event listeners, delegation, Web AudioFX & BDT cards |
 | `public/css/stitch-tokens.css` | ✅ Updated (Production) | 2026-09-11 | Google Stitch tokens, celebratory animations & cyberpunk utilities |
 | `public/js/sneak-bar.js` | ✅ Verified (Active) | 2026-09-11 | Fixed top purple sneak banner & persona switcher dock |
-| `public/config.php` | ✅ Verified (Phase 17) | 2026-09-11 | Core security, floating header, BDT formatter, reactions/comments DB & leaderboard |
+| `public/config.php` | ✅ Verified (Phase 11) | 2026-09-11 | Core security, floating header, BDT formatter, reactions/comments DB & leaderboard |
 | `public/api/admin_sneak.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Persona teleportation controller (JSON + Form support) |
 | `public/portal/candidate_review.php`| ✅ Verified (Syntax Clean) | 2026-09-11 | 100-to-2 Applicant Screening Accordion with Stitch empty state |
 | `public/portal/job_hub.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Job Listings & Recruiter ATS with BDT currency localization |
-| `public/admin/index.php` | ✅ Verified (Phase 16) | 2026-09-11 | Founder Telemetry & Infiltration Center with `/admin/login` redirect gate |
-| `public/admin/branding.php` | ✅ Verified (Phase 16) | 2026-09-11 | White-Label & Sneak Console with `/admin/login` redirect gate |
-| `public/support/index.php` | ✅ Verified (Phase 16) | 2026-09-11 | Staff Support Desk with dispute queue & `/support/login` redirect gate |
-| `public/mod/index.php` | ✅ Verified (Phase 16) | 2026-09-11 | Threat Patrol Verification Queue with `/staff/login` redirect gate |
+| `public/admin/index.php` | ✅ Verified (Phase 11) | 2026-09-11 | Founder Telemetry & Infiltration Center with `/admin/login` redirect gate |
+| `public/admin/branding.php` | ✅ Verified (Phase 11) | 2026-09-11 | White-Label & Sneak Console with `/admin/login` redirect gate |
+| `public/support/index.php` | ✅ Verified (Phase 11) | 2026-09-11 | Staff Support Desk with dispute queue & `/support/login` redirect gate |
+| `public/mod/index.php` | ✅ Verified (Phase 11) | 2026-09-11 | Threat Patrol Verification Queue with `/staff/login` redirect gate |
 | `public/api/jobs_handler.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Escrow job creation via `post_job_with_escrow()` |
 | `public/api/payout_handler.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Escrow payout release via `hire_and_release_payout()` |
 | `public/api/telegram_dispatcher.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Automated Telegram notification bridge with BDT localization |
