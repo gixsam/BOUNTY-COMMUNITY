@@ -293,6 +293,22 @@ bounty community/
   - **Apache Clean URL Routing (`.htaccess`):**
     - Enhanced rewrite rules for `/admin/login`, `/support/login`, and `/staff/login` with optional `.php` and trailing slashes.
 
+- **Phase 17: Social Community Lounge Reactions, Q&A Comment Threads & Leaderboard:**
+  - **One-Click Emoji Reactions Engine (`public/portal/index.php`, `public/js/app.js`, `public/api/reaction_handler.php`):**
+    - Added interactive reaction buttons (👍 Like, 🚀 Launch, 🪙 Bounty, 🔥 Fire) with live reaction counters under all Lounge chat messages and escrowed job alert cards.
+    - Built optimistic UI feedback with micro-bounce animations, immediate count adjustments, and active indigo styling.
+    - Created `public/api/reaction_handler.php` supporting GET (reaction totals + active user state) and POST (toggle/increment/decrement) with session state persistence and real-time Supabase broadcasting via `chat_messages` (`meta_json.type = 'reaction_event'`).
+  - **In-Stream Bounty Q&A & Quick Reply Threads (`public/portal/index.php`, `public/js/app.js`, `public/api/comment_handler.php`):**
+    - Built quick question/inquiry thread under each job alert card directly on the social wall, allowing hunters to ask questions before applying.
+    - Created `public/api/comment_handler.php` supporting GET (job comments) and POST (post inquiry/reply) with sender context preservation and Supabase broadcasting (`meta_json.type = 'job_reply'`).
+    - Integrated real-time Supabase websocket listener in `public/js/app.js` to dynamically append incoming comments to the relevant bounty card's discussion thread without page refresh.
+  - **Sidebar Community Leaderboard & Live Online Stats (`public/portal/index.php`, `public/config.php`):**
+    - Added Live Community Activity widget to the Lounge sidebar showing live counts of active members (142 online, 89 hunters, 24 recruiters, 29 tasks).
+    - Built "Top Earners this Week" Leaderboard widget showcasing top 4 performers with ranking medals (🥇, 🥈, 🥉, ⭐), persona badges, bounties won, and total earnings rendered in universal Bangladeshi Taka (`৳ BDT`).
+  - **Global JavaScript Interface (`public/js/app.js`):**
+    - Extended `window.BountyApp` with `toggleReaction()`, `toggleCommentBox()`, and `appendJobCommentToDOM()`.
+    - Added delegated event listeners for all dynamic and static `.btn-reaction` buttons and `.job-reply-form` submissions.
+
 ---
 
 ## 🚀 4. Upcoming Tasks & Future Roadmap ("Will Be Done")
@@ -333,16 +349,18 @@ bounty community/
 |---|---|---|---|
 | `.htaccess` | ✅ Verified (Syntax Clean) | 2026-09-11 | Root Apache rewrite, clean URL router & sensitive file shield |
 | `index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Root router redirecting to `/public/portal/index.php` (Hostinger 403 fix) |
-| `public/portal/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Live Community Lounge with outer dark container & obsidian glass cards |
+| `public/portal/index.php` | ✅ Verified (Phase 17) | 2026-09-11 | Live Community Lounge with emoji reactions, quick reply Q&A and sidebar leaderboard |
 | `public/portal/auth.php` | ✅ Verified (Phase 16) | 2026-09-11 | User portal login & signup with Hunter/Recruiter role tabs & obsidian card |
 | `public/admin/login.php` | ✅ Verified (Phase 16) | 2026-09-11 | Founder & Admin Terminal login with purple accent & Elena Vance quick-fill |
 | `public/support/login.php` | ✅ Verified (Phase 16) | 2026-09-11 | Customer Support Desk login with teal accent & Devon Bailey quick-fill |
 | `public/mod/login.php` | ✅ Verified (Phase 16) | 2026-09-11 | Threat Patrol Staff Terminal login with red accent & Sarah Jenkins quick-fill |
 | `public/api/auth_handler.php` | ✅ Verified (Phase 16) | 2026-09-11 | Authentication controller, boundary enforcement & cross-portal gate |
-| `public/js/app.js` | ✅ Verified (Active) | 2026-09-11 | Supabase Realtime listener, Web AudioFX & BDT dynamic card styles |
+| `public/api/reaction_handler.php` | ✅ Verified (Phase 17) | 2026-09-11 | Social emoji reaction controller (toggle, counters & Supabase broadcast) |
+| `public/api/comment_handler.php` | ✅ Verified (Phase 17) | 2026-09-11 | Job inquiry & Q&A thread controller with Supabase real-time broadcast |
+| `public/js/app.js` | ✅ Verified (Phase 17) | 2026-09-11 | Realtime reactions & Q&A event listeners, delegation, Web AudioFX & BDT cards |
 | `public/css/stitch-tokens.css` | ✅ Updated (Production) | 2026-09-11 | Google Stitch tokens, celebratory animations & cyberpunk utilities |
 | `public/js/sneak-bar.js` | ✅ Verified (Active) | 2026-09-11 | Fixed top purple sneak banner & persona switcher dock |
-| `public/config.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Core security, floating inset header, BDT formatter & layout renderers |
+| `public/config.php` | ✅ Verified (Phase 17) | 2026-09-11 | Core security, floating header, BDT formatter, reactions/comments DB & leaderboard |
 | `public/api/admin_sneak.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Persona teleportation controller (JSON + Form support) |
 | `public/portal/candidate_review.php`| ✅ Verified (Syntax Clean) | 2026-09-11 | 100-to-2 Applicant Screening Accordion with Stitch empty state |
 | `public/portal/job_hub.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Job Listings & Recruiter ATS with BDT currency localization |
@@ -360,4 +378,5 @@ bounty community/
 
 ---
 *Note: This document is maintained continuously by Antigravity and synchronized to local and Google Drive repositories upon every update.*
+
 

@@ -234,6 +234,48 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Emoji Reactions & Quick Reply Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-3 mt-3 border-t border-white/5 relative z-10">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                    <button type="button" data-reaction-item="${msgId}" data-emoji="like" class="btn-reaction px-2.5 py-1 rounded-lg text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10" title="Like">
+                        <span>👍</span>
+                        <span class="reaction-count text-[11px] font-bold">0</span>
+                    </button>
+                    <button type="button" data-reaction-item="${msgId}" data-emoji="launch" class="btn-reaction px-2.5 py-1 rounded-lg text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10" title="Launch">
+                        <span>🚀</span>
+                        <span class="reaction-count text-[11px] font-bold">0</span>
+                    </button>
+                    <button type="button" data-reaction-item="${msgId}" data-emoji="bounty" class="btn-reaction px-2.5 py-1 rounded-lg text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10" title="Bounty">
+                        <span>🪙</span>
+                        <span class="reaction-count text-[11px] font-bold">0</span>
+                    </button>
+                    <button type="button" data-reaction-item="${msgId}" data-emoji="fire" class="btn-reaction px-2.5 py-1 rounded-lg text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10" title="Fire">
+                        <span>🔥</span>
+                        <span class="reaction-count text-[11px] font-bold">0</span>
+                    </button>
+                </div>
+                <button type="button" onclick="window.BountyApp && window.BountyApp.toggleCommentBox('${jobId || msgId}')" class="px-2.5 py-1 rounded-lg text-xs font-mono text-slate-300 hover:text-indigo-300 bg-white/5 hover:bg-white/10 border border-white/10 transition flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-regular fa-comment-dots text-indigo-400"></i>
+                    <span>Q&A (<span id="comment-count-${jobId || msgId}">0</span>)</span>
+                </button>
+            </div>
+
+            <!-- Quick Reply & Discussion Thread -->
+            <div id="comment-section-${jobId || msgId}" class="mt-3 pt-3 border-t border-white/5 space-y-2.5 relative z-10">
+                <div id="comment-list-${jobId || msgId}" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                    <div class="no-comments-placeholder text-[11px] text-slate-500 italic font-mono py-1">
+                        No questions asked yet. Ask a question below before applying!
+                    </div>
+                </div>
+                <form class="job-reply-form flex items-center gap-2" data-job-id="${jobId || msgId}">
+                    <input type="text" name="reply_message" required placeholder="Ask a question about this bounty before applying..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition">
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-brandIndigo hover:bg-indigo-500 text-white font-bold text-xs shadow-glow-indigo transition flex items-center gap-1.5 cursor-pointer shrink-0">
+                        <span>Ask</span>
+                        <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                    </button>
+                </form>
+            </div>
         `;
         return card;
     }
@@ -273,6 +315,42 @@
                     </div>
                     <div class="text-sm text-slate-200 leading-relaxed break-words">
                         ${escapeHtml(data.message || '')}
+                    </div>
+
+                    <!-- Chat Emoji Reaction Buttons -->
+                    <div class="flex items-center gap-1.5 mt-2.5 pt-2 border-t border-white/5 flex-wrap">
+                        <button type="button" 
+                                data-reaction-item="${msgId}" 
+                                data-emoji="like" 
+                                class="btn-reaction px-2 py-0.5 rounded-lg text-[11px] font-mono transition-all flex items-center gap-1 cursor-pointer bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10" 
+                                title="Like this message">
+                            <span>👍</span>
+                            <span class="reaction-count text-[10px] font-bold">0</span>
+                        </button>
+                        <button type="button" 
+                                data-reaction-item="${msgId}" 
+                                data-emoji="launch" 
+                                class="btn-reaction px-2 py-0.5 rounded-lg text-[11px] font-mono transition-all flex items-center gap-1 cursor-pointer bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10" 
+                                title="Launch">
+                            <span>🚀</span>
+                            <span class="reaction-count text-[10px] font-bold">0</span>
+                        </button>
+                        <button type="button" 
+                                data-reaction-item="${msgId}" 
+                                data-emoji="bounty" 
+                                class="btn-reaction px-2 py-0.5 rounded-lg text-[11px] font-mono transition-all flex items-center gap-1 cursor-pointer bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10" 
+                                title="Bounty">
+                            <span>🪙</span>
+                            <span class="reaction-count text-[10px] font-bold">0</span>
+                        </button>
+                        <button type="button" 
+                                data-reaction-item="${msgId}" 
+                                data-emoji="fire" 
+                                class="btn-reaction px-2 py-0.5 rounded-lg text-[11px] font-mono transition-all flex items-center gap-1 cursor-pointer bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10" 
+                                title="Fire">
+                            <span>🔥</span>
+                            <span class="reaction-count text-[10px] font-bold">0</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -358,6 +436,48 @@
                     { event: 'INSERT', schema: 'public', table: 'chat_messages' },
                     payload => {
                         console.log('[Realtime] New chat_message received:', payload.new);
+                        const item = payload.new;
+                        let meta = item.meta_json || {};
+                        if (typeof meta === 'string') {
+                            try { meta = JSON.parse(meta); } catch (e) {}
+                        }
+
+                        // Realtime job inquiry / reply broadcast
+                        if (meta.type === 'job_reply' || item.message_type === 'job_reply') {
+                            const targetJobId = meta.job_id || item.room_id;
+                            if (targetJobId) {
+                                appendJobCommentToDOM(targetJobId, {
+                                    id: item.id,
+                                    sender_name: meta.sender_name || 'Community Member',
+                                    sender_handle: meta.sender_handle || 'member',
+                                    sender_role: meta.sender_role || 'hunter',
+                                    sender_avatar: meta.sender_avatar || 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150',
+                                    message: item.message,
+                                    created_at: 'Just now'
+                                });
+                                return;
+                            }
+                        }
+
+                        // Realtime emoji reaction event broadcast
+                        if (meta.type === 'reaction_event') {
+                            const targetItem = meta.item_id;
+                            const emoji = meta.emoji;
+                            if (targetItem && emoji) {
+                                const btn = document.querySelector(`.btn-reaction[data-reaction-item="${targetItem}"][data-emoji="${emoji}"]`);
+                                if (btn) {
+                                    const countSpan = btn.querySelector('.reaction-count');
+                                    if (countSpan) {
+                                        let curr = parseInt(countSpan.textContent.trim(), 10) || 0;
+                                        if (meta.active) curr++;
+                                        else if (!meta.active && curr > 0) curr--;
+                                        countSpan.textContent = curr;
+                                    }
+                                }
+                                return;
+                            }
+                        }
+
                         prependFeedItem(payload.new, true);
                     }
                 )
@@ -533,6 +653,163 @@
                 });
             }
         }
+
+        // 1. One-Click Emoji Reaction Delegation
+        document.addEventListener('click', (e) => {
+            const reactionBtn = e.target.closest('.btn-reaction');
+            if (!reactionBtn) return;
+            e.preventDefault();
+            const itemId = reactionBtn.getAttribute('data-reaction-item');
+            const emoji = reactionBtn.getAttribute('data-emoji');
+            if (itemId && emoji) {
+                toggleReaction(itemId, emoji, reactionBtn);
+            }
+        });
+
+        // 2. Quick Reply / Inquiries Form Submission Delegation
+        document.addEventListener('submit', async (e) => {
+            const form = e.target.closest('.job-reply-form');
+            if (!form) return;
+            e.preventDefault();
+
+            const jobId = form.getAttribute('data-job-id');
+            const input = form.querySelector('input[name="reply_message"]');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const message = input ? input.value.trim() : '';
+
+            if (!jobId || !message) return;
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="animate-spin text-xs">⏳</span>';
+            }
+
+            try {
+                const res = await fetch(`${baseUrl}/api/comment_handler.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ job_id: jobId, message })
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.error || 'Failed to post question');
+                }
+
+                input.value = '';
+                appendJobCommentToDOM(jobId, data.comment);
+                showToast('Question posted on bounty thread!', 'success');
+            } catch (err) {
+                showToast(err.message, 'error');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Ask</span> <i class="fa-solid fa-paper-plane text-[10px]"></i>';
+                }
+            }
+        });
+    }
+
+    function toggleCommentBox(jobId) {
+        const sec = document.getElementById(`comment-section-${jobId}`);
+        if (!sec) return;
+        sec.classList.toggle('hidden');
+        if (!sec.classList.contains('hidden')) {
+            const input = sec.querySelector('input[name="reply_message"]');
+            if (input) input.focus();
+        }
+    }
+
+    function appendJobCommentToDOM(jobId, comment) {
+        const list = document.getElementById(`comment-list-${jobId}`);
+        const countBadge = document.getElementById(`comment-count-${jobId}`);
+        if (!list) return;
+
+        const placeholder = list.querySelector('.no-comments-placeholder');
+        if (placeholder) placeholder.remove();
+
+        const item = document.createElement('div');
+        item.className = 'p-2.5 rounded-xl bg-white/[0.03] border border-white/5 flex items-start gap-2.5 text-xs animate-fadeIn';
+
+        const senderName = comment.sender_name || 'Hunter';
+        const senderHandle = comment.sender_handle || 'user';
+        const senderRole = comment.sender_role || 'hunter';
+        const senderAvatar = comment.sender_avatar || 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150';
+        const timeDisplay = comment.created_at || 'Just now';
+        const message = comment.message || '';
+
+        item.innerHTML = `
+            <img src="${escapeHtml(senderAvatar)}" alt="Avatar" class="w-6 h-6 rounded-md object-cover mt-0.5 border border-white/10">
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5 flex-wrap">
+                    <span class="font-bold text-white text-[11px]">${escapeHtml(senderName)}</span>
+                    <span class="text-[10px] text-slate-400 font-mono">@${escapeHtml(senderHandle)}</span>
+                    <span class="text-[9px] font-mono px-1 py-0.2 rounded bg-white/10 text-slate-300 uppercase">${escapeHtml(senderRole)}</span>
+                    <span class="text-[10px] text-slate-500 ml-auto font-mono">${escapeHtml(timeDisplay)}</span>
+                </div>
+                <div class="text-slate-300 text-[11px] leading-relaxed break-words">
+                    ${escapeHtml(message)}
+                </div>
+            </div>
+        `;
+        list.appendChild(item);
+        list.scrollTop = list.scrollHeight;
+
+        if (countBadge) {
+            const currentCount = parseInt(countBadge.textContent.trim(), 10) || 0;
+            countBadge.textContent = currentCount + 1;
+        }
+    }
+
+    async function toggleReaction(itemId, emoji, btn) {
+        if (!btn || !itemId || !emoji) return;
+
+        const countSpan = btn.querySelector('.reaction-count');
+        const isActive = btn.classList.contains('bg-indigo-500/25') || btn.classList.contains('shadow-glow-indigo');
+        let currentCount = countSpan ? (parseInt(countSpan.textContent.trim(), 10) || 0) : 0;
+
+        // Optimistic UI state
+        if (isActive) {
+            btn.classList.remove('bg-indigo-500/25', 'text-indigo-300', 'border-indigo-500/40', 'shadow-glow-indigo', 'font-bold');
+            btn.classList.add('bg-white/5', 'text-slate-300', 'border-white/10');
+            if (countSpan) countSpan.textContent = Math.max(0, currentCount - 1);
+        } else {
+            btn.classList.remove('bg-white/5', 'text-slate-300', 'border-white/10');
+            btn.classList.add('bg-indigo-500/25', 'text-indigo-300', 'border-indigo-500/40', 'shadow-glow-indigo', 'font-bold');
+            if (countSpan) countSpan.textContent = currentCount + 1;
+        }
+
+        // Micro-bounce animation
+        btn.classList.add('scale-110');
+        setTimeout(() => btn.classList.remove('scale-110'), 200);
+
+        try {
+            const res = await fetch(`${baseUrl}/api/reaction_handler.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ item_id: itemId, emoji })
+            });
+            const data = await res.json();
+            if (data && data.success) {
+                if (countSpan && typeof data.count !== 'undefined') {
+                    countSpan.textContent = data.count;
+                }
+                if (data.active) {
+                    btn.classList.add('bg-indigo-500/25', 'text-indigo-300', 'border-indigo-500/40', 'shadow-glow-indigo', 'font-bold');
+                    btn.classList.remove('bg-white/5', 'text-slate-300');
+                } else {
+                    btn.classList.remove('bg-indigo-500/25', 'text-indigo-300', 'border-indigo-500/40', 'shadow-glow-indigo', 'font-bold');
+                    btn.classList.add('bg-white/5', 'text-slate-300');
+                }
+            }
+        } catch (err) {
+            console.error('[Reaction] Network error:', err);
+        }
     }
 
     function formatTime(isoStr) {
@@ -561,6 +838,9 @@
         playCelebratoryCoinSound,
         triggerCelebratoryAnimation,
         prependFeedItem,
+        toggleReaction,
+        toggleCommentBox,
+        appendJobCommentToDOM,
 
         async postBounty(data) {
             try {

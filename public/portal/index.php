@@ -237,6 +237,103 @@ render_header('Live Community Lounge & Event Feed', 'portal');
                                 </a>
                             </div>
                         </div>
+
+                        <?php
+                        $reactData = get_item_reactions($msgId);
+                        $counts = $reactData['counts'];
+                        $userActive = $reactData['user_active'];
+                        $jobComments = get_job_comments($jobId ?: $msgId);
+                        ?>
+
+                        <!-- Emoji Reactions & Quick Reply Bar -->
+                        <div class="flex flex-wrap items-center justify-between gap-2 pt-3 mt-3 border-t border-white/5 relative z-10">
+                            <!-- Emoji Buttons with Live Counters -->
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <button type="button" 
+                                        data-reaction-item="<?= htmlspecialchars($msgId) ?>" 
+                                        data-emoji="like" 
+                                        class="btn-reaction px-2.5 py-1 rounded-lg text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer <?= !empty($userActive['like']) ? 'bg-indigo-500/25 text-indigo-300 border border-indigo-500/40 shadow-glow-indigo font-bold' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10' ?>"
+                                        title="Like this bounty">
+                                    <span>👍</span>
+                                    <span class="reaction-count text-[11px] font-bold"><?= (int)($counts['like'] ?? 0) ?></span>
+                                </button>
+                                <button type="button" 
+                                        data-reaction-item="<?= htmlspecialchars($msgId) ?>" 
+                                        data-emoji="launch" 
+                                        class="btn-reaction px-2.5 py-1 rounded-lg text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer <?= !empty($userActive['launch']) ? 'bg-indigo-500/25 text-indigo-300 border border-indigo-500/40 shadow-glow-indigo font-bold' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10' ?>"
+                                        title="Launch into this">
+                                    <span>🚀</span>
+                                    <span class="reaction-count text-[11px] font-bold"><?= (int)($counts['launch'] ?? 0) ?></span>
+                                </button>
+                                <button type="button" 
+                                        data-reaction-item="<?= htmlspecialchars($msgId) ?>" 
+                                        data-emoji="bounty" 
+                                        class="btn-reaction px-2.5 py-1 rounded-lg text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer <?= !empty($userActive['bounty']) ? 'bg-indigo-500/25 text-indigo-300 border border-indigo-500/40 shadow-glow-indigo font-bold' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10' ?>"
+                                        title="High value bounty">
+                                    <span>🪙</span>
+                                    <span class="reaction-count text-[11px] font-bold"><?= (int)($counts['bounty'] ?? 0) ?></span>
+                                </button>
+                                <button type="button" 
+                                        data-reaction-item="<?= htmlspecialchars($msgId) ?>" 
+                                        data-emoji="fire" 
+                                        class="btn-reaction px-2.5 py-1 rounded-lg text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer <?= !empty($userActive['fire']) ? 'bg-indigo-500/25 text-indigo-300 border border-indigo-500/40 shadow-glow-indigo font-bold' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10' ?>"
+                                        title="Hot task">
+                                    <span>🔥</span>
+                                    <span class="reaction-count text-[11px] font-bold"><?= (int)($counts['fire'] ?? 0) ?></span>
+                                </button>
+                            </div>
+
+                            <!-- Toggle Quick Reply Button -->
+                            <button type="button" 
+                                    onclick="window.BountyApp && window.BountyApp.toggleCommentBox('<?= htmlspecialchars($jobId ?: $msgId) ?>')"
+                                    class="px-2.5 py-1 rounded-lg text-xs font-mono text-slate-300 hover:text-indigo-300 bg-white/5 hover:bg-white/10 border border-white/10 transition flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-regular fa-comment-dots text-indigo-400"></i>
+                                <span>Q&A (<span id="comment-count-<?= htmlspecialchars($jobId ?: $msgId) ?>"><?= count($jobComments) ?></span>)</span>
+                            </button>
+                        </div>
+
+                        <!-- Quick Reply & Discussion Box (Directly on Social Wall) -->
+                        <div id="comment-section-<?= htmlspecialchars($jobId ?: $msgId) ?>" class="mt-3 pt-3 border-t border-white/5 space-y-2.5 relative z-10">
+                            <!-- Inquiries Thread List -->
+                            <div id="comment-list-<?= htmlspecialchars($jobId ?: $msgId) ?>" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                                <?php if (empty($jobComments)): ?>
+                                    <div class="no-comments-placeholder text-[11px] text-slate-500 italic font-mono py-1">
+                                        No questions asked yet. Ask a question below before applying!
+                                    </div>
+                                <?php else: ?>
+                                    <?php foreach ($jobComments as $c): ?>
+                                        <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 flex items-start gap-2.5 text-xs">
+                                            <img src="<?= htmlspecialchars($c['sender_avatar']) ?>" alt="Avatar" class="w-6 h-6 rounded-md object-cover mt-0.5 border border-white/10">
+                                            <div class="flex-1 min-w-0">
+                                                <div class="flex items-center gap-1.5 mb-0.5 flex-wrap">
+                                                    <span class="font-bold text-white text-[11px]"><?= htmlspecialchars($c['sender_name']) ?></span>
+                                                    <span class="text-[10px] text-slate-400 font-mono">@<?= htmlspecialchars($c['sender_handle']) ?></span>
+                                                    <span class="text-[9px] font-mono px-1 py-0.2 rounded bg-white/10 text-slate-300 uppercase"><?= htmlspecialchars($c['sender_role']) ?></span>
+                                                    <span class="text-[10px] text-slate-500 ml-auto font-mono"><?= htmlspecialchars($c['created_at']) ?></span>
+                                                </div>
+                                                <div class="text-slate-300 text-[11px] leading-relaxed break-words">
+                                                    <?= htmlspecialchars($c['message']) ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Quick Question Input Box -->
+                            <form class="job-reply-form flex items-center gap-2" data-job-id="<?= htmlspecialchars($jobId ?: $msgId) ?>">
+                                <input type="text" 
+                                       name="reply_message" 
+                                       required 
+                                       placeholder="Ask a question about this bounty before applying..." 
+                                       class="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition">
+                                <button type="submit" 
+                                        class="px-3 py-1.5 rounded-xl bg-brandIndigo hover:bg-indigo-500 text-white font-bold text-xs shadow-glow-indigo transition flex items-center gap-1.5 cursor-pointer shrink-0">
+                                    <span>Ask</span>
+                                    <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
 
                 <?php elseif ($msgType === 'system_alert'): ?>
@@ -282,6 +379,47 @@ render_header('Live Community Lounge & Event Feed', 'portal');
                                 <div class="text-sm text-slate-200 leading-relaxed break-words">
                                     <?= htmlspecialchars($msg['message'] ?? '') ?>
                                 </div>
+
+                                <?php
+                                $chatReactData = get_item_reactions($msgId);
+                                $chatCounts = $chatReactData['counts'];
+                                $chatUserActive = $chatReactData['user_active'];
+                                ?>
+                                <!-- Chat Emoji Reaction Buttons -->
+                                <div class="flex items-center gap-1.5 mt-2.5 pt-2 border-t border-white/5 flex-wrap">
+                                    <button type="button" 
+                                            data-reaction-item="<?= htmlspecialchars($msgId) ?>" 
+                                            data-emoji="like" 
+                                            class="btn-reaction px-2 py-0.5 rounded-lg text-[11px] font-mono transition-all flex items-center gap-1 cursor-pointer <?= !empty($chatUserActive['like']) ? 'bg-indigo-500/25 text-indigo-300 border border-indigo-500/40 shadow-glow-indigo font-bold' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10' ?>"
+                                            title="Like this message">
+                                        <span>👍</span>
+                                        <span class="reaction-count text-[10px] font-bold"><?= (int)($chatCounts['like'] ?? 0) ?></span>
+                                    </button>
+                                    <button type="button" 
+                                            data-reaction-item="<?= htmlspecialchars($msgId) ?>" 
+                                            data-emoji="launch" 
+                                            class="btn-reaction px-2 py-0.5 rounded-lg text-[11px] font-mono transition-all flex items-center gap-1 cursor-pointer <?= !empty($chatUserActive['launch']) ? 'bg-indigo-500/25 text-indigo-300 border border-indigo-500/40 shadow-glow-indigo font-bold' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10' ?>"
+                                            title="Launch">
+                                        <span>🚀</span>
+                                        <span class="reaction-count text-[10px] font-bold"><?= (int)($chatCounts['launch'] ?? 0) ?></span>
+                                    </button>
+                                    <button type="button" 
+                                            data-reaction-item="<?= htmlspecialchars($msgId) ?>" 
+                                            data-emoji="bounty" 
+                                            class="btn-reaction px-2 py-0.5 rounded-lg text-[11px] font-mono transition-all flex items-center gap-1 cursor-pointer <?= !empty($chatUserActive['bounty']) ? 'bg-indigo-500/25 text-indigo-300 border border-indigo-500/40 shadow-glow-indigo font-bold' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10' ?>"
+                                            title="Bounty">
+                                        <span>🪙</span>
+                                        <span class="reaction-count text-[10px] font-bold"><?= (int)($chatCounts['bounty'] ?? 0) ?></span>
+                                    </button>
+                                    <button type="button" 
+                                            data-reaction-item="<?= htmlspecialchars($msgId) ?>" 
+                                            data-emoji="fire" 
+                                            class="btn-reaction px-2 py-0.5 rounded-lg text-[11px] font-mono transition-all flex items-center gap-1 cursor-pointer <?= !empty($chatUserActive['fire']) ? 'bg-indigo-500/25 text-indigo-300 border border-indigo-500/40 shadow-glow-indigo font-bold' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10' ?>"
+                                            title="Fire">
+                                        <span>🔥</span>
+                                        <span class="reaction-count text-[10px] font-bold"><?= (int)($chatCounts['fire'] ?? 0) ?></span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -322,6 +460,94 @@ render_header('Live Community Lounge & Event Feed', 'portal');
                     <i class="fa-solid fa-plus-circle"></i>
                     <span>Post Bounty with Escrow</span>
                 </button>
+            </div>
+        </div>
+
+        <!-- ── Community Member Stats & Online Presence Widget ────────────── -->
+        <div class="glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md rounded-2xl p-5 border border-white/10 shadow-lg">
+            <div class="flex items-center justify-between mb-3.5">
+                <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+                    </span>
+                    <span>Community Activity</span>
+                </h3>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold">
+                    Live
+                </span>
+            </div>
+
+            <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 mb-3.5 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm">
+                        <i class="fa-solid fa-users-viewfinder"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold text-white font-mono">142 Members Online</div>
+                        <div class="text-[10px] text-emerald-400/80 font-mono">Active across all terminals</div>
+                    </div>
+                </div>
+                <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-center">
+                <div class="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                    <div class="text-base font-black text-amber-400 font-mono">84</div>
+                    <div class="text-[10px] text-slate-400 uppercase font-mono">Hunters Online</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                    <div class="text-base font-black text-emerald-400 font-mono">32</div>
+                    <div class="text-[10px] text-slate-400 uppercase font-mono">Recruiters Active</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                    <div class="text-base font-black text-indigo-400 font-mono">26</div>
+                    <div class="text-[10px] text-slate-400 uppercase font-mono">Tasks In Review</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                    <div class="text-base font-black text-rose-400 font-mono">4</div>
+                    <div class="text-[10px] text-slate-400 uppercase font-mono">Threat Patrols</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Top Earners this Week Leaderboard Widget ───────────────────── -->
+        <div class="glass-card bg-[rgba(18,24,38,0.75)] backdrop-blur-md rounded-2xl p-5 border border-white/10 shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                    <span class="text-base">🏆</span>
+                    <span>Top Earners this Week</span>
+                </h3>
+                <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/25 font-bold">
+                    Leaderboard
+                </span>
+            </div>
+
+            <div class="space-y-2.5">
+                <?php foreach (get_community_leaderboard() as $earner): ?>
+                    <div class="p-2.5 rounded-xl bg-white/5 border border-white/5 hover:border-white/15 transition-all duration-200">
+                        <div class="flex items-center justify-between gap-2 mb-1.5">
+                            <div class="flex items-center gap-2.5 min-w-0">
+                                <span class="text-base shrink-0"><?= $earner['medal'] ?></span>
+                                <img src="<?= htmlspecialchars($earner['avatar_url']) ?>" alt="<?= htmlspecialchars($earner['name']) ?>" class="w-8 h-8 rounded-lg object-cover border border-white/10 shrink-0">
+                                <div class="min-w-0">
+                                    <div class="text-xs font-bold text-white truncate"><?= htmlspecialchars($earner['name']) ?></div>
+                                    <div class="text-[10px] text-slate-400 font-mono truncate">@<?= htmlspecialchars($earner['handle']) ?></div>
+                                </div>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <div class="text-xs font-black text-emerald-400 font-mono"><?= format_bdt($earner['earnings']) ?></div>
+                                <div class="text-[9px] text-slate-400 font-mono"><?= $earner['bounties_won'] ?> bounties</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-1.5 border-t border-white/5 text-[10px]">
+                            <span class="text-slate-400 font-mono"><?= htmlspecialchars($earner['role']) ?></span>
+                            <span class="px-1.5 py-0.2 rounded border font-mono font-semibold <?= $earner['badge_color'] ?>">
+                                <?= htmlspecialchars($earner['badge']) ?>
+                            </span>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
 

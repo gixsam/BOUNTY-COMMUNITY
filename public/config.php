@@ -821,10 +821,174 @@ function init_mock_db(): void
                 'submitted_at'    => '3 hours ago',
             ],
         ],
+
+        'reactions' => [
+            'job-101' => ['like' => 14, 'launch' => 22, 'bounty' => 18, 'fire' => 9],
+            'job-102' => ['like' => 8,  'launch' => 11, 'bounty' => 15, 'fire' => 6],
+            'job-103' => ['like' => 19, 'launch' => 7,  'bounty' => 24, 'fire' => 12],
+            'chat-1'  => ['like' => 15, 'launch' => 18, 'bounty' => 5,  'fire' => 12],
+            'chat-2'  => ['like' => 9,  'launch' => 14, 'bounty' => 21, 'fire' => 8],
+            'chat-3'  => ['like' => 11, 'launch' => 8,  'bounty' => 4,  'fire' => 7],
+        ],
+
+        'user_reactions' => [],
+
+        'job_comments' => [
+            'job-101' => [
+                [
+                    'id'            => 'comm-101-1',
+                    'job_id'        => 'job-101',
+                    'sender_name'   => 'Alex Chen',
+                    'sender_handle' => 'alex_code',
+                    'sender_role'   => 'hunter',
+                    'sender_avatar' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+                    'message'       => 'Does this connector need to support cURL streaming for large PostgREST RPC responses?',
+                    'created_at'    => '1 hour ago',
+                ],
+                [
+                    'id'            => 'comm-101-2',
+                    'job_id'        => 'job-101',
+                    'sender_name'   => 'Marcus Sterling',
+                    'sender_handle' => 'marcus_hire',
+                    'sender_role'   => 'recruiter',
+                    'sender_avatar' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+                    'message'       => 'Streaming is optional for v1; standard JSON payloads are sufficient. Robust connection timeout and error recovery are high priority!',
+                    'created_at'    => '45 mins ago',
+                ],
+            ],
+            'job-102' => [
+                [
+                    'id'            => 'comm-102-1',
+                    'job_id'        => 'job-102',
+                    'sender_name'   => 'Dmitri Rostov',
+                    'sender_handle' => 'dmitri_tech',
+                    'sender_role'   => 'hunter',
+                    'sender_avatar' => 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
+                    'message'       => 'Are Google Stitch CSS variables already compiled in stitch-tokens.css?',
+                    'created_at'    => '2 hours ago',
+                ],
+                [
+                    'id'            => 'comm-102-2',
+                    'job_id'        => 'job-102',
+                    'sender_name'   => 'Marcus Sterling',
+                    'sender_handle' => 'marcus_hire',
+                    'sender_role'   => 'recruiter',
+                    'sender_avatar' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+                    'message'       => 'Yes! All obsidian cards, glow borders, and font tokens are pre-loaded in the layout header.',
+                    'created_at'    => '1 hour ago',
+                ],
+            ],
+            'job-103' => [
+                [
+                    'id'            => 'comm-103-1',
+                    'job_id'        => 'job-103',
+                    'sender_name'   => 'Sarah Jenkins',
+                    'sender_handle' => 'patrol_sarah',
+                    'sender_role'   => 'mod',
+                    'sender_avatar' => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
+                    'message'       => 'Will this run synchronously during candidate submission or asynchronously via cron?',
+                    'created_at'    => '3 hours ago',
+                ],
+                [
+                    'id'            => 'comm-103-2',
+                    'job_id'        => 'job-103',
+                    'sender_name'   => 'Elena Vance',
+                    'sender_handle' => 'founder_elena',
+                    'sender_role'   => 'admin',
+                    'sender_avatar' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+                    'message'       => 'Synchronous pre-filter on submit, with an in-depth score calculated when loaded into Threat Patrol desk.',
+                    'created_at'    => '2 hours ago',
+                ],
+            ],
+        ],
     ];
 }
 
 init_mock_db();
+
+/**
+ * Retrieve reaction metrics for an item (job or chat message).
+ */
+function get_item_reactions(string $itemId): array
+{
+    $userId = $_SESSION['user_id'] ?? ($_SESSION['active_persona_role'] ?? 'guest');
+    $counts = $_SESSION['bounty_mock_db']['reactions'][$itemId] ?? [
+        'like'   => 0,
+        'launch' => 0,
+        'bounty' => 0,
+        'fire'   => 0,
+    ];
+    $userActive = $_SESSION['bounty_mock_db']['user_reactions'][$itemId][$userId] ?? [];
+    return [
+        'counts'      => $counts,
+        'user_active' => $userActive,
+    ];
+}
+
+/**
+ * Retrieve discussion questions/replies for a specific job post.
+ */
+function get_job_comments(string $jobId): array
+{
+    return $_SESSION['bounty_mock_db']['job_comments'][$jobId] ?? [];
+}
+
+/**
+ * Retrieve the weekly top earners leaderboard.
+ */
+function get_community_leaderboard(): array
+{
+    return [
+        [
+            'rank'         => 1,
+            'medal'        => '🥇',
+            'name'         => 'Alex Chen',
+            'handle'       => 'alex_code',
+            'role'         => 'Elite Bounty Hunter',
+            'avatar_url'   => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+            'earnings'     => 48500.00,
+            'bounties_won' => 12,
+            'badge'        => 'Top Earner',
+            'badge_color'  => 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+        ],
+        [
+            'rank'         => 2,
+            'medal'        => '🥈',
+            'name'         => 'Dmitri Rostov',
+            'handle'       => 'dmitri_tech',
+            'role'         => 'Systems Architect',
+            'avatar_url'   => 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
+            'earnings'     => 34200.00,
+            'bounties_won' => 8,
+            'badge'        => 'Master Hunter',
+            'badge_color'  => 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30',
+        ],
+        [
+            'rank'         => 3,
+            'medal'        => '🥉',
+            'name'         => 'Kavita Rao',
+            'handle'       => 'kavita_fullstack',
+            'role'         => 'Full-Stack Craftsman',
+            'avatar_url'   => 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+            'earnings'     => 26800.00,
+            'bounties_won' => 6,
+            'badge'        => 'UI Artisan',
+            'badge_color'  => 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+        ],
+        [
+            'rank'         => 4,
+            'medal'        => '⭐',
+            'name'         => 'Sarah Jenkins',
+            'handle'       => 'patrol_sarah',
+            'role'         => 'Threat Patrol Mod',
+            'avatar_url'   => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
+            'earnings'     => 18500.00,
+            'bounties_won' => 4,
+            'badge'        => 'Guardian',
+            'badge_color'  => 'bg-rose-500/15 text-rose-300 border-rose-500/30',
+        ],
+    ];
+}
 
 
 // ── 11. RESPONSE HELPERS ─────────────────────────────────────────────────────
