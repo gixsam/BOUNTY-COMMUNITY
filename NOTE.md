@@ -225,6 +225,23 @@ bounty community/
     - Validated PHP syntax (`php -l`) across `public/config.php` and `public/portal/candidate_review.php`.
     - Verified HTML output rendering and flexbox responsiveness in local CLI.
     - Synchronized `NOTE.md` to local root and Google Drive workplace with matching SHA256 checksums.
+- **Phase 13: Clean Apache URL Routing & Root Security Hardening:**
+  - **Private File Protection (`.htaccess`):**
+    - Configured multi-layer blocking via `FilesMatch` and `mod_rewrite` for sensitive files and directories: `schema.sql`, `NOTE.md`, `.env*`, `.agent/`, and `.git*`.
+    - Direct browser requests return HTTP 403 Forbidden.
+  - **Static Asset Routing (`.htaccess`):**
+    - Seamlessly pass `/css/*`, `/js/*`, and `/api/*` directly to `public/css/*`, `public/js/*`, and `public/api/*` without 404s.
+  - **Clean Canonical URL Routing (`.htaccess`):**
+    - `/` -> `public/portal/index.php`
+    - `/login` and `/signup` -> `public/portal/auth.php`
+    - `/admin` -> `public/admin/index.php`
+    - `/admin/login` -> `public/admin/login.php`
+    - `/support` -> `public/support/index.php`
+    - `/support/login` -> `public/support/login.php`
+    - `/staff` and `/stuff` -> `public/mod/index.php`
+    - `/staff/login` and `/stuff/login` -> `public/mod/login.php`
+  - **Root Direct Routing (`index.php`):**
+    - Clean PHP redirect fallback to `public/portal/index.php` with verified syntax.
 
 ---
 

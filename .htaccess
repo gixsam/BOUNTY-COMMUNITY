@@ -8,7 +8,7 @@ Options -Indexes
 Options +FollowSymLinks
 
 # ── 1. Security: Deny Web Access to Sensitive Files and Directories ───────────
-<FilesMatch "(^#.*#|\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|sw[op]|env.*|git.*)|NOTE\.md|schema\.sql)$">
+<FilesMatch "(^\.env.*|^\.git.*|^\.agent.*|NOTE\.md|schema\.sql|\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|sw[op]))$">
     <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>
@@ -18,49 +18,50 @@ Options +FollowSymLinks
     </IfModule>
 </FilesMatch>
 
-# Block access to hidden directories (.agent, .git, etc.)
+# Block access to hidden and private directories & files
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
 
-    # Deny access to .agent and .git
+    # Block browser access to private files & directories
     RewriteRule ^\.agent(/.*)?$ - [F,L]
     RewriteRule ^\.git(/.*)?$ - [F,L]
+    RewriteRule ^\.env(.*)?$ - [F,L]
     RewriteRule ^NOTE\.md$ - [F,L]
     RewriteRule ^schema\.sql$ - [F,L]
 
     # ── 2. Static Asset Routing Without 404s ──────────────────────────────────
-    # Map top-level /css/, /js/, and /api/ to /public/
+    # Pass /css/*, /js/*, and /api/* directly to /public/*
     RewriteRule ^css/(.*)$ public/css/$1 [L,QSA]
     RewriteRule ^js/(.*)$ public/js/$1 [L,QSA]
     RewriteRule ^api/(.*)$ public/api/$1 [L,QSA]
 
-    # If the file or directory exists as-is, serve it directly
+    # If the requested resource exists as a file or directory, serve directly
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
     # ── 3. Canonical Clean Portal Routes ──────────────────────────────────────
-    # Root URL -> User Lounge & Live Feed
+    # Root URL (/) -> public/portal/index.php
     RewriteRule ^$ public/portal/index.php [L,QSA]
 
-    # User Auth (Login & Signup)
+    # User Auth (/login and /signup -> public/portal/auth.php)
     RewriteRule ^login/?$ public/portal/auth.php [L,QSA]
     RewriteRule ^signup/?$ public/portal/auth.php [L,QSA]
 
-    # Admin / Founder Infiltration Terminal
+    # Admin (/admin/login -> public/admin/login.php, /admin -> public/admin/index.php)
     RewriteRule ^admin/login/?$ public/admin/login.php [L,QSA]
     RewriteRule ^admin/?$ public/admin/index.php [L,QSA]
 
-    # Support / Escrow Dispute Desk
+    # Support (/support/login -> public/support/login.php, /support -> public/support/index.php)
     RewriteRule ^support/login/?$ public/support/login.php [L,QSA]
     RewriteRule ^support/?$ public/support/index.php [L,QSA]
 
-    # Staff / Threat Patrol & Verification Terminal (supports both 'staff' and 'stuff')
+    # Staff & Stuff (/staff/login & /stuff/login -> public/mod/login.php, /staff & /stuff -> public/mod/index.php)
     RewriteRule ^(staff|stuff)/login/?$ public/mod/login.php [L,QSA]
     RewriteRule ^(staff|stuff)/?$ public/mod/index.php [L,QSA]
 
-    # Portal sub-routes
+    # Clean Portal Sub-routes
     RewriteRule ^portal/?$ public/portal/index.php [L,QSA]
     RewriteRule ^portal/job_hub/?$ public/portal/job_hub.php [L,QSA]
     RewriteRule ^portal/candidate_review/?$ public/portal/candidate_review.php [L,QSA]
