@@ -56,11 +56,11 @@ $flash = consume_flash();
     <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none"></div>
     <div class="fixed bottom-10 right-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="w-full max-w-md relative z-10 my-8">
+    <div class="w-full max-w-md mx-auto mt-16 relative z-10 mb-12">
 
         <!-- Brand Icon & Header -->
         <div class="text-center mb-6">
-            <a href="<?= BASE_URL ?>/portal/index.php" class="inline-flex items-center gap-3 group mb-3">
+            <a href="<?= empty(BASE_URL) ? '/' : BASE_URL . '/portal/index.php' ?>" class="inline-flex items-center gap-3 group mb-3">
                 <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brandIndigo to-brandMint flex items-center justify-center shadow-glow-indigo group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-bolt text-slate-950 font-black text-xl"></i>
                 </div>
@@ -88,7 +88,7 @@ $flash = consume_flash();
         <?php endif; ?>
 
         <!-- Main Auth Card -->
-        <div class="glass-card bg-[#121826]/85 backdrop-blur-2xl border border-slate-700/60 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+        <div class="glass-card bg-[#121826]/85 backdrop-blur-xl border border-white/10 rounded-2xl max-w-md mx-auto p-8 shadow-2xl relative">
 
             <!-- Tab Switcher -->
             <div class="flex items-center p-1 rounded-xl bg-white/5 border border-white/10 mb-6 text-xs font-semibold">
@@ -189,20 +189,20 @@ $flash = consume_flash();
 
                     <!-- Role Selector (Hunter vs Recruiter) -->
                     <div>
-                        <label class="block text-xs font-mono uppercase text-slate-300 mb-1.5 font-semibold">Select Account Persona</label>
-                        <div class="grid grid-cols-2 gap-2">
+                        <label class="block text-xs font-mono uppercase text-slate-300 mb-1.5 font-semibold">Select Account Role</label>
+                        <div class="grid grid-cols-2 gap-2.5">
                             <label class="p-2.5 rounded-xl border border-white/10 bg-white/5 cursor-pointer flex items-center gap-2 hover:border-amber-400/50 has-[:checked]:border-amber-400 has-[:checked]:bg-amber-500/10 transition">
                                 <input type="radio" name="role" value="hunter" checked class="accent-amber-400">
                                 <div>
-                                    <div class="text-xs font-bold text-white">Bounty Hunter</div>
+                                    <div class="text-xs font-bold text-white">Hunter</div>
                                     <div class="text-[10px] text-slate-400">Solve tasks & earn</div>
                                 </div>
                             </label>
                             <label class="p-2.5 rounded-xl border border-white/10 bg-white/5 cursor-pointer flex items-center gap-2 hover:border-emerald-400/50 has-[:checked]:border-emerald-400 has-[:checked]:bg-emerald-500/10 transition">
                                 <input type="radio" name="role" value="recruiter" class="accent-emerald-400">
                                 <div>
-                                    <div class="text-xs font-bold text-white">Job Creator</div>
-                                    <div class="text-[10px] text-slate-400">Lock escrow & hire</div>
+                                    <div class="text-xs font-bold text-white">Recruiter</div>
+                                    <div class="text-[10px] text-slate-400">Post jobs & hire</div>
                                 </div>
                             </label>
                         </div>
@@ -262,7 +262,7 @@ $flash = consume_flash();
 
             <!-- Terminal Links -->
             <div class="mt-6 pt-4 border-t border-white/10 text-center">
-                <a href="<?= BASE_URL ?>/portal/index.php" class="text-xs text-slate-400 hover:text-white transition flex items-center justify-center gap-1">
+                <a href="<?= empty(BASE_URL) ? '/' : BASE_URL . '/portal/index.php' ?>" class="text-xs text-slate-400 hover:text-white transition flex items-center justify-center gap-1">
                     <i class="fa-solid fa-arrow-left text-[10px]"></i>
                     <span>Continue to Lounge as Guest</span>
                 </a>

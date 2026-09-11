@@ -9,7 +9,7 @@ require_once __DIR__ . '/../config.php';
 // Route Protection: Founder & Admin only
 $currentRole = $_SESSION['user_role'] ?? '';
 if (!in_array($currentRole, ['founder', 'admin'], true)) {
-    header('Location: ' . BASE_URL . '/admin/login.php');
+    header('Location: ' . (empty(BASE_URL) ? '/admin/login' : BASE_URL . '/admin/login.php'));
     exit;
 }
 

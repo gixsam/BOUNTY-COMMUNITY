@@ -17,7 +17,7 @@ $flash = consume_flash();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Threat Patrol Terminal | <?= htmlspecialchars(COMMUNITY_NAME) ?></title>
+    <title>Threat Patrol Staff Terminal | <?= htmlspecialchars(COMMUNITY_NAME) ?></title>
     <style>
         :root { color-scheme: dark; }
         html, body {
@@ -68,7 +68,7 @@ $flash = consume_flash();
             </div>
 
             <h1 class="text-xl font-bold text-white tracking-tight">
-                Staff Threat Patrol & Task Verification Terminal
+                Threat Patrol Staff Terminal
             </h1>
             <p class="text-xs text-slate-400 mt-1 font-mono">
                 Proof Audits, Malicious URL Scanning & Threat Scoring
@@ -151,7 +151,7 @@ $flash = consume_flash();
             </div>
 
             <div class="mt-4 text-center">
-                <a href="<?= BASE_URL ?>/portal/index.php" class="text-xs text-slate-400 hover:text-white transition flex items-center justify-center gap-1">
+                <a href="<?= empty(BASE_URL) ? '/' : BASE_URL . '/portal/index.php' ?>" class="text-xs text-slate-400 hover:text-white transition flex items-center justify-center gap-1">
                     <i class="fa-solid fa-arrow-left text-[10px]"></i>
                     <span>Return to Public Portal</span>
                 </a>

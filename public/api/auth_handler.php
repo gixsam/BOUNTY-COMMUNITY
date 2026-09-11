@@ -84,8 +84,9 @@ if ($action === 'login') {
 
     // Check Supabase if configured and not found in mock personas
     if (!$matchedUser && is_supabase_configured()) {
+        $cleanHandle = ltrim($email, '@');
         $res = supabase_request(
-            'rest/v1/profiles?email=eq.' . urlencode($email) . '&limit=1',
+            'rest/v1/profiles?or=(email.eq.' . urlencode($email) . ',handle.eq.' . urlencode($cleanHandle) . ')&limit=1',
             'GET',
             null,
             true
@@ -99,35 +100,36 @@ if ($action === 'login') {
         $msg = 'Account not found. Please check your credentials or register.';
         if ($isJsonRequest) { json_response(['error' => $msg], 401); }
         set_flash('error', $msg);
-        header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? (BASE_URL . '/portal/auth.php')));
+        header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? (empty(BASE_URL) ? '/login' : BASE_URL . '/portal/auth.php')));
         exit;
     }
 
     $userRole = $matchedUser['role'] ?? 'hunter';
 
     // ── CROSS-PORTAL ACCESS RESTRICTIONS ─────────────────────────────────────
+    // Strict boundary gates: Hunter/Recruiter personas are rejected from administrative and staff terminals
     if ($portal === 'admin') {
         if (!in_array($userRole, ['admin', 'founder'], true)) {
-            $msg = 'Unauthorized: Admin privileges required.';
+            $msg = 'Unauthorized: Admin privileges required. Hunter/Recruiter personas cannot access Founder Terminal.';
             if ($isJsonRequest) { json_response(['error' => $msg], 403); }
             set_flash('error', $msg);
-            header('Location: ' . BASE_URL . '/admin/login.php');
+            header('Location: ' . (empty(BASE_URL) ? '/admin/login' : BASE_URL . '/admin/login.php'));
             exit;
         }
     } elseif ($portal === 'support') {
         if (!in_array($userRole, ['support', 'admin', 'founder'], true)) {
-            $msg = 'Unauthorized: Support desk access required.';
+            $msg = 'Unauthorized: Support desk access required. Hunter/Recruiter personas cannot access Customer Support.';
             if ($isJsonRequest) { json_response(['error' => $msg], 403); }
             set_flash('error', $msg);
-            header('Location: ' . BASE_URL . '/support/login.php');
+            header('Location: ' . (empty(BASE_URL) ? '/support/login' : BASE_URL . '/support/login.php'));
             exit;
         }
     } elseif (in_array($portal, ['mod', 'staff', 'stuff'], true)) {
         if (!in_array($userRole, ['mod', 'admin', 'founder'], true)) {
-            $msg = 'Unauthorized: Staff threat patrol access required.';
+            $msg = 'Unauthorized: Staff threat patrol access required. Hunter/Recruiter personas cannot access Threat Patrol.';
             if ($isJsonRequest) { json_response(['error' => $msg], 403); }
             set_flash('error', $msg);
-            header('Location: ' . BASE_URL . '/mod/login.php');
+            header('Location: ' . (empty(BASE_URL) ? '/staff/login' : BASE_URL . '/mod/login.php'));
             exit;
         }
     }
@@ -147,10 +149,10 @@ if ($action === 'login') {
 
     // Determine target redirect
     $redirectUrl = match($portal) {
-        'admin'           => BASE_URL . '/admin/index.php',
-        'support'         => BASE_URL . '/support/index.php',
-        'mod', 'staff', 'stuff' => BASE_URL . '/mod/index.php',
-        default           => BASE_URL . '/portal/index.php'
+        'admin'           => empty(BASE_URL) ? '/admin' : BASE_URL . '/admin/index.php',
+        'support'         => empty(BASE_URL) ? '/support' : BASE_URL . '/support/index.php',
+        'mod', 'staff', 'stuff' => empty(BASE_URL) ? '/staff' : BASE_URL . '/mod/index.php',
+        default           => empty(BASE_URL) ? '/' : BASE_URL . '/portal/index.php'
     };
 
     if ($isJsonRequest) {
@@ -173,7 +175,7 @@ if ($action === 'signup') {
         $msg = 'Direct registration is disabled for administrative and staff portals.';
         if ($isJsonRequest) { json_response(['error' => $msg], 403); }
         set_flash('error', $msg);
-        header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? (BASE_URL . '/portal/auth.php')));
+        header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? (empty(BASE_URL) ? '/login' : BASE_URL . '/portal/auth.php')));
         exit;
     }
 
@@ -186,7 +188,7 @@ if ($action === 'signup') {
         $msg = 'Invalid role selected. Allowed roles are Bounty Hunter or Lead Recruiter.';
         if ($isJsonRequest) { json_response(['error' => $msg], 422); }
         set_flash('error', $msg);
-        header('Location: ' . BASE_URL . '/portal/auth.php?tab=signup');
+        header('Location: ' . (empty(BASE_URL) ? '/signup' : BASE_URL . '/portal/auth.php?tab=signup'));
         exit;
     }
 
@@ -194,7 +196,7 @@ if ($action === 'signup') {
         $msg = 'All required fields (Name, Handle, Email) must be provided.';
         if ($isJsonRequest) { json_response(['error' => $msg], 422); }
         set_flash('error', $msg);
-        header('Location: ' . BASE_URL . '/portal/auth.php?tab=signup');
+        header('Location: ' . (empty(BASE_URL) ? '/signup' : BASE_URL . '/portal/auth.php?tab=signup'));
         exit;
     }
 
@@ -239,7 +241,7 @@ if ($action === 'signup') {
     $_SESSION['user_name'] = $displayName;
     $_SESSION['active_persona_role'] = $role;
 
-    $redirectUrl = BASE_URL . '/portal/index.php';
+    $redirectUrl = empty(BASE_URL) ? '/' : BASE_URL . '/portal/index.php';
 
     if ($isJsonRequest) {
         json_response([

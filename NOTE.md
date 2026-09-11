@@ -271,6 +271,27 @@ bounty community/
     }
     ```
   - Verified 100% platform-wide currency coverage across Lounge Feed, ATS Job Hub, Candidate Review, Admin Telemetry, and real-time event feeds.
+- **Phase 16: Role-Based Portal Logins & Server-Side Auth Gatekeeper:**
+  - **User Portal Auth (`public/portal/auth.php`):**
+    - Clean tab switcher for Login and Sign Up.
+    - Role selector for registration offering `Hunter` ("Solve tasks & earn") and `Recruiter` ("Post jobs & hire").
+    - Obsidian card styling: `bg-[#121826]/85 backdrop-blur-xl border border-white/10 rounded-2xl max-w-md mx-auto p-8 shadow-2xl relative` with top spacing `mt-16`.
+    - Clean fallback return link routing to `/`.
+  - **Dedicated Staff Login Terminals (Login-Only):**
+    - Admin Login (`public/admin/login.php`): Title & `<h1>` "Founder & Admin Terminal", purple accent, quick-fill for Elena Vance.
+    - Support Login (`public/support/login.php`): Title & `<h1>` "Customer Support Desk", teal accent, quick-fill for Devon Bailey.
+    - Staff/Mod Login (`public/mod/login.php`): Title & `<h1>` "Threat Patrol Staff Terminal", red accent, quick-fill for Sarah Jenkins.
+  - **Authentication Controller (`public/api/auth_handler.php`):**
+    - Multi-tier identity lookup: predefined personas, mock registered accounts, and Supabase `public.profiles` by email or handle.
+    - Server-side boundary enforcement: Hunters and recruiters attempting access to `/admin`, `/support`, or `/staff` terminals are rejected with HTTP 403 / redirect to terminal logins.
+    - Session cookie issuance with strict role state tracking.
+    - Clean destination routing on successful authentication.
+  - **Header Gatekeeping on Protected Pages:**
+    - `public/admin/index.php` & `public/admin/branding.php`: Redirect unauthenticated visitors to `/admin/login`.
+    - `public/support/index.php`: Redirect unauthenticated visitors to `/support/login`.
+    - `public/mod/index.php`: Redirect unauthenticated visitors to `/staff/login`.
+  - **Apache Clean URL Routing (`.htaccess`):**
+    - Enhanced rewrite rules for `/admin/login`, `/support/login`, and `/staff/login` with optional `.php` and trailing slashes.
 
 ---
 
@@ -313,11 +334,11 @@ bounty community/
 | `.htaccess` | ✅ Verified (Syntax Clean) | 2026-09-11 | Root Apache rewrite, clean URL router & sensitive file shield |
 | `index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Root router redirecting to `/public/portal/index.php` (Hostinger 403 fix) |
 | `public/portal/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Live Community Lounge with outer dark container & obsidian glass cards |
-| `public/portal/auth.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | User portal login & registration with role selector and demo accounts |
-| `public/admin/login.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Founder infiltration terminal login with executive badge |
-| `public/support/login.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Customer support desk login with dispute resolution badge |
-| `public/mod/login.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Staff threat patrol login with task verification badge |
-| `public/api/auth_handler.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Authentication controller & cross-portal role validation gate |
+| `public/portal/auth.php` | ✅ Verified (Phase 16) | 2026-09-11 | User portal login & signup with Hunter/Recruiter role tabs & obsidian card |
+| `public/admin/login.php` | ✅ Verified (Phase 16) | 2026-09-11 | Founder & Admin Terminal login with purple accent & Elena Vance quick-fill |
+| `public/support/login.php` | ✅ Verified (Phase 16) | 2026-09-11 | Customer Support Desk login with teal accent & Devon Bailey quick-fill |
+| `public/mod/login.php` | ✅ Verified (Phase 16) | 2026-09-11 | Threat Patrol Staff Terminal login with red accent & Sarah Jenkins quick-fill |
+| `public/api/auth_handler.php` | ✅ Verified (Phase 16) | 2026-09-11 | Authentication controller, boundary enforcement & cross-portal gate |
 | `public/js/app.js` | ✅ Verified (Active) | 2026-09-11 | Supabase Realtime listener, Web AudioFX & BDT dynamic card styles |
 | `public/css/stitch-tokens.css` | ✅ Updated (Production) | 2026-09-11 | Google Stitch tokens, celebratory animations & cyberpunk utilities |
 | `public/js/sneak-bar.js` | ✅ Verified (Active) | 2026-09-11 | Fixed top purple sneak banner & persona switcher dock |
@@ -325,9 +346,10 @@ bounty community/
 | `public/api/admin_sneak.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Persona teleportation controller (JSON + Form support) |
 | `public/portal/candidate_review.php`| ✅ Verified (Syntax Clean) | 2026-09-11 | 100-to-2 Applicant Screening Accordion with Stitch empty state |
 | `public/portal/job_hub.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Job Listings & Recruiter ATS with BDT currency localization |
-| `public/admin/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Founder Telemetry & Infiltration Center with role protection gate |
-| `public/support/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Staff Support Desk with dispute queue & role protection gate |
-| `public/mod/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Threat Patrol Verification Queue with role protection gate |
+| `public/admin/index.php` | ✅ Verified (Phase 16) | 2026-09-11 | Founder Telemetry & Infiltration Center with `/admin/login` redirect gate |
+| `public/admin/branding.php` | ✅ Verified (Phase 16) | 2026-09-11 | White-Label & Sneak Console with `/admin/login` redirect gate |
+| `public/support/index.php` | ✅ Verified (Phase 16) | 2026-09-11 | Staff Support Desk with dispute queue & `/support/login` redirect gate |
+| `public/mod/index.php` | ✅ Verified (Phase 16) | 2026-09-11 | Threat Patrol Verification Queue with `/staff/login` redirect gate |
 | `public/api/jobs_handler.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Escrow job creation via `post_job_with_escrow()` |
 | `public/api/payout_handler.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Escrow payout release via `hire_and_release_payout()` |
 | `public/api/telegram_dispatcher.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Automated Telegram notification bridge with BDT localization |

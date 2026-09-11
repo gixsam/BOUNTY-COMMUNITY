@@ -50,16 +50,16 @@ Options +FollowSymLinks
     RewriteRule ^signup/?$ public/portal/auth.php [L,QSA]
 
     # Admin (/admin/login -> public/admin/login.php, /admin -> public/admin/index.php)
-    RewriteRule ^admin/login/?$ public/admin/login.php [L,QSA]
-    RewriteRule ^admin/?$ public/admin/index.php [L,QSA]
+    RewriteRule ^admin/login(\.php)?/?$ public/admin/login.php [L,QSA]
+    RewriteRule ^admin(\.php)?/?$ public/admin/index.php [L,QSA]
 
     # Support (/support/login -> public/support/login.php, /support -> public/support/index.php)
-    RewriteRule ^support/login/?$ public/support/login.php [L,QSA]
-    RewriteRule ^support/?$ public/support/index.php [L,QSA]
+    RewriteRule ^support/login(\.php)?/?$ public/support/login.php [L,QSA]
+    RewriteRule ^support(\.php)?/?$ public/support/index.php [L,QSA]
 
     # Staff & Stuff (/staff/login & /stuff/login -> public/mod/login.php, /staff & /stuff -> public/mod/index.php)
-    RewriteRule ^(staff|stuff)/login/?$ public/mod/login.php [L,QSA]
-    RewriteRule ^(staff|stuff)/?$ public/mod/index.php [L,QSA]
+    RewriteRule ^(staff|stuff)/login(\.php)?/?$ public/mod/login.php [L,QSA]
+    RewriteRule ^(staff|stuff)(\.php)?/?$ public/mod/index.php [L,QSA]
 
     # Clean Portal Sub-routes
     RewriteRule ^portal/?$ public/portal/index.php [L,QSA]

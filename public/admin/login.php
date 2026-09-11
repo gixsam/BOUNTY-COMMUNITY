@@ -17,7 +17,7 @@ $flash = consume_flash();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Founder & Architect Infiltration Terminal | <?= htmlspecialchars(COMMUNITY_NAME) ?></title>
+    <title>Founder & Admin Terminal | <?= htmlspecialchars(COMMUNITY_NAME) ?></title>
     <style>
         :root { color-scheme: dark; }
         html, body {
@@ -72,7 +72,7 @@ $flash = consume_flash();
             </div>
 
             <h1 class="text-xl font-bold text-white tracking-tight">
-                Founder & Architect Infiltration Terminal
+                Founder & Admin Terminal
             </h1>
             <p class="text-xs text-slate-400 mt-1 font-mono">
                 System Telemetry, Vault Audits & Persona Teleportation
@@ -146,7 +146,7 @@ $flash = consume_flash();
                     class="w-full p-2.5 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/25 text-left transition cursor-pointer flex items-center justify-between">
                     <div>
                         <div class="text-xs font-bold text-purple-300 flex items-center gap-1.5">
-                            <i class="fa-solid fa-crown text-[10px]"></i> Elena Rostova
+                            <i class="fa-solid fa-crown text-[10px]"></i> Elena Vance
                         </div>
                         <div class="text-[10px] text-slate-400 font-mono">Founder & Architect · ৳50,000</div>
                     </div>
@@ -155,7 +155,7 @@ $flash = consume_flash();
             </div>
 
             <div class="mt-4 text-center">
-                <a href="<?= BASE_URL ?>/portal/index.php" class="text-xs text-slate-400 hover:text-white transition flex items-center justify-center gap-1">
+                <a href="<?= empty(BASE_URL) ? '/' : BASE_URL . '/portal/index.php' ?>" class="text-xs text-slate-400 hover:text-white transition flex items-center justify-center gap-1">
                     <i class="fa-solid fa-arrow-left text-[10px]"></i>
                     <span>Return to Public Portal</span>
                 </a>
