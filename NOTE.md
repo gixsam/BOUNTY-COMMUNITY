@@ -6,7 +6,7 @@
 > **Frontend Stack:** HTML5, Tailwind CSS CDN (Stitch Design Tokens), Vanilla JS with `@supabase/supabase-js` v2 CDN, Lucide Icons, Web Audio API  
 > **Local Project Root:** `D:\TECH\WEBSITE\BOUNTY COMMUNITY\`  
 > **Google Drive Storage:** `G:\My Drive\ALL WEBSITE WORKPLACE\BOUNTY COMMUNITY WORKPLACE\`  
-> **Last Synchronized:** 2026-09-11 07:53 Local Time  
+> **Last Synchronized:** 2026-09-11 09:30 Local Time  
 
 ---
 
@@ -31,6 +31,8 @@ bounty community/
 ├── .agent/
 │   └── instructions.md              <-- Architect directives & synchronization rules
 ├── NOTE.md                          <-- Master project updates & roadmap log (This file)
+├── README.md                        <-- Repository overview & documentation
+├── index.php                        <-- Root router redirecting to /public/portal/index.php (Hostinger fix)
 ├── schema.sql                       <-- DDL: 8 Tables, 2 RPCs, RLS, Indexes, Seed Data
 ├── public/
 │   ├── .env                         <-- Live environment configuration (Supabase URL, Anon Key, etc.)
@@ -120,6 +122,24 @@ bounty community/
 - **Design Tokens Stylesheet Enhancements (`public/css/stitch-tokens.css`):**
   - Added `@keyframes feedItemEnter` and `@keyframes celebratoryGlow` with utility classes `.feed-item-new` and `.job-card-celebrate`.
 
+### [Phase 9] Hostinger Deployment Root Router (`index.php`) & Git Remote Push
+- **Hostinger Deployment Root Resolution:**
+  - Hostinger auto-deploys repository root directly into `public_html`, causing a 403 Forbidden error because no entry `index.php` existed in the repository root directory.
+  - Created root router `index.php` in the repository root (`index.php`) that cleanly issues an immediate HTTP 302 redirect to `/public/portal/index.php`:
+    ```php
+    <?php
+    // Root router to public portal
+    header("Location: /public/portal/index.php");
+    exit;
+    ```
+  - Validated PHP syntax cleanly via CLI (`No syntax errors detected in index.php`).
+- **File Inventory Update:** Registered `index.php` (Root Router) in master file inventory.
+- **Git Tracking & Remote Push:**
+  - Tracked and committed `index.php` to branch `main`.
+  - Pushed commits directly to GitHub origin repository (`https://github.com/gixsam/BOUNTY-COMMUNITY.git`).
+- **Google Drive Workplace Sync:**
+  - Synchronized updated `NOTE.md` to `G:\My Drive\ALL WEBSITE WORKPLACE\BOUNTY COMMUNITY WORKPLACE\NOTE.md`.
+
 ---
 
 ## 🚀 4. Upcoming Tasks & Future Roadmap ("Will Be Done")
@@ -158,6 +178,7 @@ bounty community/
 
 | File | Status | Last Check | Purpose |
 |---|---|---|---|
+| `index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Root router redirecting to `/public/portal/index.php` (Hostinger 403 fix) |
 | `public/portal/index.php` | ✅ Verified (Syntax Clean) | 2026-09-11 | Live Community Lounge, Status Box, Modal & Rich Job Alert Cards |
 | `public/js/app.js` | ✅ Verified (Active) | 2026-09-11 | Supabase Realtime `community_messages` listener, Web AudioFX & DOM prepending |
 | `public/css/stitch-tokens.css` | ✅ Updated (Production) | 2026-09-11 | Google Stitch tokens, celebratory animations & cyberpunk utilities |
